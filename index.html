@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:title" content="Comet" />
+  <meta property="og:description" content="The free, limitless script executor. 100% sUNC. Offsetless injection. No key system. The best executor on the market, completely free." />
+  <meta property="og:image" content="assets/embed.png" />
+  <meta name="theme-color" content="#080808" />
+  <title>Comet - #1, unbeatable & free</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-inner">
+    <img src="assets/comet_2.png" alt="Comet" class="loader-icon" />
+    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+    <span class="loader-text">INITIALIZING</span>
+  </div>
+</div>
+
+<div id="topbar" class="topbar">
+  <span class="topbar-msg">Comet is almost finished.. Stay tuned!</span>
+  <button class="topbar-close" onclick="document.getElementById('topbar').style.display='none'"><i class="fa-solid fa-xmark"></i></button>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="assets/comet_2.png" alt="Comet" class="nav-icon" />
+      <span>COMET</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#executor">Executor</a>
+      <a href="#credits">Credits</a>
+      <a href="https://discord.gg/M4HVPGBEvT" target="_blank" class="btn-discord"><i class="fa-brands fa-discord"></i> Discord</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="grid-bg"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content">
+    <div class="badge">FREE &nbsp;·&nbsp; NO KEY SYSTEM</div>
+    <h1 class="hero-headline">Never seen aura?<br/>Well now you have.</h1>
+    <p class="hero-sub">Zero cost. Zero limits. 100% sUNC, offsetless injection, no key system - everything free.</p>
+    <div class="hero-cta">
+      <a href="https://discord.gg/M4HVPGBEvT" target="_blank" class="btn-primary"><i class="fa-solid fa-download"></i> Download Free</a>
+      <button class="btn-secondary" id="suncBtn" onclick="openSUNC()"><i class="fa-solid fa-chart-bar"></i> sUNC Results</button>
+    </div>
+  </div>
+</section>
+
+<div class="features-strip">
+  <div class="strip-inner">
+    <span>100% sUNC</span><span class="dot">·</span>
+    <span>Offsetless Injection</span><span class="dot">·</span>
+    <span>Anti GUI Detection</span><span class="dot">·</span>
+    <span>Instance Bypassing</span><span class="dot">·</span>
+    <span>Multi-Client</span><span class="dot">·</span>
+    <span>No Key System</span><span class="dot">·</span>
+    <span>Universal Scripts</span><span class="dot">·</span>
+    <span>Game Specific Scripts</span><span class="dot">·</span>
+    <span>Chat Bypasser</span><span class="dot">·</span>
+    <span>100% Free</span><span class="dot">·</span>
+    <span>100% sUNC</span><span class="dot">·</span>
+    <span>Offsetless Injection</span><span class="dot">·</span>
+    <span>Anti GUI Detection</span><span class="dot">·</span>
+    <span>Instance Bypassing</span><span class="dot">·</span>
+    <span>Multi-Client</span><span class="dot">·</span>
+    <span>No Key System</span><span class="dot">·</span>
+    <span>Universal Scripts</span><span class="dot">·</span>
+    <span>Game Specific Scripts</span><span class="dot">·</span>
+    <span>Chat Bypasser</span><span class="dot">·</span>
+    <span>100% Free</span>
+  </div>
+</div>
+
+<section class="about" id="features">
+  <div class="section-inner">
+    <p class="section-label">WHAT IS COMET</p>
+    <h2 class="section-title">Built different.<br/>Priced right.</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Comet is a <strong>free script executor</strong> built for performance, stability, and accessibility. We support both <strong>universal scripts</strong> and <strong>game specific scripts</strong>; all without charging a single cent.</p>
+        <p>While other executors lock features behind paywalls or bury you in key systems, Comet gives you everything upfront. The only step is a simple 1-step ad download via work.ink, keeping us running so we can keep it free.</p>
+        <p>With <strong>100% sUNC compliance</strong>, offsetless injection, anti GUI detection, and full instance bypassing, Comet operates on a level 0 paid executors have ever reached. Founded in the UK, trusted worldwide.</p>
+        <a href="https://discord.gg/M4HVPGBEvT" target="_blank" class="btn-primary" style="margin-top:2rem;display:inline-flex;gap:.5rem;"><i class="fa-brands fa-discord"></i> Join Discord</a>
+      </div>
+      <div class="about-cards">
+        <div class="feat-card reveal"><div class="feat-icon"><i class="fa-solid fa-check-double"></i></div><h3>100% sUNC</h3><p>Full UNC support. Every function. Every time.</p></div>
+        <div class="feat-card reveal"><div class="feat-icon"><i class="fa-solid fa-syringe"></i></div><h3>Offsetless Injection</h3><p>No offsets, no updates breaking your tool.</p></div>
+        <div class="feat-card reveal"><div class="feat-icon"><i class="fa-solid fa-eye-slash"></i></div><h3>Anti GUI Detection</h3><p>Invisible to detection layers targeting script UIs.</p></div>
+        <div class="feat-card reveal"><div class="feat-icon"><i class="fa-solid fa-shuffle"></i></div><h3>Instance Bypassing</h3><p>Prevents games from detecting used instances.</p></div>
+        <div class="feat-card reveal"><div class="feat-icon"><i class="fa-solid fa-display"></i></div><h3>Multi-Client</h3><p>Run across multiple game instances seamlessly.</p></div>
+        <div class="feat-card reveal"><div class="feat-icon"><i class="fa-solid fa-unlock"></i></div><h3>No Key System</h3><p>1-step ad download. That is it. No re-keying, ever.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="executor-section" id="executor">
+  <div class="section-inner">
+    <p class="section-label">THE EXECUTOR</p>
+    <h2 class="section-title">Clean. Fast. Powerful.</h2>
+    <div class="exec-preview">
+      <div class="exec-img-wrap">
+        <div class="exec-glow"></div>
+        <img src="assets/image_3.png" alt="Comet Executor UI" class="exec-img" />
+      </div>
+      <div class="exec-info">
+        <div class="exec-stat reveal"><span class="stat-num">100%</span><span class="stat-label">sUNC Score</span></div>
+        <div class="exec-stat reveal"><span class="stat-num">0</span><span class="stat-label">Offsets Required</span></div>
+        <div class="exec-stat reveal"><span class="stat-num">FREE</span><span class="stat-label">Forever</span></div>
+        <div class="partner-badge reveal">
+          <i class="fa-solid fa-handshake"></i>
+          <div>
+            <span class="partner-label">OFFICIAL PARTNER</span>
+            <span class="partner-name">#1 Chat Bypasser; Built In</span>
+          </div>
+        </div>
+        <button class="btn-primary" style="width:100%;" onclick="openSUNC()"><i class="fa-solid fa-chart-bar"></i> View sUNC Results</button>
+        <a href="https://discord.gg/M4HVPGBEvT" target="_blank" class="btn-secondary" style="width:100%;text-align:center;display:flex;justify-content:center;gap:.5rem;"><i class="fa-brands fa-discord"></i> Download via Discord</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chatbypass-section">
+  <div class="section-inner">
+    <p class="section-label">PARTNERSHIP</p>
+    <h2 class="section-title">Chat Bypasser included.</h2>
+    <div class="chatbypass-grid">
+      <div class="chatbypass-info">
+        <p>Comet is officially partnered with the <strong>#1 chat bypasser</strong> on the market. Send anything in-game without restrictions, integrated directly into Comet's quick execute panel. No extra downloads, no configuration needed.</p>
+        <div class="chatbypass-tags">
+          <span class="ctag"><i class="fa-solid fa-bolt"></i> Quick Execute</span>
+          <span class="ctag"><i class="fa-solid fa-link"></i> Native Integration</span>
+          <span class="ctag"><i class="fa-solid fa-shield-halved"></i> Tag Detection</span>
+        </div>
+      </div>
+      <div class="chatbypass-card">
+        <div class="cbc-header">
+          <span class="cbc-dot red"></span><span class="cbc-dot yellow"></span><span class="cbc-dot green"></span>
+          <span class="cbc-title">Quick Execute</span>
+        </div>
+        <div class="cbc-body">
+          <div class="cbc-line"><span class="cm-kw">local</span> <span class="cm-var">msg</span> <span class="cm-op">=</span> <span class="cm-str">"slit more you deluded faggot"</span></div>
+          <div class="cbc-line"><span class="cm-fn">CatBypasser</span><span class="cm-op">:</span><span class="cm-fn">Send</span><span class="cm-op">(</span><span class="cm-var">msg</span><span class="cm-op">)</span></div>
+          <div class="cbc-line cm-comment">powered by Comet x CatBypasser</div>
+          <div class="cbc-cursor"></div>
+        </div>
+        <div class="cbc-footer">
+          <span class="cbc-status"><i class="fa-solid fa-circle" style="color:#22c55e;font-size:.5rem;"></i> Anti-Whale</span>
+          <span class="cbc-status"><i class="fa-solid fa-circle" style="color:#22c55e;font-size:.5rem;"></i> Injected</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="globe-section" id="global">
+  <div class="section-inner globe-inner">
+    <div class="globe-text">
+      <p class="section-label">WORLDWIDE</p>
+      <h2 class="section-title">Thousands of users<br/>across the world.</h2>
+      <p class="globe-desc">Founded in the United Kingdom, Comet has grown into a global community. Connection lines trace back to where it all began.</p>
+      <a href="https://discord.gg/M4HVPGBEvT" target="_blank" class="btn-primary" style="margin-top:1.5rem;display:inline-flex;gap:.5rem;"><i class="fa-brands fa-discord"></i> Join The Community</a>
+    </div>
+    <div class="globe-wrap">
+      <canvas id="globeCanvas"></canvas>
+    </div>
+  </div>
+</section>
+
+<section class="credits-section" id="credits">
+  <div class="section-inner">
+    <p class="section-label">THE TEAM</p>
+    <h2 class="section-title">Credits.</h2>
+    <div class="credits-grid" id="creditsGrid"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/comet_2.png" alt="Comet" style="width:28px;opacity:.7" />
+      <span>COMET</span>
+    </div>
+    <p class="footer-copy">2025 Comet. Free forever. Founded in the United Kingdom.</p>
+    <p class="footer-copy">Comet is where you start, while it's up: we'll change the course of exploiting.</p>
+    <div class="footer-links">
+      <a href="https://discord.gg/M4HVPGBEvT" target="_blank"><i class="fa-brands fa-discord"></i> Discord</a>
+    </div>
+  </div>
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<div id="suncOverlay" class="modal-overlay" onclick="closeSUNC(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span><i class="fa-solid fa-chart-bar"></i>&nbsp; sUNC Results</span>
+      <button onclick="closeSUNCBtn()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <iframe id="suncFrame" src="" style="width:100%;height:100%;border:none;background:#0a0a0a;"></iframe>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
