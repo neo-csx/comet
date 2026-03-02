@@ -25,7 +25,6 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .logo{width:26px;height:26px;opacity:.9}
 .header-sub{margin-left:auto;font-size:.65rem;color:var(--muted);letter-spacing:.08em}
 
-/* Custom model select dropdown */
 .model-select-wrap{position:relative;display:flex;align-items:center}
 .model-select-wrap::after{content:'⌄';position:absolute;right:.5rem;top:50%;transform:translateY(-52%);font-size:.7rem;color:var(--muted);pointer-events:none;line-height:1}
 .model-select{
@@ -50,7 +49,6 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .empty-icon{width:48px;opacity:.5}
 .empty-label{font-family:'Syne',sans-serif;font-size:.75rem;letter-spacing:.2em;color:var(--muted)}
 
-/* Message layout with avatar */
 .msg{display:flex;flex-direction:row;gap:.75rem;align-items:flex-start;animation:msgIn .25s ease}
 @keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
@@ -66,7 +64,6 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .msg-body{font-size:.85rem;line-height:1.75;color:var(--text);word-break:break-word}
 .msg-body.user{color:rgba(255,255,255,0.6);font-size:.8rem;white-space:pre-wrap}
 
-/* Markdown rendering */
 .msg-body p{margin:.25rem 0}
 .msg-body p:first-child{margin-top:0}
 .msg-body p:last-child{margin-bottom:0}
@@ -82,9 +79,7 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .msg-body hr{border:none;border-top:1px solid var(--border);margin:.75rem 0}
 .msg-body a{color:rgba(255,255,255,0.75);text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(255,255,255,0.25);transition:color .2s}
 .msg-body a:hover{color:#fff;text-decoration-color:rgba(255,255,255,0.6)}
-/* Inline code */
 .msg-body code.inline-code{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:.1em .35em;font-family:'JetBrains Mono',monospace;font-size:.8em;color:#c3e88d}
-/* Tag highlight: <something> */
 .msg-body .tag-highlight{background:#fff;color:#000;border-radius:3px;padding:.05em .3em;font-size:.82em;font-family:'JetBrains Mono',monospace;font-weight:500}
 
 .thinking-block{margin-bottom:.6rem;border-left:2px solid rgba(255,255,255,0.1);padding-left:.75rem}
@@ -105,16 +100,14 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .code-body::-webkit-scrollbar-track{background:transparent}
 .code-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
 
-.lkw{color:var(--lua-kw)}
-.lfn{color:var(--lua-fn)}
-.lstr{color:var(--lua-str)}
-.lnum{color:var(--lua-num)}
-.lcmt{color:var(--lua-comment);font-style:italic}
-.lop{color:var(--lua-op)}
-.lbi{color:var(--lua-builtin)}
+.lkw{color:var(--lua-kw)}.lfn{color:var(--lua-fn)}.lstr{color:var(--lua-str)}
+.lnum{color:var(--lua-num)}.lcmt{color:var(--lua-comment);font-style:italic}
+.lop{color:var(--lua-op)}.lbi{color:var(--lua-builtin)}
 
-.word{display:inline;opacity:0;filter:blur(4px);animation:wordReveal .35s ease forwards}
-@keyframes wordReveal{to{opacity:1;filter:blur(0)}}
+/* Word reveal animation */
+.word{display:inline;animation:wordReveal .3s ease forwards}
+@keyframes wordReveal{from{opacity:0;filter:blur(3px)}to{opacity:1;filter:blur(0)}}
+
 .cursor-blink{display:inline-block;width:2px;height:.85em;background:rgba(255,255,255,0.6);vertical-align:middle;margin-left:2px;animation:blink .9s step-end infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
@@ -159,7 +152,6 @@ textarea:focus{border-color:rgba(255,255,255,0.18)}
     <div class="model-select-wrap">
       <select id="modelSelect" class="model-select">
         <option value="1A">Meteor-1A</option>
-        <!-- add ai models -->
       </select>
     </div>
     <span class="header-sub">by comet</span>
@@ -295,133 +287,11 @@ function makeCodeBlock(lang, code, fileName) {
   return wrap;
 }
 
-// ── Markdown renderer ────────────────────────────────────────────────────────
-function renderMarkdown(text, container) {
-  // Split on code fences first
-  const segs = parseSegments(text);
-  for (const seg of segs) {
-    if (seg.type === 'code') {
-      container.appendChild(makeCodeBlock(seg.lang, seg.value));
-    } else {
-      renderTextSegment(seg.value, container);
-    }
-  }
-}
-
-function renderTextSegment(text, container) {
-  // Process block-level: headings, hr, lists, paragraphs
-  const lines = text.split('\n');
-  let i = 0;
-  while (i < lines.length) {
-    const line = lines[i];
-
-    // Blank line — skip
-    if (line.trim() === '') { i++; continue; }
-
-    // Heading
-    const hm = line.match(/^(#{1,4})\s+(.+)/);
-    if (hm) {
-      const el = document.createElement('h' + hm[1].length);
-      el.innerHTML = inlineMarkdown(hm[2]);
-      container.appendChild(el);
-      i++; continue;
-    }
-
-    // Horizontal rule
-    if (/^[-*_]{3,}$/.test(line.trim())) {
-      container.appendChild(document.createElement('hr'));
-      i++; continue;
-    }
-
-    // Unordered list
-    if (/^[\-\*\+]\s/.test(line)) {
-      const ul = document.createElement('ul');
-      while (i < lines.length && /^[\-\*\+]\s/.test(lines[i])) {
-        const li = document.createElement('li');
-        li.innerHTML = inlineMarkdown(lines[i].replace(/^[\-\*\+]\s/, ''));
-        ul.appendChild(li);
-        i++;
-      }
-      container.appendChild(ul);
-      continue;
-    }
-
-    // Ordered list
-    if (/^\d+\.\s/.test(line)) {
-      const ol = document.createElement('ol');
-      while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
-        const li = document.createElement('li');
-        li.innerHTML = inlineMarkdown(lines[i].replace(/^\d+\.\s/, ''));
-        ol.appendChild(li);
-        i++;
-      }
-      container.appendChild(ol);
-      continue;
-    }
-
-    // Paragraph — collect consecutive non-special lines
-    let paraLines = [];
-    while (i < lines.length) {
-      const l = lines[i];
-      if (l.trim() === '') { i++; break; }
-      if (/^#{1,4}\s/.test(l) || /^[\-\*\+]\s/.test(l) || /^\d+\.\s/.test(l) || /^[-*_]{3,}$/.test(l.trim())) break;
-      paraLines.push(l);
-      i++;
-    }
-    if (paraLines.length) {
-      const p = document.createElement('p');
-      p.innerHTML = inlineMarkdown(paraLines.join('\n'));
-      container.appendChild(p);
-    }
-  }
-}
-
-function inlineMarkdown(text) {
-  // Escape HTML first (except we need to handle tags specially)
-  // Process in order: inline code, bold, italic, links, <tag> highlights, then escape remainder
-  let result = '';
-  let i = 0;
-
-  // We'll use a token approach: find special patterns
-  // Order: inline code `...`, **bold**, *italic*, [text](url), <tag>
-  const patterns = [
-    { re: /`([^`]+)`/, fn: (m) => `<code class="inline-code">${escHtml(m[1])}</code>` },
-    { re: /\*\*([^*]+)\*\*/, fn: (m) => `<strong>${inlineMarkdown(m[1])}</strong>` },
-    { re: /\*([^*]+)\*/, fn: (m) => `<em>${inlineMarkdown(m[1])}</em>` },
-    { re: /\[([^\]]+)\]\(([^)]+)\)/, fn: (m) => `<a href="${escHtml(m[2])}" target="_blank" rel="noopener">${escHtml(m[1])}</a>` },
-    { re: /<([a-zA-Z][a-zA-Z0-9_\-/ ]*)>/, fn: (m) => `<span class="tag-highlight">&lt;${escHtml(m[1])}&gt;</span>` },
-  ];
-
-  // Iterative approach
-  while (i < text.length) {
-    let earliest = -1, earliestMatch = null, earliestFn = null;
-    for (const p of patterns) {
-      const sub = text.slice(i);
-      const m = p.re.exec(sub);
-      if (m && (earliest === -1 || m.index < earliest)) {
-        earliest = m.index;
-        earliestMatch = m;
-        earliestFn = p.fn;
-      }
-    }
-    if (earliest === -1) {
-      result += escHtml(text.slice(i));
-      break;
-    }
-    result += escHtml(text.slice(i, i + earliest));
-    result += earliestFn(earliestMatch);
-    i += earliest + earliestMatch[0].length;
-  }
-
-  // Convert newlines within inline context to <br>
-  return result.replace(/\n/g, '<br>');
-}
-
+// ── Helpers ──────────────────────────────────────────────────────────────────
 function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── Segment parser (split on ```fences```) ───────────────────────────────────
 function parseSegments(text) {
   const segs = [];
   const re = /```(\w*)\n?([\s\S]*?)```/g;
@@ -435,24 +305,156 @@ function parseSegments(text) {
   return segs;
 }
 
-function looksLikeCode(text) {
-  const luaPatterns = [
-    /\blocal\s+\w+/,/\bfunction\s+\w+/,/\bend\b/,/\bfor\s+\w+\s*=/,
-    /\bif\s+.+\bthen\b/,/game[:.]GetService/,/workspace\./,/Instance\.new/,
-    /task\.wait/,/pairs\s*\(/,/ipairs\s*\(/,/:FindFirstChild/,/:WaitForChild/,
+// ── Inline markdown → HTML string ────────────────────────────────────────────
+function inlineMarkdown(text) {
+  let result = '';
+  let i = 0;
+  const patterns = [
+    { re: /`([^`]+)`/,           fn: (m) => `<code class="inline-code">${escHtml(m[1])}</code>` },
+    { re: /\*\*([^*]+)\*\*/,     fn: (m) => `<strong>${inlineMarkdown(m[1])}</strong>` },
+    { re: /\*([^*]+)\*/,         fn: (m) => `<em>${inlineMarkdown(m[1])}</em>` },
+    { re: /\[([^\]]+)\]\(([^)]+)\)/, fn: (m) => `<a href="${escHtml(m[2])}" target="_blank" rel="noopener">${escHtml(m[1])}</a>` },
+    { re: /<([a-zA-Z][a-zA-Z0-9_\-/ ]*)>/, fn: (m) => `<span class="tag-highlight">${escHtml(m[1])}</span>` },
   ];
-  const matches = luaPatterns.filter(p => p.test(text)).length;
-  const lines = text.split('\n').length;
-  return matches >= 2 || (lines >= 4 && matches >= 1);
+  while (i < text.length) {
+    let earliest = -1, earliestMatch = null, earliestFn = null;
+    for (const p of patterns) {
+      const m = p.re.exec(text.slice(i));
+      if (m && (earliest === -1 || m.index < earliest)) {
+        earliest = m.index; earliestMatch = m; earliestFn = p.fn;
+      }
+    }
+    if (earliest === -1) { result += escHtml(text.slice(i)); break; }
+    result += escHtml(text.slice(i, i + earliest));
+    result += earliestFn(earliestMatch);
+    i += earliest + earliestMatch[0].length;
+  }
+  return result.replace(/\n/g, '<br>');
 }
+
+// ── Full markdown → DOM (rendered immediately, no animation) ─────────────────
+function renderMarkdownToContainer(text, container) {
+  const segs = parseSegments(text);
+  for (const seg of segs) {
+    if (seg.type === 'code') {
+      container.appendChild(makeCodeBlock(seg.lang, seg.value));
+    } else {
+      renderTextBlock(seg.value, container);
+    }
+  }
+}
+
+function renderTextBlock(text, container) {
+  const lines = text.split('\n');
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (line.trim() === '') { i++; continue; }
+    const hm = line.match(/^(#{1,4})\s+(.+)/);
+    if (hm) {
+      const el = document.createElement('h' + hm[1].length);
+      el.innerHTML = inlineMarkdown(hm[2]);
+      container.appendChild(el); i++; continue;
+    }
+    if (/^[-*_]{3,}$/.test(line.trim())) {
+      container.appendChild(document.createElement('hr')); i++; continue;
+    }
+    if (/^[\-\*\+]\s/.test(line)) {
+      const ul = document.createElement('ul');
+      while (i < lines.length && /^[\-\*\+]\s/.test(lines[i])) {
+        const li = document.createElement('li');
+        li.innerHTML = inlineMarkdown(lines[i].replace(/^[\-\*\+]\s/, ''));
+        ul.appendChild(li); i++;
+      }
+      container.appendChild(ul); continue;
+    }
+    if (/^\d+\.\s/.test(line)) {
+      const ol = document.createElement('ol');
+      while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
+        const li = document.createElement('li');
+        li.innerHTML = inlineMarkdown(lines[i].replace(/^\d+\.\s/, ''));
+        ol.appendChild(li); i++;
+      }
+      container.appendChild(ol); continue;
+    }
+    let paraLines = [];
+    while (i < lines.length) {
+      const l = lines[i];
+      if (l.trim() === '') { i++; break; }
+      if (/^#{1,4}\s/.test(l) || /^[\-\*\+]\s/.test(l) || /^\d+\.\s/.test(l) || /^[-*_]{3,}$/.test(l.trim())) break;
+      paraLines.push(l); i++;
+    }
+    if (paraLines.length) {
+      const p = document.createElement('p');
+      p.innerHTML = inlineMarkdown(paraLines.join('\n'));
+      container.appendChild(p);
+    }
+  }
+}
+
+// ── Reveal: word-by-word for text, char-by-char for code ─────────────────────
+async function revealContent(text, container) {
+  const segs = parseSegments(text);
+  for (const seg of segs) {
+    if (seg.type === 'code') {
+      const cb = makeCodeBlock(seg.lang, '');
+      const codeBodyEl = cb.querySelector('.code-body');
+      container.appendChild(cb);
+      await typeCodeBlock(seg.lang, seg.value, codeBodyEl);
+    } else {
+      await streamWords(seg.value, container);
+    }
+    messages.scrollTop = messages.scrollHeight;
+  }
+}
+
+// Stream plain text as words, respecting markdown block structure.
+// Strategy: tokenize the text into words+spaces, appending each word to a
+// running buffer, then re-render the whole buffer each time via markdown.
+// This is simple, correct, and produces a streaming typewriter feel.
+async function streamWords(text, container) {
+  // Split text into tokens: words and whitespace/punctuation runs
+  const tokens = text.split(/(\s+)/);
+  let buffer = '';
+
+  for (let i = 0; i < tokens.length; i++) {
+    buffer += tokens[i];
+    // Re-render the buffer into the container
+    container.innerHTML = '';
+    renderTextBlock(buffer, container);
+    messages.scrollTop = messages.scrollHeight;
+
+    const isSpace = /^\s+$/.test(tokens[i]);
+    if (!isSpace && tokens[i].length > 0) {
+      await sleep(18 + Math.random() * 22);
+    }
+  }
+}
+
+async function typeCodeBlock(lang, code, bodyEl) {
+  const isLua = /^lua$/i.test(lang);
+  let typed = '';
+  for (let i = 0; i < code.length; i++) {
+    typed += code[i];
+    if (isLua) bodyEl.innerHTML = luaHighlight(typed);
+    else bodyEl.textContent = typed;
+    messages.scrollTop = messages.scrollHeight;
+    let delay = 6;
+    if (code[i] === '\n') delay = 14;
+    else if (code[i] === ' ') delay = 3;
+    if (Math.random() < 0.04) delay += 25;
+    await sleep(delay);
+  }
+}
+
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
 // ── Avatar helpers ────────────────────────────────────────────────────────────
 function makeAiAvatar() {
   const av = document.createElement('div');
   av.className = 'msg-avatar ai-avatar';
   const img = document.createElement('img');
-  img.src = 'assets/comet_2.png';
-  img.alt = 'Meteor';
+  img.src = 'assets/comet_2.png'; img.alt = 'Meteor';
   av.appendChild(img);
   return av;
 }
@@ -464,12 +466,22 @@ function makeUserAvatar() {
   return av;
 }
 
+function looksLikeCode(text) {
+  const luaPatterns = [
+    /\blocal\s+\w+/,/\bfunction\s+\w+/,/\bend\b/,/\bfor\s+\w+\s*=/,
+    /\bif\s+.+\bthen\b/,/game[:.]GetService/,/workspace\./,/Instance\.new/,
+    /task\.wait/,/pairs\s*\(/,/ipairs\s*\(/,/:FindFirstChild/,/:WaitForChild/,
+  ];
+  const matches = luaPatterns.filter(p => p.test(text)).length;
+  const lines = text.split('\n').length;
+  return matches >= 2 || (lines >= 4 && matches >= 1);
+}
+
 // ── Message rendering ─────────────────────────────────────────────────────────
 function renderUserMessage(promptText, files) {
   const div = document.createElement('div');
   div.className = 'msg';
   div.appendChild(makeUserAvatar());
-
   const content = document.createElement('div');
   content.className = 'msg-content';
   const roleEl = document.createElement('div');
@@ -477,7 +489,6 @@ function renderUserMessage(promptText, files) {
   roleEl.textContent = 'you';
   const body = document.createElement('div');
   body.className = 'msg-body user';
-
   if (promptText) {
     if (looksLikeCode(promptText)) {
       body.appendChild(makeCodeBlock('lua', promptText));
@@ -488,13 +499,8 @@ function renderUserMessage(promptText, files) {
       body.appendChild(t);
     }
   }
-
-  for (const f of files) {
-    body.appendChild(makeCodeBlock('lua', f.content, f.name));
-  }
-
-  content.appendChild(roleEl);
-  content.appendChild(body);
+  for (const f of files) body.appendChild(makeCodeBlock('lua', f.content, f.name));
+  content.appendChild(roleEl); content.appendChild(body);
   div.appendChild(content);
   messages.appendChild(div);
   messages.scrollTop = messages.scrollHeight;
@@ -503,9 +509,7 @@ function renderUserMessage(promptText, files) {
 
 function buildApiQuestion(promptText, files) {
   let q = promptText || '';
-  for (const f of files) {
-    q += `\n\n[FILE: ${f.name}]\n\`\`\`lua\n${f.content}\n\`\`\``;
-  }
+  for (const f of files) q += `\n\n[FILE: ${f.name}]\n\`\`\`lua\n${f.content}\n\`\`\``;
   return q.trim();
 }
 
@@ -536,87 +540,16 @@ function addFiles(fileList) {
       fr.readAsText(file);
     }));
   }
-  Promise.all(readers).then(results => {
-    attachedFiles.push(...results);
-    renderAttachBar();
-  });
+  Promise.all(readers).then(results => { attachedFiles.push(...results); renderAttachBar(); });
 }
 
 attachBtn.onclick = () => fileInput.click();
 fileInput.onchange = () => { addFiles(fileInput.files); fileInput.value = ''; };
-
 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
 dropZone.addEventListener('dragleave', e => { if (!dropZone.contains(e.relatedTarget)) dropZone.classList.remove('drag-over'); });
-dropZone.addEventListener('drop', e => {
-  e.preventDefault();
-  dropZone.classList.remove('drag-over');
-  addFiles(e.dataTransfer.files);
-});
-
-inputEl.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
-});
-inputEl.addEventListener('input', () => {
-  inputEl.style.height = 'auto';
-  inputEl.style.height = Math.min(inputEl.scrollHeight, 140) + 'px';
-});
-
-async function send() {
-  const promptText = inputEl.value.trim();
-  if (!promptText && attachedFiles.length === 0) return;
-  if (sendBtn.disabled) return;
-  if (emptyState) { emptyState.remove(); emptyState = null; }
-
-  const filesToSend = [...attachedFiles];
-  renderUserMessage(promptText, filesToSend);
-
-  inputEl.value = ''; inputEl.style.height = 'auto';
-  attachedFiles = []; renderAttachBar();
-  sendBtn.disabled = true;
-
-  const apiQuestion = buildApiQuestion(promptText, filesToSend);
-  const thinkingMsg = appendLoadingMsg();
-
-  try {
-    const encoded = btoa(unescape(encodeURIComponent(apiQuestion)));
-    const selectedModel = document.getElementById('modelSelect').value;
-    const res = await fetch(`https://api.getcomet.space/ai?question=${encoded}&model=${selectedModel}`);
-    const data = await res.json();
-    let content = '', reasoning = '';
-    const choices = data.choices || [];
-    if (choices.length > 0) {
-      const msg = choices[0].message || {};
-      content = msg.content || '';
-      reasoning = msg.reasoning || msg.reasoning_content || '';
-    }
-    thinkingMsg.remove();
-    const aiMsg = createAiMsg();
-    const body = aiMsg.querySelector('.msg-body');
-    if (reasoning) {
-      const block = document.createElement('div');
-      block.className = 'thinking-block';
-      const toggle = document.createElement('button');
-      toggle.className = 'thinking-toggle';
-      toggle.innerHTML = '<span>▸</span> reasoning';
-      const thinkContent = document.createElement('div');
-      thinkContent.className = 'thinking-content';
-      thinkContent.textContent = reasoning;
-      toggle.addEventListener('click', () => {
-        const open = thinkContent.classList.toggle('open');
-        toggle.querySelector('span').textContent = open ? '▾' : '▸';
-      });
-      block.appendChild(toggle); block.appendChild(thinkContent); body.appendChild(block);
-    }
-    await revealContent(content, body);
-  } catch(err) {
-    thinkingMsg.remove();
-    const fb = createAiMsg();
-    fb.querySelector('.msg-body').textContent = 'something went wrong. try again.';
-  }
-
-  sendBtn.disabled = false;
-  inputEl.focus();
-}
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); addFiles(e.dataTransfer.files); });
+inputEl.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
+inputEl.addEventListener('input', () => { inputEl.style.height = 'auto'; inputEl.style.height = Math.min(inputEl.scrollHeight, 140) + 'px'; });
 
 function getModelLabel() {
   const sel = document.getElementById('modelSelect');
@@ -660,120 +593,65 @@ function createAiMsg() {
   return div;
 }
 
-// ── Reveal content with word-by-word animation ────────────────────────────────
-async function revealContent(text, container) {
-  // We reveal word by word for text, character by character for code
-  const segs = parseSegments(text);
-  let cursor = document.createElement('span');
-  cursor.className = 'cursor-blink';
-  container.appendChild(cursor);
+async function send() {
+  const promptText = inputEl.value.trim();
+  if (!promptText && attachedFiles.length === 0) return;
+  if (sendBtn.disabled) return;
+  if (emptyState) { emptyState.remove(); emptyState = null; }
 
-  for (const seg of segs) {
-    if (seg.type === 'code') {
-      cursor.remove();
-      const cb = makeCodeBlock(seg.lang, seg.value);
-      const codeBodyEl = cb.querySelector('.code-body');
-      codeBodyEl.innerHTML = '';
-      container.appendChild(cb);
-      cursor = document.createElement('span');
-      cursor.className = 'cursor-blink';
-      container.appendChild(cursor);
-      await typeCodeBlock(seg.lang, seg.value, codeBodyEl);
-      messages.scrollTop = messages.scrollHeight;
-    } else {
-      await revealMarkdownText(seg.value, cursor);
+  const filesToSend = [...attachedFiles];
+  renderUserMessage(promptText, filesToSend);
+  inputEl.value = ''; inputEl.style.height = 'auto';
+  attachedFiles = []; renderAttachBar();
+  sendBtn.disabled = true;
+
+  const apiQuestion = buildApiQuestion(promptText, filesToSend);
+  const thinkingMsg = appendLoadingMsg();
+
+  try {
+    const encoded = btoa(unescape(encodeURIComponent(apiQuestion)));
+    const selectedModel = document.getElementById('modelSelect').value;
+    const res = await fetch(`https://api.getcomet.space/ai?question=${encoded}&model=${selectedModel}`);
+    const data = await res.json();
+    let content = '', reasoning = '';
+    const choices = data.choices || [];
+    if (choices.length > 0) {
+      const msg = choices[0].message || {};
+      content = msg.content || '';
+      reasoning = msg.reasoning || msg.reasoning_content || '';
     }
-  }
-  cursor.remove();
-}
-
-async function revealMarkdownText(text, cursor) {
-  // Render the markdown into a temp div, then reveal word by word
-  // For simplicity and to keep animation: render into a fragment, insert before cursor
-  const tempDiv = document.createElement('div');
-  renderTextSegment(text, tempDiv);
-
-  // For each child node, we animate its text content word by word
-  const children = Array.from(tempDiv.childNodes);
-  for (const child of children) {
-    if (child.nodeType === Node.TEXT_NODE) {
-      await revealWords(child.textContent, cursor);
-    } else {
-      // Insert element before cursor, then reveal its text nodes
-      const clone = child.cloneNode(true);
-      // Clear text nodes inside, animate them
-      cursor.before(clone);
-      await animateElementText(clone);
-      messages.scrollTop = messages.scrollHeight;
+    thinkingMsg.remove();
+    const aiMsg = createAiMsg();
+    const body = aiMsg.querySelector('.msg-body');
+    if (reasoning) {
+      const block = document.createElement('div');
+      block.className = 'thinking-block';
+      const toggle = document.createElement('button');
+      toggle.className = 'thinking-toggle';
+      toggle.innerHTML = '<span>▸</span> reasoning';
+      const thinkContent = document.createElement('div');
+      thinkContent.className = 'thinking-content';
+      thinkContent.textContent = reasoning;
+      toggle.addEventListener('click', () => {
+        const open = thinkContent.classList.toggle('open');
+        toggle.querySelector('span').textContent = open ? '▾' : '▸';
+      });
+      block.appendChild(toggle); block.appendChild(thinkContent); body.appendChild(block);
     }
+    content = content.replace(/\s*\/n\s*/g, '\n');
+    await revealContent(content, body);
+  } catch(err) {
+    thinkingMsg.remove();
+    const fb = createAiMsg();
+    fb.querySelector('.msg-body').textContent = 'something went wrong. try again.';
   }
+
+  sendBtn.disabled = false;
+  inputEl.focus();
 }
-
-async function animateElementText(el) {
-  // Walk text nodes and reveal words
-  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-  const textNodes = [];
-  let node;
-  while ((node = walker.nextNode())) textNodes.push(node);
-
-  for (const tn of textNodes) {
-    const original = tn.textContent;
-    tn.textContent = '';
-    const parts = original.split(/(\s+)/);
-    for (const part of parts) {
-      if (/^\s+$/.test(part)) {
-        tn.textContent += part;
-      } else {
-        const span = document.createElement('span');
-        span.className = 'word';
-        span.textContent = part;
-        // Insert span after the text node
-        tn.parentNode.insertBefore(span, tn.nextSibling);
-        messages.scrollTop = messages.scrollHeight;
-        await sleep(16 + Math.random() * 20);
-      }
-    }
-  }
-}
-
-async function typeCodeBlock(lang, code, bodyEl) {
-  const isLua = /^lua$/i.test(lang);
-  const chars = code.split('');
-  let typed = '';
-  for (let i = 0; i < chars.length; i++) {
-    typed += chars[i];
-    if (isLua) bodyEl.innerHTML = luaHighlight(typed);
-    else bodyEl.textContent = typed;
-    messages.scrollTop = messages.scrollHeight;
-    const ch = chars[i];
-    let delay = 8;
-    if (ch === '\n') delay = 18;
-    else if (ch === ' ') delay = 4;
-    if (Math.random() < 0.04) delay += 30;
-    await sleep(delay);
-  }
-}
-
-async function revealWords(text, cursor) {
-  const parts = text.split(/(\s+)/);
-  for (const part of parts) {
-    if (/^\s+$/.test(part)) {
-      cursor.insertAdjacentText('beforebegin', part);
-    } else {
-      const span = document.createElement('span');
-      span.className = 'word';
-      span.textContent = part;
-      cursor.before(span);
-      messages.scrollTop = messages.scrollHeight;
-      await sleep(16 + Math.random() * 20);
-    }
-  }
-}
-
-function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
 if (window.location.pathname === "/chat/") {
-    window.history.replaceState({}, "", "/");
+  window.history.replaceState({}, "", "/");
 }
 </script>
 </body>
