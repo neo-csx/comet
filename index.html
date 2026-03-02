@@ -849,6 +849,11 @@
     observeAll();
     new MutationObserver(observeAll).observe(document.body, { childList: true, subtree: true });
   })();
+
+if (window.location.hostname === "chat.getcomet.space") {
+    window.location.replace("/chat/");
+}
+  
 </script>
 </body>
 </html>
