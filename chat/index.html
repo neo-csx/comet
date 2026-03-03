@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Meteor-1A</title>
+<title>Comet AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -509,7 +509,13 @@ function renderUserMessage(promptText, files) {
 
 function buildApiQuestion(promptText, files) {
   let q = promptText || '';
-  for (const f of files) q += `\n\n[FILE: ${f.name}]\n\`\`\`lua\n${f.content}\n\`\`\``;
+  for (const f of files) {
+    const numbered = f.content
+      .split('\n')
+      .map((line, i) => `${String(i + 1).padStart(4, ' ')} | ${line}`)
+      .join('\n');
+    q += `\n\n[FILE: ${f.name}]\n\`\`\`lua\n${numbered}\n\`\`\``;
+  }
   return q.trim();
 }
 
@@ -656,3 +662,4 @@ if (window.location.pathname === "/chat/") {
 </script>
 </body>
 </html>
+
