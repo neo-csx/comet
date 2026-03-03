@@ -634,7 +634,11 @@ async function doAiRequest(promptText, files) {
   try {
     const encoded=btoa(unescape(encodeURIComponent(buildApiQuestion(promptText,files))));
     const model=document.getElementById('modelSelect').value;
-    const data=await fetch('https://api.getcomet.space/ai?question='+encoded+'&model='+model).then(r=>r.json());
+    const data = await fetch('https://api.getcomet.space/ai', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ question: buildApiQuestion(promptText, files), model })
+  }).then(r => r.json());
     let content='',reasoning='';
     if(data.choices?.[0]){const msg=data.choices[0].message||{};content=msg.content||'';reasoning=msg.reasoning||msg.reasoning_content||'';}
     loading.remove();
@@ -717,3 +721,4 @@ document.addEventListener('click',e=>{
 </script>
 </body>
 </html>
+
