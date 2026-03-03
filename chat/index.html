@@ -724,14 +724,10 @@ async function send(){
 }
 
 if(window.location.pathname==='/chat/')window.history.replaceState({},'','/');
-
-document.addEventListener('click',e=>{
-  const btn=e.target.closest('.retry-btn');
-  if(btn){const d=btn.closest('.msg');if(d){d.remove();sendBtn.disabled=true;doAiRequest(lastPromptText,lastFilesToSend);}}
-},true);
 </script>
 </body>
 </html>
+
 
 
 
