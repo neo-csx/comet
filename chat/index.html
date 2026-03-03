@@ -16,6 +16,7 @@
   --lua-kw:#c792ea;--lua-fn:#82aaff;--lua-str:#c3e88d;
   --lua-num:#f78c6c;--lua-comment:rgba(255,255,255,0.28);
   --lua-op:rgba(255,255,255,0.55);--lua-builtin:#ffcb6b;
+  --share-accent:#5fff5f;
 }
 html,body{height:100%;overflow:hidden}
 body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;display:flex;flex-direction:column;align-items:center}
@@ -29,6 +30,18 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .model-select{font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.12em;color:var(--accent);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:.25rem 1.6rem .25rem .6rem;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;text-transform:uppercase;transition:border-color .2s,background .2s}
 .model-select:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.2)}
 .model-select option{background:#111;color:var(--text)}
+
+/* ── Share session banner ──────────────────────────────────────── */
+.share-banner{display:none;align-items:center;gap:.6rem;padding:.4rem .75rem;background:rgba(95,255,95,0.05);border:1px solid rgba(95,255,95,0.18);border-radius:7px;margin:.4rem 0 0;font-size:.65rem;color:rgba(95,255,95,0.8);flex-shrink:0;animation:shareIn .2s ease}
+@keyframes shareIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.share-banner.active{display:flex}
+.share-dot{width:6px;height:6px;border-radius:50%;background:var(--share-accent);box-shadow:0 0 6px var(--share-accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.share-code{font-family:'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--share-accent)}
+.share-tab{color:rgba(255,255,255,0.4);font-size:.6rem}
+.share-disconnect{margin-left:auto;background:none;border:none;color:rgba(255,255,255,0.25);cursor:pointer;font-size:.75rem;padding:.1rem .2rem;transition:color .15s}
+.share-disconnect:hover{color:rgba(255,255,255,0.6)}
+
 .messages{flex:1;overflow-y:auto;padding:1.5rem 0;display:flex;flex-direction:column;gap:1.5rem;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent}
 .messages::-webkit-scrollbar{width:4px}
 .messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
@@ -98,6 +111,12 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .retry-btn:hover{background:rgba(255,255,255,0.06);color:var(--text);border-color:rgba(255,255,255,0.18)}
 .retry-btn svg{width:9px;height:9px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 
+/* ── Share applied chip ─────────────────────────────────────── */
+.share-applied-chip{display:inline-flex;align-items:center;gap:.4rem;background:rgba(95,255,95,0.06);border:1px solid rgba(95,255,95,0.2);border-radius:6px;padding:.28rem .6rem;font-size:.68rem;color:rgba(95,255,95,0.8);margin:.3rem 0;animation:msgIn .2s ease}
+.share-applied-chip svg{flex-shrink:0;opacity:.8}
+.share-waiting-chip{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:.28rem .6rem;font-size:.68rem;color:rgba(255,255,255,0.4);margin:.3rem 0}
+.share-waiting-chip .sw-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.3);animation:pulse 1.2s infinite}
+
 /* ── Sources strip ─────────────────────────────────────────── */
 .sources-strip{display:inline-flex;align-items:center;gap:.45rem;cursor:pointer;position:relative;padding:.2rem .55rem .2rem .35rem;border:1px solid rgba(255,255,255,0.1);border-radius:999px;background:rgba(255,255,255,0.03);transition:background .2s,border-color .2s}
 .sources-strip:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.2)}
@@ -110,8 +129,6 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .sources-more{font-size:.58rem;letter-spacing:.06em;color:var(--muted);white-space:nowrap}
 .sources-label{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap;font-family:'JetBrains Mono',monospace}
 .sources-strip:hover .fav{transform:scale(1.1)}
-
-/* Sources popup */
 .sources-popup{position:absolute;bottom:calc(100% + 8px);left:0;background:#111;border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:.5rem;min-width:240px;max-width:320px;z-index:100;box-shadow:0 8px 32px rgba(0,0,0,0.6);animation:popIn .15s ease}
 .sources-popup-title{font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);padding:.2rem .4rem .45rem;border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:.35rem}
 .sources-popup-item{display:flex;align-items:center;gap:.55rem;padding:.3rem .4rem;border-radius:5px;text-decoration:none;transition:background .15s;cursor:pointer}
@@ -122,7 +139,7 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .sources-popup-item .si-url{font-size:.65rem;color:rgba(255,255,255,0.55);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
 .sources-popup-item:hover .si-url{color:rgba(255,255,255,0.8)}
 
-/* Edit panel */
+/* ── Edit panel ─────────────────────────────────────────────── */
 .edit-panel{position:fixed;top:0;right:0;bottom:0;width:min(520px,90vw);background:#0a0a0a;border-left:1px solid rgba(255,255,255,0.09);z-index:150;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.22,.68,0,1.2)}
 .edit-panel.open{transform:translateX(0)}
 .edit-panel-header{display:flex;align-items:center;gap:.6rem;padding:.65rem .9rem;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.025);flex-shrink:0}
@@ -187,6 +204,16 @@ textarea:focus{border-color:rgba(255,255,255,0.18)}
     </div>
     <span class="header-sub">by comet</span>
   </header>
+
+  <!-- Share session banner — shown when executor is connected -->
+  <div class="share-banner" id="shareBanner">
+    <div class="share-dot"></div>
+    <span>executor connected</span>
+    <span class="share-code" id="shareBannerCode"></span>
+    <span class="share-tab" id="shareBannerTab"></span>
+    <button class="share-disconnect" id="shareDisconnectBtn" title="disconnect">✕</button>
+  </div>
+
   <div class="messages" id="messages">
     <div class="empty-state" id="emptyState">
       <img class="empty-icon" src="assets/comet_2.png" alt="" />
@@ -237,6 +264,8 @@ textarea:focus{border-color:rgba(255,255,255,0.18)}
 </div>
 
 <script>
+const API_BASE = 'https://api.getcomet.space';
+
 const inputEl    = document.getElementById('input');
 const messages   = document.getElementById('messages');
 const sendBtn    = document.getElementById('sendBtn');
@@ -250,129 +279,81 @@ let attachedFiles   = [];
 let lastPromptText  = '';
 let lastFilesToSend = [];
 
-// ── File store ────────────────────────────────────────────────────────────────
+// ── Share session state ───────────────────────────────────────────
+let shareCode     = null;   // active share code (or null)
+let shareTabName  = null;   // last known tab name from executor
+let shareContent  = null;   // last known content
+
+function updateShareBanner() {
+  const banner = document.getElementById('shareBanner');
+  if (shareCode) {
+    banner.classList.add('active');
+    document.getElementById('shareBannerCode').textContent = shareCode;
+    document.getElementById('shareBannerTab').textContent =
+      shareTabName ? `· ${shareTabName}` : '';
+  } else {
+    banner.classList.remove('active');
+  }
+}
+
+document.getElementById('shareDisconnectBtn').addEventListener('click', () => {
+  shareCode = null; shareTabName = null; shareContent = null;
+  updateShareBanner();
+});
+
+// ── File store ────────────────────────────────────────────────────
 const fileStore = {};
 function getEntry(name) { return fileStore[name.toLowerCase()] ?? null; }
 function setContent(name, content) { const k=name.toLowerCase(); fileStore[k]=fileStore[k]??{}; fileStore[k].content=content; }
 function setPrev(name, prev) { const k=name.toLowerCase(); if(fileStore[k])fileStore[k].prevContent=prev; }
 function seedStore(files) { for(const f of files)setContent(f.name,f.content); }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────
 function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
-// ── Sources / favicons ────────────────────────────────────────────────────────
-function getDomain(url) {
-  try { return new URL(url).hostname; } catch { return url; }
-}
-function getFaviconUrl(url) {
-  try {
-    const domain = new URL(url).origin;
-    return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=32`;
-  } catch { return null; }
-}
-
+// ── Sources / favicons ────────────────────────────────────────────
+function getDomain(url) { try { return new URL(url).hostname; } catch { return url; } }
+function getFaviconUrl(url) { try { const domain = new URL(url).origin; return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=32`; } catch { return null; } }
 function makeFavImg(url, size) {
   const favUrl = getFaviconUrl(url);
-  if (!favUrl) {
-    const fb = document.createElement('div');
-    fb.className = 'fav-fallback';
-    fb.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
-    return fb;
-  }
-  const img = document.createElement('img');
-  img.className = 'fav';
-  img.src = favUrl;
-  img.alt = getDomain(url);
-  img.width = size || 16;
-  img.height = size || 16;
-  img.onerror = () => { img.style.display='none'; };
-  return img;
+  if (!favUrl) { const fb=document.createElement('div');fb.className='fav-fallback';fb.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;return fb; }
+  const img=document.createElement('img');img.className='fav';img.src=favUrl;img.alt=getDomain(url);img.width=size||16;img.height=size||16;img.onerror=()=>{img.style.display='none';};return img;
 }
-
 let activeSourcesPopup = null;
-
-function closeSourcesPopup() {
-  if (activeSourcesPopup) { activeSourcesPopup.remove(); activeSourcesPopup = null; }
-}
-
+function closeSourcesPopup() { if(activeSourcesPopup){activeSourcesPopup.remove();activeSourcesPopup=null;} }
 function makeSourcesStrip(visitedUrls) {
-  if (!visitedUrls || visitedUrls.length === 0) return null;
-
-  const MAX_SHOWN = 3;
-  const strip = document.createElement('div');
-  strip.className = 'sources-strip';
-
-  const favsWrap = document.createElement('div');
-  favsWrap.className = 'sources-favicons';
-
-  const shown = visitedUrls.slice(0, MAX_SHOWN);
-  for (const url of shown) favsWrap.appendChild(makeFavImg(url, 16));
+  if(!visitedUrls||visitedUrls.length===0) return null;
+  const MAX_SHOWN=3, strip=document.createElement('div');strip.className='sources-strip';
+  const favsWrap=document.createElement('div');favsWrap.className='sources-favicons';
+  visitedUrls.slice(0,MAX_SHOWN).forEach(url=>favsWrap.appendChild(makeFavImg(url,16)));
   strip.appendChild(favsWrap);
-
-  if (visitedUrls.length > MAX_SHOWN) {
-    const more = document.createElement('span');
-    more.className = 'sources-more';
-    more.textContent = `+${visitedUrls.length - MAX_SHOWN}`;
-    strip.appendChild(more);
-  }
-
-  const label = document.createElement('span');
-  label.className = 'sources-label';
-  label.textContent = 'sources';
-  strip.appendChild(label);
-
-  // Click → toggle popup
-  strip.addEventListener('click', (e) => {
+  if(visitedUrls.length>MAX_SHOWN){const more=document.createElement('span');more.className='sources-more';more.textContent=`+${visitedUrls.length-MAX_SHOWN}`;strip.appendChild(more);}
+  const label=document.createElement('span');label.className='sources-label';label.textContent='sources';strip.appendChild(label);
+  strip.addEventListener('click',e=>{
     e.stopPropagation();
-    if (activeSourcesPopup && strip.contains(activeSourcesPopup)) {
-      closeSourcesPopup(); return;
-    }
+    if(activeSourcesPopup&&strip.contains(activeSourcesPopup)){closeSourcesPopup();return;}
     closeSourcesPopup();
-
-    const popup = document.createElement('div');
-    popup.className = 'sources-popup';
-    const title = document.createElement('div');
-    title.className = 'sources-popup-title';
-    title.textContent = `${visitedUrls.length} source${visitedUrls.length !== 1 ? 's' : ''} visited`;
-    popup.appendChild(title);
-
-    for (const url of visitedUrls) {
-      const item = document.createElement('a');
-      item.className = 'sources-popup-item';
-      item.href = url;
-      item.target = '_blank';
-      item.rel = 'noopener noreferrer';
-
-      const favEl = makeFavImg(url, 16);
-      favEl.className = favEl.classList.contains('fav') ? 'si-fav' : 'si-fav-fb';
-      item.appendChild(favEl);
-
-      const label = document.createElement('span');
-      label.className = 'si-url';
-      label.textContent = getDomain(url);
-      label.title = url;
-      item.appendChild(label);
-
+    const popup=document.createElement('div');popup.className='sources-popup';
+    const title=document.createElement('div');title.className='sources-popup-title';title.textContent=`${visitedUrls.length} source${visitedUrls.length!==1?'s':''} visited`;popup.appendChild(title);
+    visitedUrls.forEach(url=>{
+      const item=document.createElement('a');item.className='sources-popup-item';item.href=url;item.target='_blank';item.rel='noopener noreferrer';
+      const favEl=makeFavImg(url,16);favEl.className=favEl.classList.contains('fav')?'si-fav':'si-fav-fb';item.appendChild(favEl);
+      const lbl=document.createElement('span');lbl.className='si-url';lbl.textContent=getDomain(url);lbl.title=url;item.appendChild(lbl);
       popup.appendChild(item);
-    }
-
-    strip.appendChild(popup);
-    activeSourcesPopup = popup;
+    });
+    strip.appendChild(popup);activeSourcesPopup=popup;
   });
-
   return strip;
 }
+document.addEventListener('click',closeSourcesPopup);
 
-document.addEventListener('click', closeSourcesPopup);
-
-// ── Lua highlighter ───────────────────────────────────────────────────────────
+// ── Lua highlighter ───────────────────────────────────────────────
 const LUA_KW=new Set(['and','break','do','else','elseif','end','false','for','function','goto','if','in','local','nil','not','or','repeat','return','then','true','until','while']);
 const LUA_BI=new Set(['print','pairs','ipairs','tostring','tonumber','type','error','assert','pcall','xpcall','select','unpack','rawget','rawset','rawequal','rawlen','require','load','loadfile','loadstring','dofile','collectgarbage','getmetatable','setmetatable','next','task','game','workspace','script','Instance','Vector3','Vector2','CFrame','Color3','UDim','UDim2','TweenInfo','Enum','wait','spawn','delay','math','table','string','os','coroutine','bit32','getfenv','setfenv','getrawmetatable','setrawmetatable','hookfunction','newcclosure','checkcaller','iscclosure','islclosure','clonefunction','Drawing','writefile','readfile','listfiles','makefolder','delfolder','delfile','HttpGet','request','http','syn','_G','shared']);
-
 function luaHighlight(code){
-  const out=[];let i=0;
-  const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const out=[],esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  let i=0;
   while(i<code.length){
     if(code[i]==='-'&&code[i+1]==='-'){let e=code.indexOf('\n',i);if(e<0)e=code.length;out.push(`<span class="lcmt">${esc(code.slice(i,e))}</span>`);i=e;continue;}
     if(code[i]==='"'||code[i]==="'"){const q=code[i];let j=i+1;while(j<code.length&&code[j]!==q){if(code[j]==='\\')j++;j++;}out.push(`<span class="lstr">${esc(code.slice(i,j+1))}</span>`);i=j+1;continue;}
@@ -389,7 +370,7 @@ function luaHighlight(code){
 }
 function hlLine(line,isLua){return isLua?luaHighlight(line):escHtml(line);}
 
-// ── Code blocks (chat) ────────────────────────────────────────────────────────
+// ── Code blocks (chat) ────────────────────────────────────────────
 function makeCodeBlock(lang,code,fileName){
   const wrap=document.createElement('div');wrap.className='code-block';
   const hdr=document.createElement('div');hdr.className='code-header';
@@ -403,11 +384,10 @@ function makeCodeBlock(lang,code,fileName){
   const body=document.createElement('div');body.className='code-body';
   /^lua$/i.test(lang)?body.innerHTML=luaHighlight(code):body.textContent=code;
   wrap.appendChild(hdr);wrap.appendChild(body);
-  wrap._codeRef=codeRef;
-  return wrap;
+  wrap._codeRef=codeRef;return wrap;
 }
 
-// ── Markdown helpers ──────────────────────────────────────────────────────────
+// ── Markdown helpers ──────────────────────────────────────────────
 function parseSegments(text){
   const segs=[],re=/```([\w]*)\n([\s\S]*?)```/g;let last=0,m;re.lastIndex=0;
   while((m=re.exec(text))!==null){if(m.index>last)segs.push({type:'text',value:text.slice(last,m.index)});segs.push({type:'code',lang:m[1].trim()||'',value:m[2].replace(/\n$/,'')});last=m.index+m[0].length;}
@@ -447,7 +427,7 @@ function renderTextBlock(text,container){
   }
 }
 
-// ── Chat streaming ────────────────────────────────────────────────────────────
+// ── Chat streaming ────────────────────────────────────────────────
 async function revealContent(text,container){
   for(const seg of parseSegments(text)){
     if(seg.type==='code'){if(!seg.value.trim()&&!seg.lang)continue;const cb=makeCodeBlock(seg.lang,'');const bodyEl=cb.querySelector('.code-body');container.appendChild(cb);await typeCodeBlock(seg.lang,seg.value,bodyEl);}
@@ -467,7 +447,7 @@ async function typeCodeBlock(lang,code,bodyEl){
   for(const ch of code){typed+=ch;isLua?bodyEl.innerHTML=luaHighlight(typed):bodyEl.textContent=typed;messages.scrollTop=messages.scrollHeight;let d=6;if(ch==='\n')d=14;else if(ch===' ')d=3;if(Math.random()<.04)d+=25;await sleep(d);}
 }
 
-// ── Avatars ───────────────────────────────────────────────────────────────────
+// ── Avatars ───────────────────────────────────────────────────────
 function makeAiAvatar(){const av=document.createElement('div');av.className='msg-avatar ai-avatar';const img=document.createElement('img');img.src='assets/comet_2.png';img.alt='Meteor';av.appendChild(img);return av;}
 function makeUserAvatar(){const av=document.createElement('div');av.className='msg-avatar user-avatar';av.innerHTML=`<svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>`;return av;}
 function looksLikeCode(t){const p=[/\blocal\s+\w+/,/\bfunction\s+\w+/,/\bend\b/,/\bfor\s+\w+\s*=/,/\bif\s+.+\bthen\b/,/game[:.]GetService/,/workspace\./,/Instance\.new/,/task\.wait/,/pairs\s*\(/];const m=p.filter(r=>r.test(t)).length;return m>=2||(t.split('\n').length>=4&&m>=1);}
@@ -500,6 +480,11 @@ function makeFileChip(name,content){
 
 function buildApiQuestion(promptText,files){
   let q=promptText||'';
+  // Inject share context so AI knows about active executor session
+  if(shareCode){
+    q=`[SHARE:${shareCode}]\n`+q;
+    if(shareTabName)q+=`\n[SHARE_TAB:${shareTabName}]`;
+  }
   for(const f of files){const e=getEntry(f.name);const c=e?e.content:f.content;const n=c.split('\n').map((l,i)=>`${String(i+1).padStart(4,' ')} | ${l}`).join('\n');q+=`\n\n[FILE: ${f.name}]\n\`\`\`lua\n${n}\n\`\`\``;}
   return q.trim();
 }
@@ -549,7 +534,60 @@ function createAiMsg(){
   return{div,body,actions};
 }
 
-// ── Edit panel ────────────────────────────────────────────────────────────────
+// ── Share command chip (shown while waiting for executor ack) ──────
+function makeShareWaitingChip(message){
+  const chip=document.createElement('div');chip.className='share-waiting-chip';
+  chip.innerHTML=`<div class="sw-dot"></div><span>sending to executor — ${escHtml(message||'applying changes')}…</span>`;
+  return chip;
+}
+function makeShareAppliedChip(message){
+  const chip=document.createElement('div');chip.className='share-applied-chip';
+  chip.innerHTML=`<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 3" stroke="#5fff5f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>applied in executor — ${escHtml(message||'done')}</span>`;
+  return chip;
+}
+
+// ── Share command processor ────────────────────────────────────────
+// Intercepts [SHARE_COMMAND:{...}] tags from AI response,
+// posts them to the worker, and waits for ack from the executor
+async function processShareCommands(text, bodyEl, actionsEl){
+  const cmdRe=/\[SHARE_COMMAND:\s*(\{[\s\S]*?\})\]/g;
+  const parts=[];let last=0,m;
+  cmdRe.lastIndex=0;
+  while((m=cmdRe.exec(text))!==null){
+    if(m.index>last)parts.push({type:'text',value:text.slice(last,m.index)});
+    try{parts.push({type:'cmd',value:JSON.parse(m[1])});}catch{parts.push({type:'text',value:m[0]});}
+    last=m.index+m[0].length;
+  }
+  if(last<text.length)parts.push({type:'text',value:text.slice(last)});
+
+  for(const part of parts){
+    if(part.type==='text'){
+      if(part.value.trim())await revealContent(part.value,bodyEl);
+    } else {
+      const cmd=part.value;
+      const id=cmd.id||(Date.now().toString(36)+'_'+Math.random().toString(36).slice(2));
+      cmd.id=id;
+      const waitChip=makeShareWaitingChip(cmd.message);
+      bodyEl.appendChild(waitChip);
+      messages.scrollTop=messages.scrollHeight;
+      try{
+        await fetch(`${API_BASE}/share/command`,{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify(cmd)
+        });
+        // Poll for ack (max ~12s via ackwait endpoint)
+        const ackRes=await fetch(`${API_BASE}/share/ackwait?code=${encodeURIComponent(cmd.code)}&id=${encodeURIComponent(id)}`);
+        const ackData=await ackRes.json();
+        waitChip.replaceWith(makeShareAppliedChip(cmd.message));
+      } catch(err){
+        waitChip.replaceWith(makeShareAppliedChip('sent (no ack received)'));
+      }
+    }
+  }
+}
+
+// ── Edit panel ────────────────────────────────────────────────────
 const editPanel    = document.getElementById('editPanel');
 const editBackdrop = document.getElementById('editBackdrop');
 const editTitle    = document.getElementById('editPanelTitle');
@@ -566,7 +604,6 @@ function renderLinesInstant(content,name){
   for(const line of content.split('\n')){const s=document.createElement('span');s.className='ep-line';s.innerHTML=hlLine(line,isLua);wrap.appendChild(s);}
   return wrap;
 }
-
 async function animateDiff(prevContent,newContent,hunks,name){
   const isLua=/\.lua[u]?$/i.test(name);
   editBodyEl.innerHTML='';
@@ -574,9 +611,7 @@ async function animateDiff(prevContent,newContent,hunks,name){
   editBodyEl.appendChild(wrap);
   for(const h of [...hunks].sort((a,b)=>b.start-a.start)){
     const allLines=wrap.querySelectorAll('.ep-line');
-    const removeStart=h.start-1;
-    const removeCount=h.mode==='insert'?0:h.end-h.start+1;
-    const toRemove=[];
+    const removeStart=h.start-1,removeCount=h.mode==='insert'?0:h.end-h.start+1,toRemove=[];
     for(let i=removeStart;i<removeStart+removeCount;i++){if(allLines[i])toRemove.push(allLines[i]);}
     for(const el of toRemove)el.classList.add('removing');
     if(toRemove.length)await sleep(260);
@@ -592,29 +627,23 @@ async function animateDiff(prevContent,newContent,hunks,name){
     }
   }
 }
-
 function openEditPanel(name){
   const entry=getEntry(name);const content=entry?entry.content:'';
   currentEditFile={name,content};editTitle.textContent=name;
-  const isHtml=/\.html?$/i.test(name);
   editTabs.innerHTML='';
-  ['code',...(isHtml?['preview']:[])].forEach(tab=>{
-    const btn=document.createElement('button');btn.className='edit-panel-tab'+(tab==='code'?' active':'');btn.dataset.tab=tab;btn.textContent=tab;
+  ['code'].forEach(tab=>{
+    const btn=document.createElement('button');btn.className='edit-panel-tab active';btn.dataset.tab=tab;btn.textContent=tab;
     btn.onclick=()=>switchEditTab(tab);editTabs.appendChild(btn);
   });
   editBodyEl.innerHTML='';editBodyEl.appendChild(renderLinesInstant(content,name));
   editPanel.classList.add('open');editBackdrop.classList.add('visible');
 }
-
 async function openEditPanelAnimated(name,hunks,firstTime){
   const entry=getEntry(name);const content=entry?entry.content:'';const prev=entry?entry.prevContent??content:content;
   currentEditFile={name,content};editTitle.textContent=name;
-  const isHtml=/\.html?$/i.test(name);
   editTabs.innerHTML='';
-  ['code',...(isHtml?['preview']:[])].forEach(tab=>{
-    const btn=document.createElement('button');btn.className='edit-panel-tab'+(tab==='code'?' active':'');btn.dataset.tab=tab;btn.textContent=tab;
-    btn.onclick=()=>switchEditTab(tab);editTabs.appendChild(btn);
-  });
+  const btn=document.createElement('button');btn.className='edit-panel-tab active';btn.dataset.tab='code';btn.textContent='code';
+  btn.onclick=()=>switchEditTab('code');editTabs.appendChild(btn);
   editPanel.classList.add('open');editBackdrop.classList.add('visible');
   if(firstTime){
     const isLua=/\.lua[u]?$/i.test(name);editBodyEl.innerHTML='';
@@ -624,17 +653,12 @@ async function openEditPanelAnimated(name,hunks,firstTime){
       for(const ch of line){typed+=ch;s.innerHTML=hlLine(typed,isLua);editBodyEl.scrollTop=editBodyEl.scrollHeight;let d=4;if(Math.random()<.03)d+=18;await sleep(d);}
       await sleep(9);
     }
-  } else {
-    await animateDiff(prev,content,hunks,name);
-  }
+  } else { await animateDiff(prev,content,hunks,name); }
 }
-
 function switchEditTab(tab){
   editTabs.querySelectorAll('.edit-panel-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
-  if(tab==='preview'){editBodyEl.innerHTML='';const iframe=document.createElement('iframe');iframe.className='edit-panel-preview';iframe.sandbox='allow-scripts allow-same-origin';editBodyEl.appendChild(iframe);iframe.contentDocument.open();iframe.contentDocument.write(currentEditFile.content);iframe.contentDocument.close();}
-  else{editBodyEl.innerHTML='';editBodyEl.appendChild(renderLinesInstant(currentEditFile.content,currentEditFile.name));}
+  editBodyEl.innerHTML='';editBodyEl.appendChild(renderLinesInstant(currentEditFile.content,currentEditFile.name));
 }
-
 function closeEditPanel(){editPanel.classList.remove('open');editBackdrop.classList.remove('visible');}
 editCloseBtn.onclick=closeEditPanel;
 editBackdrop.onclick=closeEditPanel;
@@ -646,7 +670,7 @@ editCopyBtn.onclick=()=>{
   });
 };
 
-// ── [EDIT] diff parser ────────────────────────────────────────────────────────
+// ── [EDIT] diff parser ────────────────────────────────────────────
 function applyHunks(srcContent,hunks){
   const lines=[...srcContent.split('\n')];
   for(const h of [...hunks].sort((a,b)=>b.start-a.start)){
@@ -655,7 +679,6 @@ function applyHunks(srcContent,hunks){
   }
   return lines.join('\n');
 }
-
 function parseEditBlocks(text,knownFiles){
   const edits=[];
   const cleanText=text.replace(/\[EDIT:\s*([^\]]+)\]([\s\S]*?)\[\/EDIT\]/g,(full,fileName,body)=>{
@@ -668,39 +691,37 @@ function parseEditBlocks(text,knownFiles){
       const start=parseInt(m[1],10),isIns=m[4]==='+',end=isIns?start:(m[3]?parseInt(m[3],10):start);
       hunks.push({start,end,mode:isIns?'insert':'replace',replacement:m[5].replace(/\n$/,'')});
     }
-    setPrev(fileName,src);
-    const result=applyHunks(src,hunks);
-    setContent(fileName,result);
-    const isFirst=!e;
-    edits.push({name:fileName,hunks,isFirst});
+    setPrev(fileName,src);const result=applyHunks(src,hunks);setContent(fileName,result);
+    const isFirst=!e;edits.push({name:fileName,hunks,isFirst});
     return '__EDIT_CHIP_'+(edits.length-1)+'__';
   });
   return{cleanText,edits};
 }
-
 function makeEditChip(edit){
   const chip=document.createElement('div');chip.className='edit-chip';
   const cl=edit.hunks.length+' change'+(edit.hunks.length!==1?'s':'');
   chip.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>'
     +`<span>${escHtml(edit.name)}</span><span style="opacity:.45;font-size:.6rem">${cl}</span>`;
-  chip.onclick=()=>openEditPanel(edit.name);
-  return chip;
+  chip.onclick=()=>openEditPanel(edit.name);return chip;
 }
 
-// ── Strip fetch tags from displayed content (safety net) ──────────────────────
-function stripFetchTagsFromDisplay(text) {
+// ── Strip fetch/share tags from displayed content ─────────────────
+function stripInternalTags(text){
   return text
-    .replace(/\[FETCH(?:JSON)?:\s*https?:\/\/[^\]]+\]/gi, '')
-    .replace(/\n{3,}/g, '\n\n')
+    .replace(/\[FETCH(?:JSON)?:\s*https?:\/\/[^\]]+\]/gi,'')
+    .replace(/\[SHARE_COMMAND:\s*\{[\s\S]*?\}\]/g,'')
+    .replace(/\[SHARE:[^\]]+\]/g,'')
+    .replace(/\[SHARE_TAB:[^\]]+\]/g,'')
+    .replace(/\n{3,}/g,'\n\n')
     .trim();
 }
 
-// ── Core AI request ───────────────────────────────────────────────────────────
+// ── Core AI request ───────────────────────────────────────────────
 async function doAiRequest(promptText,files){
   const loading=appendLoadingMsg();
   try{
     const model=document.getElementById('modelSelect').value;
-    const data=await fetch('https://api.getcomet.space/ai',{
+    const data=await fetch(`${API_BASE}/ai`,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({question:buildApiQuestion(promptText,files),model})
@@ -709,11 +730,7 @@ async function doAiRequest(promptText,files){
     let content='',reasoning='';
     if(data.choices?.[0]){const msg=data.choices[0].message||{};content=msg.content||'';reasoning=msg.reasoning||msg.reasoning_content||'';}
 
-    // Strip any [FETCH:] tags that leaked into the final content
-    content = stripFetchTagsFromDisplay(content);
-
-    const visitedUrls = Array.isArray(data.visitedUrls) ? data.visitedUrls : [];
-
+    const visitedUrls=Array.isArray(data.visitedUrls)?data.visitedUrls:[];
     loading.remove();
     const{body,actions}=createAiMsg();
 
@@ -727,6 +744,7 @@ async function doAiRequest(promptText,files){
 
     content=content.replace(/\s*\/n\s*/g,'\n');
 
+    // Parse [EDIT:] blocks
     const editRe=/(\[EDIT:\s*[^\]]+\][\s\S]*?\[\/EDIT\])/g;
     const rawParts=content.split(editRe);
     const{edits}=parseEditBlocks(content,files);
@@ -737,7 +755,15 @@ async function doAiRequest(promptText,files){
         const edit=edits[editIdx++];
         if(edit)await openEditPanelAnimated(edit.name,edit.hunks,edit.isFirst);
       } else if(part.trim()){
-        await revealContent(part,body);
+        const cleaned=stripInternalTags(part);
+        if(cleaned.trim()){
+          // Check for SHARE_COMMAND tags — process them specially
+          if(shareCode&&/\[SHARE_COMMAND:/i.test(part)){
+            await processShareCommands(cleaned,body,actions);
+          } else {
+            await revealContent(cleaned,body);
+          }
+        }
       }
     }
 
@@ -746,12 +772,7 @@ async function doAiRequest(promptText,files){
       for(const e of edits)chipRow.appendChild(makeEditChip(e));
       body.appendChild(chipRow);
     }
-
-    // Append sources strip to actions bar if there were any fetches
-    if(visitedUrls.length > 0){
-      const strip = makeSourcesStrip(visitedUrls);
-      if(strip) actions.appendChild(strip);
-    }
+    if(visitedUrls.length>0){const strip=makeSourcesStrip(visitedUrls);if(strip)actions.appendChild(strip);}
 
   } catch(err){
     loading.remove();
@@ -774,6 +795,54 @@ async function send(){
   attachedFiles=[];renderAttachBar();
   sendBtn.disabled=true;
   await doAiRequest(promptText,filesToSend);
+}
+
+// ── Share code generation (triggered by AI saying "generate a share code") ──
+// The AI can embed a special trigger [GENERATE_SHARE_CODE] in its response
+// OR the user can type "generate share code" and we handle it client-side
+async function generateShareCode(){
+  try{
+    const res=await fetch(`${API_BASE}/share/create`,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
+    const data=await res.json();
+    if(data.code){
+      shareCode=data.code;
+      shareTabName=null;
+      shareContent=null;
+      updateShareBanner();
+      return data.code;
+    }
+  } catch(e){ return null; }
+}
+
+// ── Intercept "generate share code" or "connect executor" in messages ─
+const originalSend=send;
+
+// Override send to catch share code generation requests locally
+document.getElementById('sendBtn').removeAttribute('onclick');
+document.getElementById('sendBtn').addEventListener('click',sendOverride);
+inputEl.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendOverride();}},true);
+
+async function sendOverride(){
+  const promptText=inputEl.value.trim().toLowerCase();
+  if(/^(generate|gen|create|make)\s+(a\s+)?share\s+code$/.test(promptText)||promptText==='connect executor'||promptText==='share code'){
+    if(emptyState){emptyState.remove();emptyState=null;}
+    renderUserMessage(inputEl.value.trim(),[]);
+    inputEl.value='';inputEl.style.height='auto';
+    // Show loading
+    const loadDiv=appendLoadingMsg();
+    const code=await generateShareCode();
+    loadDiv.remove();
+    const{body}=createAiMsg();
+    if(code){
+      const p=document.createElement('p');
+      p.innerHTML=`here's your share code:<br><br><span style="font-family:'JetBrains Mono',monospace;font-size:1rem;letter-spacing:.15em;color:#5fff5f;background:rgba(95,255,95,0.06);border:1px solid rgba(95,255,95,0.2);border-radius:6px;padding:.3rem .7rem;">${escHtml(code)}</span><br><br>in comet executor, press <span style="background:rgba(255,255,255,0.08);border-radius:3px;padding:.1em .4em;">shift+f5</span> and enter this code. once connected i can see your active tab and make changes directly in the executor.`;
+      body.appendChild(p);
+    } else {
+      const p=document.createElement('p');p.textContent='failed to generate a share code, try again.';body.appendChild(p);
+    }
+    return;
+  }
+  await send();
 }
 
 if(window.location.pathname==='/chat/')window.history.replaceState({},'','/');
