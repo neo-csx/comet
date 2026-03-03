@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Comet AI - Meteor</title>
+<title>Comet AI - 1Meteor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -96,16 +96,13 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .lnum{color:var(--lua-num)}.lcmt{color:var(--lua-comment);font-style:italic}
 .lop{color:var(--lua-op)}.lbi{color:var(--lua-builtin)}
 
-/* Pasted code label */
 .pasted-label{font-size:.55rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:.15rem;opacity:.7}
 
-/* File chip in messages */
 .file-chip-msg{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:.3rem .65rem;font-size:.7rem;color:rgba(255,255,255,0.6);cursor:pointer;transition:background .2s,border-color .2s;margin:.2rem 0;max-width:240px}
 .file-chip-msg:hover{background:rgba(255,255,255,0.09);border-color:rgba(255,255,255,0.2);color:var(--text)}
 .file-chip-msg svg{flex-shrink:0;opacity:.7}
 .file-chip-msg span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* File viewer popup */
 .file-popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:200;display:flex;align-items:center;justify-content:center;animation:fadeIn .15s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .file-popup{background:#0d0d0d;border:1px solid rgba(255,255,255,0.1);border-radius:10px;width:min(700px,94vw);max-height:80vh;display:flex;flex-direction:column;overflow:hidden;animation:popIn .18s ease}
@@ -118,13 +115,12 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .file-popup-body::-webkit-scrollbar{width:4px}
 .file-popup-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
 
-/* Retry button */
 .msg-actions{display:flex;gap:.4rem;margin-top:.25rem}
 .retry-btn{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid rgba(255,255,255,0.08);color:var(--muted);padding:.18rem .5rem;border-radius:4px;cursor:pointer;font-family:'JetBrains Mono',monospace;transition:all .2s;display:flex;align-items:center;gap:.3rem}
 .retry-btn:hover{background:rgba(255,255,255,0.06);color:var(--text);border-color:rgba(255,255,255,0.18)}
 .retry-btn svg{width:9px;height:9px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 
-/* Edit file panel */
+/* Edit panel — single definition */
 .edit-panel{position:fixed;top:0;right:0;bottom:0;width:min(520px,90vw);background:#0a0a0a;border-left:1px solid rgba(255,255,255,0.09);z-index:150;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.22,.68,0,1.2)}
 .edit-panel.open{transform:translateX(0)}
 .edit-panel-header{display:flex;align-items:center;gap:.6rem;padding:.65rem .9rem;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.025);flex-shrink:0}
@@ -174,30 +170,6 @@ textarea:focus{border-color:rgba(255,255,255,0.18)}
 .attach-btn{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,border-color .2s;flex-shrink:0;color:var(--muted)}
 .attach-btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:var(--text)}
 .attach-btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-/* Edit file panel */
-.edit-panel{position:fixed;top:0;right:0;bottom:0;width:min(520px,90vw);background:#0a0a0a;border-left:1px solid rgba(255,255,255,0.09);z-index:150;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.22,.68,0,1.2)}
-.edit-panel.open{transform:translateX(0)}
-.edit-panel-header{display:flex;align-items:center;gap:.6rem;padding:.65rem .9rem;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.025);flex-shrink:0}
-.edit-panel-title{font-size:.68rem;letter-spacing:.1em;color:rgba(255,255,255,0.55);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.edit-panel-badge{font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(195,232,141,0.12);color:#c3e88d;border:1px solid rgba(195,232,141,0.2);border-radius:3px;padding:.1rem .35rem;flex-shrink:0}
-.edit-panel-btns{display:flex;gap:.4rem;flex-shrink:0}
-.edit-panel-btn{background:none;border:1px solid rgba(255,255,255,0.1);color:var(--muted);padding:.18rem .5rem;border-radius:4px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;transition:all .2s;display:flex;align-items:center;gap:.25rem}
-.edit-panel-btn:hover{background:rgba(255,255,255,0.07);color:var(--text);border-color:rgba(255,255,255,0.2)}
-.edit-panel-btn svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.edit-panel-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,0.07);flex-shrink:0}
-.edit-panel-tab{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;background:none;border:none;color:var(--muted);padding:.45rem .8rem;cursor:pointer;font-family:'JetBrains Mono',monospace;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;margin-bottom:-1px}
-.edit-panel-tab:hover{color:rgba(255,255,255,0.5)}
-.edit-panel-tab.active{color:var(--text);border-bottom-color:rgba(255,255,255,0.4)}
-.edit-panel-body{flex:1;overflow:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent}
-.edit-panel-body::-webkit-scrollbar{width:4px}
-.edit-panel-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
-.edit-panel-code{padding:.85rem 1rem;font-size:.77rem;line-height:1.7;white-space:pre;font-family:'JetBrains Mono',monospace}
-.edit-panel-preview{width:100%;height:100%;border:none;background:#fff}
-.edit-chip{display:inline-flex;align-items:center;gap:.4rem;background:rgba(195,232,141,0.07);border:1px solid rgba(195,232,141,0.2);border-radius:6px;padding:.28rem .6rem;font-size:.68rem;color:rgba(195,232,141,0.8);cursor:pointer;transition:background .2s,border-color .2s;margin:.3rem 0}
-.edit-chip:hover{background:rgba(195,232,141,0.13);border-color:rgba(195,232,141,0.4);color:#c3e88d}
-.edit-chip svg{flex-shrink:0;opacity:.8}
-.edit-backdrop{position:fixed;inset:0;z-index:149;display:none}
-.edit-backdrop.visible{display:block}
 </style>
 </head>
 <body>
@@ -240,7 +212,8 @@ textarea:focus{border-color:rgba(255,255,255,0.18)}
 </div>
 
 <input type="file" id="fileInput" accept=".lua,.luau,.txt" multiple style="display:none" />
-<!-- Edit file panel -->
+
+<!-- Edit panel — single instance -->
 <div class="edit-backdrop" id="editBackdrop"></div>
 <div class="edit-panel" id="editPanel">
   <div class="edit-panel-header">
@@ -261,43 +234,39 @@ textarea:focus{border-color:rgba(255,255,255,0.18)}
   <div class="edit-panel-body" id="editPanelBody"></div>
 </div>
 
-
-<!-- Edit file panel -->
-<div class="edit-backdrop" id="editBackdrop"></div>
-<div class="edit-panel" id="editPanel">
-  <div class="edit-panel-header">
-    <span class="edit-panel-title" id="editPanelTitle">file.lua</span>
-    <span class="edit-panel-badge">edited</span>
-    <div class="edit-panel-btns">
-      <button class="edit-panel-btn" id="editDownloadBtn" title="download">
-        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>download
-      </button>
-      <button class="edit-panel-btn" id="editCloseBtn" title="close">
-        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>close
-      </button>
-    </div>
-  </div>
-  <div class="edit-panel-tabs" id="editPanelTabs">
-    <button class="edit-panel-tab active" data-tab="code">code</button>
-  </div>
-  <div class="edit-panel-body" id="editPanelBody"></div>
-</div>
-
 <script>
-const inputEl = document.getElementById('input');
-const messages = document.getElementById('messages');
-const sendBtn = document.getElementById('sendBtn');
-const attachBtn = document.getElementById('attachBtn');
-const fileInput = document.getElementById('fileInput');
-const attachBar = document.getElementById('attachBar');
-const dropZone = document.getElementById('dropZone');
-let emptyState = document.getElementById('emptyState');
+const inputEl    = document.getElementById('input');
+const messages   = document.getElementById('messages');
+const sendBtn    = document.getElementById('sendBtn');
+const attachBtn  = document.getElementById('attachBtn');
+const fileInput  = document.getElementById('fileInput');
+const attachBar  = document.getElementById('attachBar');
+const dropZone   = document.getElementById('dropZone');
+let emptyState   = document.getElementById('emptyState');
 
 let attachedFiles = [];
 
 // Store last user turn for retry
-let lastPromptText = '';
+let lastPromptText  = '';
 let lastFilesToSend = [];
+
+// ── Editable file store ───────────────────────────────────────────────────────
+// Maps filename (lowercase) → current content string.
+// Updated every time an [EDIT] block is applied so subsequent edits operate
+// on the already-patched version rather than the original upload.
+const editedFileStore = {};
+
+function getFileContent(name) {
+  return editedFileStore[name.toLowerCase()] ?? null;
+}
+function setFileContent(name, content) {
+  editedFileStore[name.toLowerCase()] = content;
+}
+
+// Seed store from attached files when they are loaded
+function seedStore(files) {
+  for (const f of files) setFileContent(f.name, f.content);
+}
 
 // ── File popup ────────────────────────────────────────────────────────────────
 function openFilePopup(name, content) {
@@ -435,11 +404,8 @@ function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// FIX: Parse fenced code blocks reliably before any inline processing.
-// The regex requires ``` to be at the start of a line (or start of string).
 function parseSegments(text) {
   const segs = [];
-  // Match ```lang\ncode\n``` — the closing ``` must be on its own line
   const re = /```([\w]*)\n([\s\S]*?)```/g;
   let last = 0, m;
   re.lastIndex = 0;
@@ -456,9 +422,6 @@ function parseSegments(text) {
   return segs;
 }
 
-// FIX: <highlight> now uses [^>]+ which allows numbers, symbols, anything except >
-// FIX: inline backtick pattern explicitly requires the backtick NOT be preceded
-//      by another backtick to avoid eating into fenced blocks
 function inlineMarkdown(text) {
   let result = '';
   let i = 0;
@@ -467,7 +430,6 @@ function inlineMarkdown(text) {
     { re: /\*\*([^*\n]+)\*\*/,                  fn: (m) => `<strong>${inlineMarkdown(m[1])}</strong>` },
     { re: /\*([^*\n]+)\*/,                       fn: (m) => `<em>${inlineMarkdown(m[1])}</em>` },
     { re: /\[([^\]]+)\]\(([^)]+)\)/,            fn: (m) => `<a href="${escHtml(m[2])}" target="_blank" rel="noopener">${escHtml(m[1])}</a>` },
-    // FIX: [^>]+ allows any character (numbers, symbols, spaces, etc.) inside <>
     { re: /<([^>]+)>/,                           fn: (m) => `<span class="tag-highlight">${escHtml(m[1])}</span>` },
   ];
   while (i < text.length) {
@@ -567,8 +529,6 @@ async function revealContent(text, container) {
 async function streamWords(text, container) {
   const tokens = text.split(/(\s+)/);
   let buffer = '';
-  // Create a dedicated sub-container for this text segment so code blocks
-  // appended later by revealContent don't get wiped by innerHTML reassignment
   const subContainer = document.createElement('div');
   container.appendChild(subContainer);
   for (let i = 0; i < tokens.length; i++) {
@@ -642,7 +602,6 @@ function renderUserMessage(promptText, files) {
   const body = document.createElement('div');
   body.className = 'msg-body user';
 
-  // Text / pasted code first
   if (promptText) {
     if (looksLikeCode(promptText)) {
       const lbl = document.createElement('div');
@@ -658,7 +617,6 @@ function renderUserMessage(promptText, files) {
     }
   }
 
-  // Files below text — shown as clickable chips
   if (files.length > 0) {
     const fileRow = document.createElement('div');
     fileRow.style.cssText = 'display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.4rem';
@@ -676,7 +634,9 @@ function renderUserMessage(promptText, files) {
 function buildApiQuestion(promptText, files) {
   let q = promptText || '';
   for (const f of files) {
-    const numbered = f.content
+    // Always send current version from store (may have been edited already)
+    const currentContent = getFileContent(f.name) ?? f.content;
+    const numbered = currentContent
       .split('\n')
       .map((line, i) => `${String(i + 1).padStart(4, ' ')} | ${line}`)
       .join('\n');
@@ -712,7 +672,12 @@ function addFiles(fileList) {
       fr.readAsText(file);
     }));
   }
-  Promise.all(readers).then(results => { attachedFiles.push(...results); renderAttachBar(); });
+  Promise.all(readers).then(results => {
+    attachedFiles.push(...results);
+    // Seed the editable store so follow-up edits use latest content
+    seedStore(results);
+    renderAttachBar();
+  });
 }
 
 attachBtn.onclick = () => fileInput.click();
@@ -759,7 +724,6 @@ function createAiMsg() {
   const body = document.createElement('div');
   body.className = 'msg-body';
 
-  // Retry button — retries the last user turn
   const actions = document.createElement('div');
   actions.className = 'msg-actions';
   const retryBtn = document.createElement('button');
@@ -768,7 +732,7 @@ function createAiMsg() {
   retryBtn.onclick = () => {
     div.remove();
     sendBtn.disabled = true;
-    doAiRequest(lastPromptText, lastFilesToSend);
+    doAiRequestWithEdits(lastPromptText, lastFilesToSend);
   };
   actions.appendChild(retryBtn);
 
@@ -778,79 +742,7 @@ function createAiMsg() {
   div.appendChild(content);
   messages.appendChild(div);
   messages.scrollTop = messages.scrollHeight;
-  return div;
-}
-
-// ── Core AI request (separated for retry support) ─────────────────────────────
-async function doAiRequest(promptText, files) {
-  const thinkingMsg = appendLoadingMsg();
-  const apiQuestion = buildApiQuestion(promptText, files);
-
-  try {
-    const encoded = btoa(unescape(encodeURIComponent(apiQuestion)));
-    const selectedModel = document.getElementById('modelSelect').value;
-    const res = await fetch(`https://api.getcomet.space/ai?question=${encoded}&model=${selectedModel}`);
-    const data = await res.json();
-    let content = '', reasoning = '';
-    const choices = data.choices || [];
-    if (choices.length > 0) {
-      const msg = choices[0].message || {};
-      content = msg.content || '';
-      reasoning = msg.reasoning || msg.reasoning_content || '';
-    }
-    thinkingMsg.remove();
-    const aiMsg = createAiMsg();
-    const body = aiMsg.querySelector('.msg-body');
-    if (reasoning) {
-      const block = document.createElement('div');
-      block.className = 'thinking-block';
-      const toggle = document.createElement('button');
-      toggle.className = 'thinking-toggle';
-      toggle.innerHTML = '<span>▸</span> reasoning';
-      const thinkContent = document.createElement('div');
-      thinkContent.className = 'thinking-content';
-      thinkContent.textContent = reasoning;
-      toggle.addEventListener('click', () => {
-        const open = thinkContent.classList.toggle('open');
-        toggle.querySelector('span').textContent = open ? '▾' : '▸';
-      });
-      block.appendChild(toggle); block.appendChild(thinkContent); body.appendChild(block);
-    }
-    content = content.replace(/\s*\/n\s*/g, '\n');
-    await revealContent(content, body);
-  } catch(err) {
-    thinkingMsg.remove();
-    const fb = createAiMsg();
-    fb.querySelector('.msg-body').textContent = 'something went wrong. try again.';
-  }
-
-  sendBtn.disabled = false;
-  inputEl.focus();
-}
-
-async function send() {
-  const promptText = inputEl.value.trim();
-  if (!promptText && attachedFiles.length === 0) return;
-  if (sendBtn.disabled) return;
-  if (emptyState) { emptyState.remove(); emptyState = null; }
-
-  const filesToSend = [...attachedFiles];
-
-  // Save for retry
-  lastPromptText = promptText;
-  lastFilesToSend = filesToSend;
-
-  renderUserMessage(promptText, filesToSend);
-  inputEl.value = ''; inputEl.style.height = 'auto';
-  attachedFiles = []; renderAttachBar();
-  sendBtn.disabled = true;
-
-  await doAiRequestWithEdits(promptText, filesToSend);
-}
-
-
-if (window.location.pathname === "/chat/") {
-  window.history.replaceState({}, "", "/");
+  return { div, body };
 }
 
 // ── Edit panel ────────────────────────────────────────────────────────────────
@@ -937,32 +829,90 @@ editDlBtn.onclick = () => {
 };
 
 // ── [EDIT] block parser & diff applier ───────────────────────────────────────
+// Supported hunk types sent by the AI:
+//   @@start-end        → replace lines start..end with replacement (may be empty = DELETE)
+//   @@start+           → insert replacement lines BEFORE line start (ADD)
+//   @@start            → replace single line at start
+//
+// The AI teaches:
+//   - Remove lines  : @@start-end  with empty replacement block
+//   - Add lines     : @@start+     with new content
+//   - Replace lines : @@start-end  with new content
+//
+// We also pull from the editedFileStore so subsequent edits on an already-
+// edited file work off the patched version, not the original upload.
+
+function applyHunks(srcContent, hunks) {
+  const srcLines = srcContent.split('\n');
+  const result   = [...srcLines];
+
+  // Apply hunks from bottom-to-top so line numbers stay valid
+  const sorted = [...hunks].sort((a, b) => b.start - a.start);
+
+  for (const h of sorted) {
+    const repLines = h.replacement.length ? h.replacement.split('\n') : [];
+
+    if (h.mode === 'insert') {
+      // @@N+ — insert BEFORE line N (1-indexed)
+      result.splice(h.start - 1, 0, ...repLines);
+    } else {
+      // @@N-M or @@N — replace lines N..M inclusive
+      const deleteCount = h.end - h.start + 1;
+      result.splice(h.start - 1, deleteCount, ...repLines);
+    }
+  }
+
+  return result.join('\n');
+}
+
 function parseEditBlocks(text, knownFiles) {
   const edits = [];
+
+  // Match [EDIT: filename.lua] ... [/EDIT]
   const editRe = /\[EDIT:\s*([^\]]+)\]([\s\S]*?)\[\/EDIT\]/g;
+
   const cleanText = text.replace(editRe, (full, fileName, body) => {
     fileName = fileName.trim();
-    const srcFile = knownFiles.find(f => f.name.toLowerCase() === fileName.toLowerCase());
-    const srcLines = srcFile ? srcFile.content.split('\n') : [];
-    const hunks = [];
-    const trimmed = body.trim() + '\n';
-    const hunkRe = /@@(\d+)-(\d+)\n([\s\S]*?)(?=@@\d+-\d+\n|$)/g;
-    let hm;
-    while ((hm = hunkRe.exec(trimmed)) !== null) {
-      hunks.push({
-        start: parseInt(hm[1], 10),
-        end:   parseInt(hm[2], 10),
-        replacement: hm[3].replace(/\n$/, '')
-      });
+
+    // Resolve source — prefer already-edited version, then uploaded files
+    const storedContent = getFileContent(fileName);
+    let srcContent;
+    if (storedContent !== null) {
+      srcContent = storedContent;
+    } else {
+      const srcFile = knownFiles.find(f => f.name.toLowerCase() === fileName.toLowerCase());
+      srcContent = srcFile ? srcFile.content : '';
     }
-    let result = [...srcLines];
-    [...hunks].sort((a,b) => b.start - a.start).forEach(h => {
-      const rep = h.replacement.length ? h.replacement.split('\n') : [];
-      result.splice(h.start - 1, h.end - h.start + 1, ...rep);
+
+    // Parse hunks
+    // Supports:  @@N-M\n<replacement>  |  @@N\n<replacement>  |  @@N+\n<lines>
+    const hunks = [];
+    const hunkRe = /@@(\d+)(-(\d+)|(\+))?\n([\s\S]*?)(?=@@\d+|$)/g;
+    let hm;
+    while ((hm = hunkRe.exec(body.trim() + '\n')) !== null) {
+      const start = parseInt(hm[1], 10);
+      const isInsert = hm[4] === '+';
+      const end   = isInsert ? start : (hm[3] ? parseInt(hm[3], 10) : start);
+      // Strip trailing newline that acts as separator between hunks
+      const rawReplacement = hm[5].replace(/\n$/, '');
+      hunks.push({ start, end, mode: isInsert ? 'insert' : 'replace', replacement: rawReplacement });
+    }
+
+    const resultContent = applyHunks(srcContent, hunks);
+
+    // Persist back to store so next edit operates on updated content
+    setFileContent(fileName, resultContent);
+
+    edits.push({
+      name: fileName,
+      hunks,
+      result: resultContent,
+      hadSource: srcContent.length > 0
     });
-    edits.push({ name: fileName, hunks, result: result.join('\n'), hadSource: !!srcFile });
+
     return '__EDIT_CHIP_' + (edits.length - 1) + '__';
   });
+
   return { cleanText, edits };
 }
 
@@ -997,24 +947,27 @@ function renderEditChips(container, edits) {
   }
 }
 
-// ── doAiRequestWithEdits ──────────────────────────────────────────────────────
+// ── Core AI request ───────────────────────────────────────────────────────────
 async function doAiRequestWithEdits(promptText, files) {
   const thinkingMsg = appendLoadingMsg();
   const apiQuestion = buildApiQuestion(promptText, files);
+
   try {
     const encoded = btoa(unescape(encodeURIComponent(apiQuestion)));
     const selectedModel = document.getElementById('modelSelect').value;
     const res = await fetch('https://api.getcomet.space/ai?question=' + encoded + '&model=' + selectedModel);
     const data = await res.json();
+
     let content = '', reasoning = '';
     if (data.choices && data.choices[0]) {
       const msg = data.choices[0].message || {};
-      content = msg.content || '';
+      content   = msg.content || '';
       reasoning = msg.reasoning || msg.reasoning_content || '';
     }
+
     thinkingMsg.remove();
-    const aiMsg = createAiMsg();
-    const body = aiMsg.querySelector('.msg-body');
+    const { div: aiDiv, body } = createAiMsg();
+
     if (reasoning) {
       const block = document.createElement('div');
       block.className = 'thinking-block';
@@ -1030,23 +983,49 @@ async function doAiRequestWithEdits(promptText, files) {
       });
       block.appendChild(toggle); block.appendChild(thinkContent); body.appendChild(block);
     }
+
     content = content.replace(/\s*\/n\s*/g, '\n');
     const { cleanText, edits } = parseEditBlocks(content, files);
     await revealContent(cleanText, body);
+
     if (edits.length > 0) {
       renderEditChips(body, edits);
       setTimeout(() => openEditPanel(edits[0].name, edits[0].result, true), 350);
     }
   } catch(err) {
     thinkingMsg.remove();
-    const fb = createAiMsg();
-    fb.querySelector('.msg-body').textContent = 'something went wrong. try again.';
+    const { body } = createAiMsg();
+    body.textContent = 'something went wrong. try again.';
   }
+
   sendBtn.disabled = false;
   inputEl.focus();
 }
 
-// Patch retry to use new request
+async function send() {
+  const promptText = inputEl.value.trim();
+  if (!promptText && attachedFiles.length === 0) return;
+  if (sendBtn.disabled) return;
+  if (emptyState) { emptyState.remove(); emptyState = null; }
+
+  const filesToSend = [...attachedFiles];
+
+  lastPromptText  = promptText;
+  lastFilesToSend = filesToSend;
+
+  renderUserMessage(promptText, filesToSend);
+  inputEl.value = ''; inputEl.style.height = 'auto';
+  attachedFiles = []; renderAttachBar();
+  sendBtn.disabled = true;
+
+  await doAiRequestWithEdits(promptText, filesToSend);
+}
+
+if (window.location.pathname === "/chat/") {
+  window.history.replaceState({}, "", "/");
+}
+
+// Retry delegation
 document.addEventListener('click', e => {
   const btn = e.target.closest('.retry-btn');
   if (!btn) return;
