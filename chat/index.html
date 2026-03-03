@@ -285,11 +285,23 @@ function makeCodeBlock(lang, code, fileName) {
   const lbl=document.createElement('span'); lbl.className='code-lang'; lbl.textContent=lang||'code'; left.appendChild(lbl);
   if(fileName){const fn=document.createElement('span');fn.className='code-file-name';fn.textContent=fileName;left.appendChild(fn);}
   const btn=document.createElement('button'); btn.className='copy-btn'; btn.textContent='copy';
-  btn.onclick=()=>navigator.clipboard.writeText(code).then(()=>{btn.textContent='copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='copy';btn.classList.remove('copied');},2000);});
+  // read finalCode from a ref so it works whether code is pre-filled or typed in later
+  const codeRef = { value: code };
+  btn.onclick=()=>navigator.clipboard.writeText(codeRef.value).then(()=>{btn.textContent='copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='copy';btn.classList.remove('copied');},2000);});
   hdr.appendChild(left); hdr.appendChild(btn);
   const body=document.createElement('div'); body.className='code-body';
   /^lua$/i.test(lang)?body.innerHTML=luaHighlight(code):body.textContent=code;
-  wrap.appendChild(hdr); wrap.appendChild(body); return wrap;
+  wrap.appendChild(hdr); wrap.appendChild(body);
+  wrap._codeRef = codeRef; // expose so typeCodeBlock can update it
+  return wrap;
+}
+
+async function typeCodeBlock(lang, code, bodyEl) {
+  // update the codeRef on the parent wrap so copy button gets the full code
+  const wrap = bodyEl.closest('.code-block');
+  if(wrap?._codeRef) wrap._codeRef.value = code;
+  const isLua=/^lua$/i.test(lang); let typed='';
+  for(const ch of code){typed+=ch;isLua?bodyEl.innerHTML=luaHighlight(typed):bodyEl.textContent=typed;messages.scrollTop=messages.scrollHeight;let d=6;if(ch==='\n')d=14;else if(ch===' ')d=3;if(Math.random()<.04)d+=25;await sleep(d);}
 }
 
 // ── Markdown helpers ──────────────────────────────────────────────────────────
@@ -632,7 +644,6 @@ function renderEditChips(container, edits){
 async function doAiRequest(promptText, files) {
   const loading=appendLoadingMsg();
   try {
-    const encoded=btoa(unescape(encodeURIComponent(buildApiQuestion(promptText,files))));
     const model=document.getElementById('modelSelect').value;
     const data = await fetch('https://api.getcomet.space/ai', {
       method: 'POST',
@@ -721,5 +732,6 @@ document.addEventListener('click',e=>{
 </script>
 </body>
 </html>
+
 
 
