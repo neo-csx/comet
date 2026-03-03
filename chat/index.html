@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Comet AI - 1Meteor</title>
+<title>Comet AI - Meteor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -24,38 +24,29 @@ body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospa
 header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-bottom:1px solid var(--border);flex-shrink:0}
 .logo{width:26px;height:26px;opacity:.9}
 .header-sub{margin-left:auto;font-size:.65rem;color:var(--muted);letter-spacing:.08em}
-
 .model-select-wrap{position:relative;display:flex;align-items:center}
 .model-select-wrap::after{content:'⌄';position:absolute;right:.5rem;top:50%;transform:translateY(-52%);font-size:.7rem;color:var(--muted);pointer-events:none;line-height:1}
 .model-select{font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.12em;color:var(--accent);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:.25rem 1.6rem .25rem .6rem;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;text-transform:uppercase;transition:border-color .2s,background .2s}
 .model-select:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.2)}
-.model-select:focus{border-color:rgba(255,255,255,0.25)}
-.model-select option{background:#111;color:var(--text);font-family:'Syne',sans-serif;letter-spacing:.08em}
-
+.model-select option{background:#111;color:var(--text)}
 .messages{flex:1;overflow-y:auto;padding:1.5rem 0;display:flex;flex-direction:column;gap:1.5rem;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent}
 .messages::-webkit-scrollbar{width:4px}
-.messages::-webkit-scrollbar-track{background:transparent}
 .messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
-
 .empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;opacity:.35;pointer-events:none}
 .empty-icon{width:48px;opacity:.5}
 .empty-label{font-family:'Syne',sans-serif;font-size:.75rem;letter-spacing:.2em;color:var(--muted)}
-
 .msg{display:flex;flex-direction:row;gap:.75rem;align-items:flex-start;animation:msgIn .25s ease}
 @keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
 .msg-avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-top:2px}
 .msg-avatar.ai-avatar{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1)}
 .msg-avatar.ai-avatar img{width:16px;height:16px;opacity:.8}
 .msg-avatar.user-avatar{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12)}
 .msg-avatar.user-avatar svg{width:14px;height:14px;fill:rgba(255,255,255,0.5)}
-
 .msg-content{display:flex;flex-direction:column;gap:.35rem;flex:1;min-width:0}
 .msg-role{font-size:.6rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
 .msg-role.ai{color:rgba(255,255,255,0.5)}
 .msg-body{font-size:.85rem;line-height:1.75;color:var(--text);word-break:break-word}
 .msg-body.user{color:rgba(255,255,255,0.6);font-size:.8rem}
-
 .msg-body p{margin:.25rem 0}
 .msg-body p:first-child{margin-top:0}
 .msg-body p:last-child{margin-bottom:0}
@@ -70,16 +61,14 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .msg-body li{margin:.15rem 0;line-height:1.65}
 .msg-body hr{border:none;border-top:1px solid var(--border);margin:.75rem 0}
 .msg-body a{color:rgba(255,255,255,0.75);text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(255,255,255,0.25);transition:color .2s}
-.msg-body a:hover{color:#fff;text-decoration-color:rgba(255,255,255,0.6)}
+.msg-body a:hover{color:#fff}
 .msg-body code.inline-code{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:.1em .35em;font-family:'JetBrains Mono',monospace;font-size:.8em;color:#c3e88d}
 .msg-body .tag-highlight{background:#fff;color:#000;border-radius:3px;padding:.05em .3em;font-size:.82em;font-family:'JetBrains Mono',monospace;font-weight:500}
-
 .thinking-block{margin-bottom:.6rem;border-left:2px solid rgba(255,255,255,0.1);padding-left:.75rem}
 .thinking-toggle{font-size:.6rem;letter-spacing:.12em;cursor:pointer;text-transform:uppercase;display:flex;align-items:center;gap:.4rem;background:none;border:none;color:var(--muted);font-family:'JetBrains Mono',monospace;padding:0;margin-bottom:.3rem}
 .thinking-toggle:hover{color:rgba(255,255,255,0.5)}
 .thinking-content{font-size:.7rem;line-height:1.7;color:rgba(255,255,255,0.2);display:none;white-space:pre-wrap;word-break:break-word}
 .thinking-content.open{display:block}
-
 .code-block{margin:.4rem 0;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);background:#0d0d0d;display:block}
 .code-header{display:flex;align-items:center;justify-content:space-between;padding:.4rem .75rem;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.06)}
 .code-lang{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
@@ -89,20 +78,15 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .copy-btn.copied{color:#c3e88d;border-color:#c3e88d44}
 .code-body{padding:.85rem 1rem;overflow-x:auto;font-size:.78rem;line-height:1.7;white-space:pre;font-family:'JetBrains Mono',monospace}
 .code-body::-webkit-scrollbar{height:4px}
-.code-body::-webkit-scrollbar-track{background:transparent}
 .code-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
-
 .lkw{color:var(--lua-kw)}.lfn{color:var(--lua-fn)}.lstr{color:var(--lua-str)}
 .lnum{color:var(--lua-num)}.lcmt{color:var(--lua-comment);font-style:italic}
 .lop{color:var(--lua-op)}.lbi{color:var(--lua-builtin)}
-
 .pasted-label{font-size:.55rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:.15rem;opacity:.7}
-
 .file-chip-msg{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:.3rem .65rem;font-size:.7rem;color:rgba(255,255,255,0.6);cursor:pointer;transition:background .2s,border-color .2s;margin:.2rem 0;max-width:240px}
 .file-chip-msg:hover{background:rgba(255,255,255,0.09);border-color:rgba(255,255,255,0.2);color:var(--text)}
 .file-chip-msg svg{flex-shrink:0;opacity:.7}
 .file-chip-msg span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
 .file-popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:200;display:flex;align-items:center;justify-content:center;animation:fadeIn .15s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .file-popup{background:#0d0d0d;border:1px solid rgba(255,255,255,0.1);border-radius:10px;width:min(700px,94vw);max-height:80vh;display:flex;flex-direction:column;overflow:hidden;animation:popIn .18s ease}
@@ -114,13 +98,12 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .file-popup-body{overflow-y:auto;padding:.85rem 1rem;font-size:.78rem;line-height:1.7;white-space:pre;font-family:'JetBrains Mono',monospace;flex:1;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent}
 .file-popup-body::-webkit-scrollbar{width:4px}
 .file-popup-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
-
 .msg-actions{display:flex;gap:.4rem;margin-top:.25rem}
 .retry-btn{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid rgba(255,255,255,0.08);color:var(--muted);padding:.18rem .5rem;border-radius:4px;cursor:pointer;font-family:'JetBrains Mono',monospace;transition:all .2s;display:flex;align-items:center;gap:.3rem}
 .retry-btn:hover{background:rgba(255,255,255,0.06);color:var(--text);border-color:rgba(255,255,255,0.18)}
 .retry-btn svg{width:9px;height:9px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 
-/* Edit panel — single definition */
+/* Edit panel */
 .edit-panel{position:fixed;top:0;right:0;bottom:0;width:min(520px,90vw);background:#0a0a0a;border-left:1px solid rgba(255,255,255,0.09);z-index:150;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.22,.68,0,1.2)}
 .edit-panel.open{transform:translateX(0)}
 .edit-panel-header{display:flex;align-items:center;gap:.6rem;padding:.65rem .9rem;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.025);flex-shrink:0}
@@ -129,25 +112,32 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .edit-panel-btns{display:flex;gap:.4rem;flex-shrink:0}
 .edit-panel-btn{background:none;border:1px solid rgba(255,255,255,0.1);color:var(--muted);padding:.18rem .5rem;border-radius:4px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;transition:all .2s;display:flex;align-items:center;gap:.25rem}
 .edit-panel-btn:hover{background:rgba(255,255,255,0.07);color:var(--text);border-color:rgba(255,255,255,0.2)}
+.edit-panel-btn.copied{color:#c3e88d;border-color:#c3e88d44}
 .edit-panel-btn svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .edit-panel-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,0.07);flex-shrink:0}
 .edit-panel-tab{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;background:none;border:none;color:var(--muted);padding:.45rem .8rem;cursor:pointer;font-family:'JetBrains Mono',monospace;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;margin-bottom:-1px}
 .edit-panel-tab:hover{color:rgba(255,255,255,0.5)}
 .edit-panel-tab.active{color:var(--text);border-bottom-color:rgba(255,255,255,0.4)}
-.edit-panel-body{flex:1;overflow:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent}
+.edit-panel-body{flex:1;overflow:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent;position:relative}
 .edit-panel-body::-webkit-scrollbar{width:4px}
 .edit-panel-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
-.edit-panel-code{padding:.85rem 1rem;font-size:.77rem;line-height:1.7;white-space:pre;font-family:'JetBrains Mono',monospace}
+
+/* Line-based edit panel renderer */
+.ep-lines{padding:.85rem 1rem;font-size:.77rem;line-height:1.7;font-family:'JetBrains Mono',monospace;white-space:pre}
+.ep-line{display:block;transition:background .15s}
+.ep-line.removing{background:rgba(255,80,80,0.12);animation:lineRemove .25s ease forwards}
+@keyframes lineRemove{0%{opacity:1;max-height:2em}100%{opacity:0;max-height:0;padding:0;margin:0}}
+.ep-line.inserting{animation:lineInsert .2s ease forwards}
+@keyframes lineInsert{from{opacity:0;transform:translateX(-4px)}to{opacity:1;transform:none}}
+
 .edit-panel-preview{width:100%;height:100%;border:none;background:#fff}
 .edit-chip{display:inline-flex;align-items:center;gap:.4rem;background:rgba(195,232,141,0.07);border:1px solid rgba(195,232,141,0.2);border-radius:6px;padding:.28rem .6rem;font-size:.68rem;color:rgba(195,232,141,0.8);cursor:pointer;transition:background .2s,border-color .2s;margin:.3rem 0}
 .edit-chip:hover{background:rgba(195,232,141,0.13);border-color:rgba(195,232,141,0.4);color:#c3e88d}
 .edit-chip svg{flex-shrink:0;opacity:.8}
 .edit-backdrop{position:fixed;inset:0;z-index:149;display:none}
 .edit-backdrop.visible{display:block}
-
 .spinner{display:inline-block;width:14px;height:14px;border:1.5px solid rgba(255,255,255,0.1);border-top-color:rgba(255,255,255,0.5);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 .input-area{flex-shrink:0;border-top:1px solid var(--border);padding:.75rem 0 1.25rem;display:flex;flex-direction:column;gap:.5rem}
 .attachments-bar{display:flex;flex-wrap:wrap;gap:.4rem}
 .attach-chip{display:flex;align-items:center;gap:.35rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:5px;padding:.2rem .5rem;font-size:.65rem;color:rgba(255,255,255,0.55);max-width:200px}
@@ -184,14 +174,12 @@ textarea:focus{border-color:rgba(255,255,255,0.18)}
     </div>
     <span class="header-sub">by comet</span>
   </header>
-
   <div class="messages" id="messages">
     <div class="empty-state" id="emptyState">
       <img class="empty-icon" src="assets/comet_2.png" alt="" />
       <span class="empty-label">Ask Meteor anything</span>
     </div>
   </div>
-
   <div class="input-area">
     <div class="attachments-bar" id="attachBar"></div>
     <div class="input-row">
@@ -220,6 +208,9 @@ textarea:focus{border-color:rgba(255,255,255,0.18)}
     <span class="edit-panel-title" id="editPanelTitle">file.lua</span>
     <span class="edit-panel-badge">edited</span>
     <div class="edit-panel-btns">
+      <button class="edit-panel-btn" id="editCopyBtn">
+        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>copy
+      </button>
       <button class="edit-panel-btn" id="editDownloadBtn">
         <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>download
       </button>
@@ -244,26 +235,32 @@ const attachBar  = document.getElementById('attachBar');
 const dropZone   = document.getElementById('dropZone');
 let emptyState   = document.getElementById('emptyState');
 
-let attachedFiles = [];
-
-// Store last user turn for retry
+let attachedFiles   = [];
 let lastPromptText  = '';
 let lastFilesToSend = [];
 
 // ── Editable file store ───────────────────────────────────────────────────────
-// Maps filename (lowercase) → current content string.
-// Updated every time an [EDIT] block is applied so subsequent edits operate
-// on the already-patched version rather than the original upload.
+// key: filename lowercase  →  { content: string, seenInPanel: bool }
+// seenInPanel: false = first time opening, do full type-out
+//              true  = already shown, do surgical diff animation
 const editedFileStore = {};
 
-function getFileContent(name) {
+function getFileEntry(name) {
   return editedFileStore[name.toLowerCase()] ?? null;
 }
 function setFileContent(name, content) {
-  editedFileStore[name.toLowerCase()] = content;
+  const key = name.toLowerCase();
+  if (!editedFileStore[key]) {
+    editedFileStore[key] = { content, seenInPanel: false };
+  } else {
+    editedFileStore[key].content = content;
+    // don't reset seenInPanel — stays true once first shown
+  }
 }
-
-// Seed store from attached files when they are loaded
+function markFileSeen(name) {
+  const key = name.toLowerCase();
+  if (editedFileStore[key]) editedFileStore[key].seenInPanel = true;
+}
 function seedStore(files) {
   for (const f of files) setFileContent(f.name, f.content);
 }
@@ -273,476 +270,188 @@ function openFilePopup(name, content) {
   const overlay = document.createElement('div');
   overlay.className = 'file-popup-overlay';
   overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
-
-  const popup = document.createElement('div');
-  popup.className = 'file-popup';
-
-  const hdr = document.createElement('div');
-  hdr.className = 'file-popup-header';
-  const nameLbl = document.createElement('span');
-  nameLbl.className = 'file-popup-name';
-  nameLbl.textContent = name;
-  const closeBtn = document.createElement('button');
-  closeBtn.className = 'file-popup-close';
-  closeBtn.textContent = '×';
-  closeBtn.onclick = () => overlay.remove();
-  hdr.appendChild(nameLbl);
-  hdr.appendChild(closeBtn);
-
-  const body = document.createElement('div');
-  body.className = 'file-popup-body';
-  body.innerHTML = luaHighlight(content);
-
-  popup.appendChild(hdr);
-  popup.appendChild(body);
-  overlay.appendChild(popup);
-  document.body.appendChild(overlay);
+  const popup = document.createElement('div'); popup.className = 'file-popup';
+  const hdr = document.createElement('div'); hdr.className = 'file-popup-header';
+  const nameLbl = document.createElement('span'); nameLbl.className = 'file-popup-name'; nameLbl.textContent = name;
+  const closeBtn = document.createElement('button'); closeBtn.className = 'file-popup-close'; closeBtn.textContent = '×'; closeBtn.onclick = () => overlay.remove();
+  hdr.appendChild(nameLbl); hdr.appendChild(closeBtn);
+  const body = document.createElement('div'); body.className = 'file-popup-body'; body.innerHTML = luaHighlight(content);
+  popup.appendChild(hdr); popup.appendChild(body); overlay.appendChild(popup); document.body.appendChild(overlay);
 }
-
 function makeFileChip(name, content) {
-  const chip = document.createElement('div');
-  chip.className = 'file-chip-msg';
-  chip.title = 'click to view ' + name;
+  const chip = document.createElement('div'); chip.className = 'file-chip-msg'; chip.title = 'click to view ' + name;
   chip.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>${escHtml(name)}</span>`;
-  chip.onclick = () => openFilePopup(name, content);
-  return chip;
+  chip.onclick = () => openFilePopup(name, content); return chip;
 }
 
-// ── Lua syntax highlighter ────────────────────────────────────────────────────
+// ── Lua highlighter ───────────────────────────────────────────────────────────
 const LUA_KW = new Set(['and','break','do','else','elseif','end','false','for','function','goto','if','in','local','nil','not','or','repeat','return','then','true','until','while']);
 const LUA_BI = new Set(['print','pairs','ipairs','tostring','tonumber','type','error','assert','pcall','xpcall','select','unpack','rawget','rawset','rawequal','rawlen','require','load','loadfile','loadstring','dofile','collectgarbage','getmetatable','setmetatable','next','task','game','workspace','script','Instance','Vector3','Vector2','CFrame','Color3','UDim','UDim2','TweenInfo','Enum','wait','spawn','delay','math','table','string','os','coroutine','bit32','getfenv','setfenv','getrawmetatable','setrawmetatable','hookfunction','newcclosure','checkcaller','iscclosure','islclosure','clonefunction','Drawing','writefile','readfile','listfiles','makefolder','delfolder','delfile','HttpGet','request','http','syn','_G','shared']);
 
 function luaHighlight(code) {
-  const out = [];
-  let i = 0;
+  const out = []; let i = 0;
   function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   while (i < code.length) {
-    if (code[i] === '-' && code[i+1] === '-') {
-      let end = code.indexOf('\n', i);
-      if (end === -1) end = code.length;
-      out.push(`<span class="lcmt">${esc(code.slice(i,end))}</span>`);
-      i = end; continue;
-    }
-    if (code[i] === '"' || code[i] === "'") {
-      const q = code[i]; let j = i+1;
-      while (j < code.length && code[j] !== q) { if (code[j] === '\\') j++; j++; }
-      out.push(`<span class="lstr">${esc(code.slice(i,j+1))}</span>`);
-      i = j+1; continue;
-    }
-    if (code[i] === '[' && (code[i+1] === '[' || code[i+1] === '=')) {
-      let lvl = 0; let k = i+1;
-      while (code[k] === '=') { lvl++; k++; }
-      if (code[k] === '[') {
-        const close = ']' + '='.repeat(lvl) + ']';
-        let end = code.indexOf(close, k+1);
-        if (end === -1) end = code.length - close.length;
-        out.push(`<span class="lstr">${esc(code.slice(i, end+close.length))}</span>`);
-        i = end + close.length; continue;
-      }
-    }
-    const nm = code.slice(i).match(/^(0x[\da-fA-F]+|\d+\.?\d*([eE][+-]?\d+)?)/);
-    if (nm && (i === 0 || !/\w/.test(code[i-1]))) {
-      out.push(`<span class="lnum">${esc(nm[0])}</span>`);
-      i += nm[0].length; continue;
-    }
-    const wm = code.slice(i).match(/^[a-zA-Z_]\w*/);
-    if (wm) {
-      const w = wm[0];
-      if (LUA_KW.has(w)) out.push(`<span class="lkw">${esc(w)}</span>`);
-      else if (LUA_BI.has(w)) out.push(`<span class="lbi">${esc(w)}</span>`);
-      else {
-        const after = code.slice(i+w.length).replace(/^[\s\n]*/,'');
-        if (after[0] === '(' || after[0] === '{') out.push(`<span class="lfn">${esc(w)}</span>`);
-        else out.push(esc(w));
-      }
-      i += w.length; continue;
-    }
-    const om = code.slice(i).match(/^[+\-*\/^%#&|~<>=.,:;(){}[\]]/);
-    if (om) { out.push(`<span class="lop">${esc(om[0])}</span>`); i += om[0].length; continue; }
-    out.push(esc(code[i])); i++;
+    if (code[i]==='-'&&code[i+1]==='-'){let e=code.indexOf('\n',i);if(e===-1)e=code.length;out.push(`<span class="lcmt">${esc(code.slice(i,e))}</span>`);i=e;continue;}
+    if (code[i]==='"'||code[i]==="'"){const q=code[i];let j=i+1;while(j<code.length&&code[j]!==q){if(code[j]==='\\')j++;j++;}out.push(`<span class="lstr">${esc(code.slice(i,j+1))}</span>`);i=j+1;continue;}
+    if(code[i]==='['&&(code[i+1]==='['||code[i+1]==='=')){let lvl=0,k=i+1;while(code[k]==='='){lvl++;k++;}if(code[k]==='['){const cl=']'+'='.repeat(lvl)+']';let e=code.indexOf(cl,k+1);if(e===-1)e=code.length-cl.length;out.push(`<span class="lstr">${esc(code.slice(i,e+cl.length))}</span>`);i=e+cl.length;continue;}}
+    const nm=code.slice(i).match(/^(0x[\da-fA-F]+|\d+\.?\d*([eE][+-]?\d+)?)/);
+    if(nm&&(i===0||!/\w/.test(code[i-1]))){out.push(`<span class="lnum">${esc(nm[0])}</span>`);i+=nm[0].length;continue;}
+    const wm=code.slice(i).match(/^[a-zA-Z_]\w*/);
+    if(wm){const w=wm[0];if(LUA_KW.has(w))out.push(`<span class="lkw">${esc(w)}</span>`);else if(LUA_BI.has(w))out.push(`<span class="lbi">${esc(w)}</span>`);else{const after=code.slice(i+w.length).replace(/^[\s\n]*/,'');if(after[0]==='('||after[0]==='{')out.push(`<span class="lfn">${esc(w)}</span>`);else out.push(esc(w));}i+=w.length;continue;}
+    const om=code.slice(i).match(/^[+\-*\/^%#&|~<>=.,:;(){}[\]]/);
+    if(om){out.push(`<span class="lop">${esc(om[0])}</span>`);i+=om[0].length;continue;}
+    out.push(esc(code[i]));i++;
   }
   return out.join('');
 }
 
 function makeCodeBlock(lang, code, fileName) {
-  const wrap = document.createElement('div');
-  wrap.className = 'code-block';
-  const hdr = document.createElement('div');
-  hdr.className = 'code-header';
-  const left = document.createElement('div');
-  left.style.display = 'flex'; left.style.alignItems = 'center'; left.style.gap = '.4rem';
-  const lbl = document.createElement('span');
-  lbl.className = 'code-lang';
-  lbl.textContent = lang || 'code';
-  left.appendChild(lbl);
-  if (fileName) {
-    const fn = document.createElement('span');
-    fn.className = 'code-file-name';
-    fn.textContent = fileName;
-    left.appendChild(fn);
-  }
-  const btn = document.createElement('button');
-  btn.className = 'copy-btn';
-  btn.textContent = 'copy';
-  btn.onclick = () => {
-    navigator.clipboard.writeText(code).then(() => {
-      btn.textContent = 'copied!'; btn.classList.add('copied');
-      setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 2000);
-    });
-  };
+  const wrap = document.createElement('div'); wrap.className = 'code-block';
+  const hdr = document.createElement('div'); hdr.className = 'code-header';
+  const left = document.createElement('div'); left.style.cssText='display:flex;align-items:center;gap:.4rem';
+  const lbl = document.createElement('span'); lbl.className='code-lang'; lbl.textContent=lang||'code'; left.appendChild(lbl);
+  if(fileName){const fn=document.createElement('span');fn.className='code-file-name';fn.textContent=fileName;left.appendChild(fn);}
+  const btn = document.createElement('button'); btn.className='copy-btn'; btn.textContent='copy';
+  btn.onclick=()=>{navigator.clipboard.writeText(code).then(()=>{btn.textContent='copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='copy';btn.classList.remove('copied');},2000);});};
   hdr.appendChild(left); hdr.appendChild(btn);
-  const body = document.createElement('div');
-  body.className = 'code-body';
-  if (/^lua$/i.test(lang)) body.innerHTML = luaHighlight(code);
-  else body.textContent = code;
-  wrap.appendChild(hdr); wrap.appendChild(body);
-  return wrap;
+  const body = document.createElement('div'); body.className='code-body';
+  if(/^lua$/i.test(lang)) body.innerHTML=luaHighlight(code); else body.textContent=code;
+  wrap.appendChild(hdr); wrap.appendChild(body); return wrap;
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 function parseSegments(text) {
-  const segs = [];
-  const re = /```([\w]*)\n([\s\S]*?)```/g;
-  let last = 0, m;
-  re.lastIndex = 0;
-  while ((m = re.exec(text)) !== null) {
-    if (m.index > last) segs.push({type:'text', value: text.slice(last, m.index)});
-    const code = m[2].replace(/\n$/, '');
-    segs.push({type:'code', lang: m[1].trim() || '', value: code});
-    last = m.index + m[0].length;
-  }
-  if (last < text.length) {
-    const trailing = text.slice(last);
-    if (trailing.trim()) segs.push({type:'text', value: trailing});
-  }
+  const segs=[]; const re=/```([\w]*)\n([\s\S]*?)```/g; let last=0,m; re.lastIndex=0;
+  while((m=re.exec(text))!==null){if(m.index>last)segs.push({type:'text',value:text.slice(last,m.index)});segs.push({type:'code',lang:m[1].trim()||'',value:m[2].replace(/\n$/,'')});last=m.index+m[0].length;}
+  if(last<text.length){const t=text.slice(last);if(t.trim())segs.push({type:'text',value:t});}
   return segs;
 }
 
 function inlineMarkdown(text) {
-  let result = '';
-  let i = 0;
-  const patterns = [
-    { re: /`([^`\n]+)`/,                        fn: (m) => `<code class="inline-code">${escHtml(m[1])}</code>` },
-    { re: /\*\*([^*\n]+)\*\*/,                  fn: (m) => `<strong>${inlineMarkdown(m[1])}</strong>` },
-    { re: /\*([^*\n]+)\*/,                       fn: (m) => `<em>${inlineMarkdown(m[1])}</em>` },
-    { re: /\[([^\]]+)\]\(([^)]+)\)/,            fn: (m) => `<a href="${escHtml(m[2])}" target="_blank" rel="noopener">${escHtml(m[1])}</a>` },
-    { re: /<([^>]+)>/,                           fn: (m) => `<span class="tag-highlight">${escHtml(m[1])}</span>` },
+  let result='',i=0;
+  const patterns=[
+    {re:/`([^`\n]+)`/,fn:m=>`<code class="inline-code">${escHtml(m[1])}</code>`},
+    {re:/\*\*([^*\n]+)\*\*/,fn:m=>`<strong>${inlineMarkdown(m[1])}</strong>`},
+    {re:/\*([^*\n]+)\*/,fn:m=>`<em>${inlineMarkdown(m[1])}</em>`},
+    {re:/\[([^\]]+)\]\(([^)]+)\)/,fn:m=>`<a href="${escHtml(m[2])}" target="_blank" rel="noopener">${escHtml(m[1])}</a>`},
+    {re:/<([^>]+)>/,fn:m=>`<span class="tag-highlight">${escHtml(m[1])}</span>`},
   ];
-  while (i < text.length) {
-    let earliest = -1, earliestMatch = null, earliestFn = null;
-    for (const p of patterns) {
-      const slice = text.slice(i);
-      const m = p.re.exec(slice);
-      if (m && (earliest === -1 || m.index < earliest)) {
-        earliest = m.index; earliestMatch = m; earliestFn = p.fn;
-      }
-    }
-    if (earliest === -1) { result += escHtml(text.slice(i)); break; }
-    result += escHtml(text.slice(i, i + earliest));
-    result += earliestFn(earliestMatch);
-    i += earliest + earliestMatch[0].length;
+  while(i<text.length){
+    let earliest=-1,eMatch=null,eFn=null;
+    for(const p of patterns){const sl=text.slice(i);const m=p.re.exec(sl);if(m&&(earliest===-1||m.index<earliest)){earliest=m.index;eMatch=m;eFn=p.fn;}}
+    if(earliest===-1){result+=escHtml(text.slice(i));break;}
+    result+=escHtml(text.slice(i,i+earliest));result+=eFn(eMatch);i+=earliest+eMatch[0].length;
   }
-  return result.replace(/\n/g, '<br>');
-}
-
-// ── Markdown → DOM ────────────────────────────────────────────────────────────
-function renderMarkdownToContainer(text, container) {
-  const segs = parseSegments(text);
-  for (const seg of segs) {
-    if (seg.type === 'code') {
-      container.appendChild(makeCodeBlock(seg.lang, seg.value));
-    } else {
-      renderTextBlock(seg.value, container);
-    }
-  }
+  return result.replace(/\n/g,'<br>');
 }
 
 function renderTextBlock(text, container) {
-  const lines = text.split('\n');
-  let i = 0;
-  while (i < lines.length) {
-    const line = lines[i];
-    if (line.trim() === '') { i++; continue; }
-    const hm = line.match(/^(#{1,4})\s+(.+)/);
-    if (hm) {
-      const el = document.createElement('h' + hm[1].length);
-      el.innerHTML = inlineMarkdown(hm[2]);
-      container.appendChild(el); i++; continue;
-    }
-    if (/^[-*_]{3,}$/.test(line.trim())) {
-      container.appendChild(document.createElement('hr')); i++; continue;
-    }
-    if (/^[\-\*\+]\s/.test(line)) {
-      const ul = document.createElement('ul');
-      while (i < lines.length && /^[\-\*\+]\s/.test(lines[i])) {
-        const li = document.createElement('li');
-        li.innerHTML = inlineMarkdown(lines[i].replace(/^[\-\*\+]\s/, ''));
-        ul.appendChild(li); i++;
-      }
-      container.appendChild(ul); continue;
-    }
-    if (/^\d+\.\s/.test(line)) {
-      const ol = document.createElement('ol');
-      while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
-        const li = document.createElement('li');
-        li.innerHTML = inlineMarkdown(lines[i].replace(/^\d+\.\s/, ''));
-        ol.appendChild(li); i++;
-      }
-      container.appendChild(ol); continue;
-    }
-    let paraLines = [];
-    while (i < lines.length) {
-      const l = lines[i];
-      if (l.trim() === '') { i++; break; }
-      if (/^#{1,4}\s/.test(l) || /^[\-\*\+]\s/.test(l) || /^\d+\.\s/.test(l) || /^[-*_]{3,}$/.test(l.trim())) break;
-      paraLines.push(l); i++;
-    }
-    if (paraLines.length) {
-      const p = document.createElement('p');
-      p.innerHTML = inlineMarkdown(paraLines.join('\n'));
-      container.appendChild(p);
-    }
+  const lines=text.split('\n'); let i=0;
+  while(i<lines.length){
+    const line=lines[i];
+    if(line.trim()===''){i++;continue;}
+    const hm=line.match(/^(#{1,4})\s+(.+)/);
+    if(hm){const el=document.createElement('h'+hm[1].length);el.innerHTML=inlineMarkdown(hm[2]);container.appendChild(el);i++;continue;}
+    if(/^[-*_]{3,}$/.test(line.trim())){container.appendChild(document.createElement('hr'));i++;continue;}
+    if(/^[\-\*\+]\s/.test(line)){const ul=document.createElement('ul');while(i<lines.length&&/^[\-\*\+]\s/.test(lines[i])){const li=document.createElement('li');li.innerHTML=inlineMarkdown(lines[i].replace(/^[\-\*\+]\s/,''));ul.appendChild(li);i++;}container.appendChild(ul);continue;}
+    if(/^\d+\.\s/.test(line)){const ol=document.createElement('ol');while(i<lines.length&&/^\d+\.\s/.test(lines[i])){const li=document.createElement('li');li.innerHTML=inlineMarkdown(lines[i].replace(/^\d+\.\s/,''));ol.appendChild(li);i++;}container.appendChild(ol);continue;}
+    let pl=[];
+    while(i<lines.length){const l=lines[i];if(l.trim()===''){i++;break;}if(/^#{1,4}\s/.test(l)||/^[\-\*\+]\s/.test(l)||/^\d+\.\s/.test(l)||/^[-*_]{3,}$/.test(l.trim()))break;pl.push(l);i++;}
+    if(pl.length){const p=document.createElement('p');p.innerHTML=inlineMarkdown(pl.join('\n'));container.appendChild(p);}
   }
 }
 
-// ── Streaming reveal ──────────────────────────────────────────────────────────
 async function revealContent(text, container) {
-  const segs = parseSegments(text);
-  for (const seg of segs) {
-    if (seg.type === 'code') {
-      if (!seg.value.trim() && !seg.lang) continue;
-      const cb = makeCodeBlock(seg.lang, '');
-      const codeBodyEl = cb.querySelector('.code-body');
-      container.appendChild(cb);
-      await typeCodeBlock(seg.lang, seg.value, codeBodyEl);
-    } else {
-      await streamWords(seg.value, container);
-    }
-    messages.scrollTop = messages.scrollHeight;
+  for(const seg of parseSegments(text)){
+    if(seg.type==='code'){if(!seg.value.trim()&&!seg.lang)continue;const cb=makeCodeBlock(seg.lang,'');const bodyEl=cb.querySelector('.code-body');container.appendChild(cb);await typeCodeBlock(seg.lang,seg.value,bodyEl);}
+    else await streamWords(seg.value,container);
+    messages.scrollTop=messages.scrollHeight;
   }
 }
-
 async function streamWords(text, container) {
-  const tokens = text.split(/(\s+)/);
-  let buffer = '';
-  const subContainer = document.createElement('div');
-  container.appendChild(subContainer);
-  for (let i = 0; i < tokens.length; i++) {
-    buffer += tokens[i];
-    subContainer.innerHTML = '';
-    renderTextBlock(buffer, subContainer);
-    messages.scrollTop = messages.scrollHeight;
-    const isSpace = /^\s+$/.test(tokens[i]);
-    if (!isSpace && tokens[i].length > 0) {
-      await sleep(18 + Math.random() * 22);
-    }
-  }
+  const tokens=text.split(/(\s+)/); let buf='';
+  const sub=document.createElement('div'); container.appendChild(sub);
+  for(let i=0;i<tokens.length;i++){buf+=tokens[i];sub.innerHTML='';renderTextBlock(buf,sub);messages.scrollTop=messages.scrollHeight;if(!/^\s+$/.test(tokens[i])&&tokens[i].length>0)await sleep(18+Math.random()*22);}
 }
-
 async function typeCodeBlock(lang, code, bodyEl) {
-  const isLua = /^lua$/i.test(lang);
-  let typed = '';
-  for (let i = 0; i < code.length; i++) {
-    typed += code[i];
-    if (isLua) bodyEl.innerHTML = luaHighlight(typed);
-    else bodyEl.textContent = typed;
-    messages.scrollTop = messages.scrollHeight;
-    let delay = 6;
-    if (code[i] === '\n') delay = 14;
-    else if (code[i] === ' ') delay = 3;
-    if (Math.random() < 0.04) delay += 25;
-    await sleep(delay);
-  }
+  const isLua=/^lua$/i.test(lang); let typed='';
+  for(let i=0;i<code.length;i++){typed+=code[i];if(isLua)bodyEl.innerHTML=luaHighlight(typed);else bodyEl.textContent=typed;messages.scrollTop=messages.scrollHeight;let d=6;if(code[i]==='\n')d=14;else if(code[i]===' ')d=3;if(Math.random()<0.04)d+=25;await sleep(d);}
+}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+function makeAiAvatar(){const av=document.createElement('div');av.className='msg-avatar ai-avatar';const img=document.createElement('img');img.src='assets/comet_2.png';img.alt='Meteor';av.appendChild(img);return av;}
+function makeUserAvatar(){const av=document.createElement('div');av.className='msg-avatar user-avatar';av.innerHTML=`<svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>`;return av;}
+
+function looksLikeCode(text){
+  const p=[/\blocal\s+\w+/,/\bfunction\s+\w+/,/\bend\b/,/\bfor\s+\w+\s*=/,/\bif\s+.+\bthen\b/,/game[:.]GetService/,/workspace\./,/Instance\.new/,/task\.wait/,/pairs\s*\(/,/ipairs\s*\(/,/:FindFirstChild/,/:WaitForChild/];
+  const m=p.filter(r=>r.test(text)).length; return m>=2||(text.split('\n').length>=4&&m>=1);
 }
 
-function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
-
-// ── Avatars ───────────────────────────────────────────────────────────────────
-function makeAiAvatar() {
-  const av = document.createElement('div');
-  av.className = 'msg-avatar ai-avatar';
-  const img = document.createElement('img');
-  img.src = 'assets/comet_2.png'; img.alt = 'Meteor';
-  av.appendChild(img);
-  return av;
-}
-
-function makeUserAvatar() {
-  const av = document.createElement('div');
-  av.className = 'msg-avatar user-avatar';
-  av.innerHTML = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>`;
-  return av;
-}
-
-function looksLikeCode(text) {
-  const luaPatterns = [
-    /\blocal\s+\w+/,/\bfunction\s+\w+/,/\bend\b/,/\bfor\s+\w+\s*=/,
-    /\bif\s+.+\bthen\b/,/game[:.]GetService/,/workspace\./,/Instance\.new/,
-    /task\.wait/,/pairs\s*\(/,/ipairs\s*\(/,/:FindFirstChild/,/:WaitForChild/,
-  ];
-  const matches = luaPatterns.filter(p => p.test(text)).length;
-  const lines = text.split('\n').length;
-  return matches >= 2 || (lines >= 4 && matches >= 1);
-}
-
-// ── Message rendering ─────────────────────────────────────────────────────────
 function renderUserMessage(promptText, files) {
-  const div = document.createElement('div');
-  div.className = 'msg';
-  div.appendChild(makeUserAvatar());
-  const content = document.createElement('div');
-  content.className = 'msg-content';
-  const roleEl = document.createElement('div');
-  roleEl.className = 'msg-role';
-  roleEl.textContent = 'you';
-  const body = document.createElement('div');
-  body.className = 'msg-body user';
-
-  if (promptText) {
-    if (looksLikeCode(promptText)) {
-      const lbl = document.createElement('div');
-      lbl.className = 'pasted-label';
-      lbl.textContent = 'pasted code';
-      body.appendChild(lbl);
-      body.appendChild(makeCodeBlock('lua', promptText));
-    } else {
-      const t = document.createElement('span');
-      t.style.whiteSpace = 'pre-wrap';
-      t.textContent = promptText;
-      body.appendChild(t);
-    }
-  }
-
-  if (files.length > 0) {
-    const fileRow = document.createElement('div');
-    fileRow.style.cssText = 'display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.4rem';
-    for (const f of files) fileRow.appendChild(makeFileChip(f.name, f.content));
-    body.appendChild(fileRow);
-  }
-
-  content.appendChild(roleEl); content.appendChild(body);
-  div.appendChild(content);
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
-  return div;
+  const div=document.createElement('div');div.className='msg';div.appendChild(makeUserAvatar());
+  const content=document.createElement('div');content.className='msg-content';
+  const roleEl=document.createElement('div');roleEl.className='msg-role';roleEl.textContent='you';
+  const body=document.createElement('div');body.className='msg-body user';
+  if(promptText){if(looksLikeCode(promptText)){const lbl=document.createElement('div');lbl.className='pasted-label';lbl.textContent='pasted code';body.appendChild(lbl);body.appendChild(makeCodeBlock('lua',promptText));}else{const t=document.createElement('span');t.style.whiteSpace='pre-wrap';t.textContent=promptText;body.appendChild(t);}}
+  if(files.length>0){const fr=document.createElement('div');fr.style.cssText='display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.4rem';for(const f of files)fr.appendChild(makeFileChip(f.name,f.content));body.appendChild(fr);}
+  content.appendChild(roleEl);content.appendChild(body);div.appendChild(content);messages.appendChild(div);messages.scrollTop=messages.scrollHeight;return div;
 }
 
 function buildApiQuestion(promptText, files) {
-  let q = promptText || '';
-  for (const f of files) {
-    // Always send current version from store (may have been edited already)
-    const currentContent = getFileContent(f.name) ?? f.content;
-    const numbered = currentContent
-      .split('\n')
-      .map((line, i) => `${String(i + 1).padStart(4, ' ')} | ${line}`)
-      .join('\n');
-    q += `\n\n[FILE: ${f.name}]\n\`\`\`lua\n${numbered}\n\`\`\``;
-  }
+  let q=promptText||'';
+  for(const f of files){const e=getFileEntry(f.name);const c=e?e.content:f.content;const numbered=c.split('\n').map((l,i)=>`${String(i+1).padStart(4,' ')} | ${l}`).join('\n');q+=`\n\n[FILE: ${f.name}]\n\`\`\`lua\n${numbered}\n\`\`\``;}
   return q.trim();
 }
 
 function renderAttachBar() {
-  attachBar.innerHTML = '';
-  attachedFiles.forEach((f, idx) => {
-    const chip = document.createElement('div');
-    chip.className = 'attach-chip';
-    chip.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
-    const name = document.createElement('span');
-    name.textContent = f.name;
-    const rm = document.createElement('button');
-    rm.className = 'attach-chip-remove';
-    rm.textContent = '×';
-    rm.onclick = () => { attachedFiles.splice(idx, 1); renderAttachBar(); };
-    chip.appendChild(name); chip.appendChild(rm);
-    attachBar.appendChild(chip);
+  attachBar.innerHTML='';
+  attachedFiles.forEach((f,idx)=>{
+    const chip=document.createElement('div');chip.className='attach-chip';
+    chip.innerHTML=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
+    const name=document.createElement('span');name.textContent=f.name;
+    const rm=document.createElement('button');rm.className='attach-chip-remove';rm.textContent='×';rm.onclick=()=>{attachedFiles.splice(idx,1);renderAttachBar();};
+    chip.appendChild(name);chip.appendChild(rm);attachBar.appendChild(chip);
   });
 }
 
 function addFiles(fileList) {
-  const readers = [];
-  for (const file of fileList) {
-    if (!/\.(lua|luau|txt)$/i.test(file.name)) continue;
-    readers.push(new Promise(res => {
-      const fr = new FileReader();
-      fr.onload = e => res({ name: file.name, content: e.target.result });
-      fr.readAsText(file);
-    }));
-  }
-  Promise.all(readers).then(results => {
-    attachedFiles.push(...results);
-    // Seed the editable store so follow-up edits use latest content
-    seedStore(results);
-    renderAttachBar();
-  });
+  const readers=[];
+  for(const file of fileList){if(!/\.(lua|luau|txt)$/i.test(file.name))continue;readers.push(new Promise(res=>{const fr=new FileReader();fr.onload=e=>res({name:file.name,content:e.target.result});fr.readAsText(file);}));}
+  Promise.all(readers).then(results=>{attachedFiles.push(...results);seedStore(results);renderAttachBar();});
 }
 
-attachBtn.onclick = () => fileInput.click();
-fileInput.onchange = () => { addFiles(fileInput.files); fileInput.value = ''; };
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-dropZone.addEventListener('dragleave', e => { if (!dropZone.contains(e.relatedTarget)) dropZone.classList.remove('drag-over'); });
-dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); addFiles(e.dataTransfer.files); });
-inputEl.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
-inputEl.addEventListener('input', () => { inputEl.style.height = 'auto'; inputEl.style.height = Math.min(inputEl.scrollHeight, 140) + 'px'; });
+attachBtn.onclick=()=>fileInput.click();
+fileInput.onchange=()=>{addFiles(fileInput.files);fileInput.value='';};
+dropZone.addEventListener('dragover',e=>{e.preventDefault();dropZone.classList.add('drag-over');});
+dropZone.addEventListener('dragleave',e=>{if(!dropZone.contains(e.relatedTarget))dropZone.classList.remove('drag-over');});
+dropZone.addEventListener('drop',e=>{e.preventDefault();dropZone.classList.remove('drag-over');addFiles(e.dataTransfer.files);});
+inputEl.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
+inputEl.addEventListener('input',()=>{inputEl.style.height='auto';inputEl.style.height=Math.min(inputEl.scrollHeight,140)+'px';});
 
-function getModelLabel() {
-  const sel = document.getElementById('modelSelect');
-  return 'meteor-' + (sel ? sel.value.toLowerCase() : '1a');
-}
+function getModelLabel(){const sel=document.getElementById('modelSelect');return'meteor-'+(sel?sel.value.toLowerCase():'1a');}
 
 function appendLoadingMsg() {
-  const div = document.createElement('div');
-  div.className = 'msg';
-  div.appendChild(makeAiAvatar());
-  const content = document.createElement('div');
-  content.className = 'msg-content';
-  const roleEl = document.createElement('div');
-  roleEl.className = 'msg-role ai';
-  roleEl.textContent = getModelLabel();
-  const body = document.createElement('div');
-  body.className = 'msg-body';
-  const s = document.createElement('div'); s.className = 'spinner'; body.appendChild(s);
-  content.appendChild(roleEl); content.appendChild(body);
-  div.appendChild(content);
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
-  return div;
+  const div=document.createElement('div');div.className='msg';div.appendChild(makeAiAvatar());
+  const content=document.createElement('div');content.className='msg-content';
+  const roleEl=document.createElement('div');roleEl.className='msg-role ai';roleEl.textContent=getModelLabel();
+  const body=document.createElement('div');body.className='msg-body';
+  const s=document.createElement('div');s.className='spinner';body.appendChild(s);
+  content.appendChild(roleEl);content.appendChild(body);div.appendChild(content);messages.appendChild(div);messages.scrollTop=messages.scrollHeight;return div;
 }
 
 function createAiMsg() {
-  const div = document.createElement('div');
-  div.className = 'msg';
-  div.appendChild(makeAiAvatar());
-  const content = document.createElement('div');
-  content.className = 'msg-content';
-  const roleEl = document.createElement('div');
-  roleEl.className = 'msg-role ai';
-  roleEl.textContent = getModelLabel();
-  const body = document.createElement('div');
-  body.className = 'msg-body';
-
-  const actions = document.createElement('div');
-  actions.className = 'msg-actions';
-  const retryBtn = document.createElement('button');
-  retryBtn.className = 'retry-btn';
-  retryBtn.innerHTML = `<svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>retry`;
-  retryBtn.onclick = () => {
-    div.remove();
-    sendBtn.disabled = true;
-    doAiRequestWithEdits(lastPromptText, lastFilesToSend);
-  };
-  actions.appendChild(retryBtn);
-
-  content.appendChild(roleEl);
-  content.appendChild(body);
-  content.appendChild(actions);
-  div.appendChild(content);
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
-  return { div, body };
+  const div=document.createElement('div');div.className='msg';div.appendChild(makeAiAvatar());
+  const content=document.createElement('div');content.className='msg-content';
+  const roleEl=document.createElement('div');roleEl.className='msg-role ai';roleEl.textContent=getModelLabel();
+  const body=document.createElement('div');body.className='msg-body';
+  const actions=document.createElement('div');actions.className='msg-actions';
+  const retryBtn=document.createElement('button');retryBtn.className='retry-btn';
+  retryBtn.innerHTML=`<svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>retry`;
+  retryBtn.onclick=()=>{div.remove();sendBtn.disabled=true;doAiRequestWithEdits(lastPromptText,lastFilesToSend);};
+  actions.appendChild(retryBtn);content.appendChild(roleEl);content.appendChild(body);content.appendChild(actions);div.appendChild(content);messages.appendChild(div);messages.scrollTop=messages.scrollHeight;
+  return{div,body};
 }
 
 // ── Edit panel ────────────────────────────────────────────────────────────────
@@ -752,12 +461,119 @@ const editTitle    = document.getElementById('editPanelTitle');
 const editTabs     = document.getElementById('editPanelTabs');
 const editBodyEl   = document.getElementById('editPanelBody');
 const editDlBtn    = document.getElementById('editDownloadBtn');
+const editCopyBtn  = document.getElementById('editCopyBtn');
 const editCloseBtn = document.getElementById('editCloseBtn');
-let currentEditFile = { name: '', content: '' };
+let currentEditFile = {name:'',content:''};
 
-function openEditPanel(name, fileContent, animated) {
-  currentEditFile = { name, content: fileContent };
+// ── Line-span renderer for edit panel ────────────────────────────────────────
+// Renders each line as a <span class="ep-line"> so we can animate them.
+function renderLinesInPanel(content) {
+  const isLua = /\.lua[u]?$/i.test(currentEditFile.name);
+  const container = document.createElement('div');
+  container.className = 'ep-lines';
+  const lines = content.split('\n');
+  for (const line of lines) {
+    const span = document.createElement('span');
+    span.className = 'ep-line';
+    span.innerHTML = isLua ? luaHighlight(line) : escHtml(line);
+    container.appendChild(span);
+  }
+  return container;
+}
+
+// Full type-out animation for first-time show.
+async function typeOutPanel(content) {
+  editBodyEl.innerHTML = '';
+  const isLua = /\.lua[u]?$/i.test(currentEditFile.name);
+  const container = document.createElement('div');
+  container.className = 'ep-lines';
+  editBodyEl.appendChild(container);
+
+  const lines = content.split('\n');
+  for (const line of lines) {
+    const span = document.createElement('span');
+    span.className = 'ep-line';
+    container.appendChild(span);
+    // type char by char
+    let typed = '';
+    for (const ch of line) {
+      typed += ch;
+      span.innerHTML = isLua ? luaHighlight(typed) : escHtml(typed);
+      editBodyEl.scrollTop = editBodyEl.scrollHeight;
+      let d = 4;
+      if (Math.random() < 0.03) d += 18;
+      await sleep(d);
+    }
+    // newline pause
+    await sleep(10);
+    editBodyEl.scrollTop = editBodyEl.scrollHeight;
+  }
+}
+
+// Surgical diff animation for subsequent edits.
+// hunks must be sorted ascending by start line.
+async function animatePanelDiff(oldContent, newContent, hunks) {
+  // Build the line container from old content first
+  editBodyEl.innerHTML = '';
+  const container = renderLinesInPanel(oldContent);
+  editBodyEl.appendChild(container);
+  const isLua = /\.lua[u]?$/i.test(currentEditFile.name);
+
+  // Work through hunks bottom-to-top in the DOM so indices stay valid
+  const sorted = [...hunks].sort((a,b) => b.start - a.start);
+
+  for (const h of sorted) {
+    const lineEls = container.querySelectorAll('.ep-line');
+    // Determine which DOM lines to remove
+    let removeStart, removeCount;
+    if (h.mode === 'insert') {
+      removeStart = h.start - 1; // insert point (nothing removed)
+      removeCount = 0;
+    } else {
+      removeStart = h.start - 1;
+      removeCount = h.end - h.start + 1;
+    }
+
+    // Animate removal
+    const toRemove = [];
+    for (let i = removeStart; i < removeStart + removeCount; i++) {
+      if (lineEls[i]) toRemove.push(lineEls[i]);
+    }
+    for (const el of toRemove) {
+      el.classList.add('removing');
+    }
+    if (toRemove.length > 0) await sleep(280);
+    for (const el of toRemove) el.remove();
+
+    // Insert new lines
+    const repLines = h.replacement.length ? h.replacement.split('\n') : [];
+    const afterEls = container.querySelectorAll('.ep-line');
+    // Reference node to insert before (the line that was AFTER the removed block)
+    const refNode = afterEls[removeStart] ?? null;
+
+    for (const repLine of repLines) {
+      const span = document.createElement('span');
+      span.className = 'ep-line inserting';
+      container.insertBefore(span, refNode);
+      editBodyEl.scrollTop = editBodyEl.scrollHeight;
+
+      // type into the new span
+      let typed = '';
+      for (const ch of repLine) {
+        typed += ch;
+        span.innerHTML = isLua ? luaHighlight(typed) : escHtml(typed);
+        editBodyEl.scrollTop = editBodyEl.scrollHeight;
+        await sleep(5 + Math.random() * 8);
+      }
+      await sleep(10);
+    }
+  }
+}
+
+async function openEditPanel(name, fileContent, hunks) {
+  currentEditFile = {name, content: fileContent};
   editTitle.textContent = name;
+
   const isHtml = /\.html?$/i.test(name);
   editTabs.innerHTML = '';
   ['code', ...(isHtml ? ['preview'] : [])].forEach(tab => {
@@ -767,49 +583,38 @@ function openEditPanel(name, fileContent, animated) {
     btn.onclick = () => switchEditTab(tab);
     editTabs.appendChild(btn);
   });
-  renderEditPanelContent('code', fileContent, animated);
+
   editPanel.classList.add('open');
   editBackdrop.classList.add('visible');
+
+  const entry = getFileEntry(name);
+  const firstTime = !entry || !entry.seenInPanel;
+  markFileSeen(name);
+
+  if (firstTime || !hunks || hunks.length === 0) {
+    // Full type-out
+    await typeOutPanel(fileContent);
+  } else {
+    // Figure out old content (before this round of edits)
+    // We need the pre-edit content. We stored it in the entry before applying.
+    const oldContent = entry._prevContent ?? fileContent;
+    await animatePanelDiff(oldContent, fileContent, hunks);
+  }
 }
 
 function switchEditTab(tab) {
-  editTabs.querySelectorAll('.edit-panel-tab').forEach(b =>
-    b.classList.toggle('active', b.dataset.tab === tab));
-  renderEditPanelContent(tab, currentEditFile.content, false);
-}
-
-function renderEditPanelContent(tab, fileContent, animated) {
-  editBodyEl.innerHTML = '';
+  editTabs.querySelectorAll('.edit-panel-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   if (tab === 'preview') {
+    editBodyEl.innerHTML = '';
     const iframe = document.createElement('iframe');
     iframe.className = 'edit-panel-preview';
     iframe.sandbox = 'allow-scripts allow-same-origin';
     editBodyEl.appendChild(iframe);
-    iframe.contentDocument.open();
-    iframe.contentDocument.write(fileContent);
-    iframe.contentDocument.close();
-    return;
-  }
-  const pre = document.createElement('div');
-  pre.className = 'edit-panel-code';
-  const isLua = /\.lua[u]?$/i.test(currentEditFile.name);
-  if (animated) {
-    editBodyEl.appendChild(pre);
-    (async () => {
-      let typed = '';
-      for (let ci = 0; ci < fileContent.length; ci++) {
-        typed += fileContent[ci];
-        pre.innerHTML = isLua ? luaHighlight(typed) : escHtml(typed);
-        editBodyEl.scrollTop = editBodyEl.scrollHeight;
-        let d = 4;
-        if (fileContent[ci] === '\n') d = 10;
-        if (Math.random() < 0.03) d += 20;
-        await sleep(d);
-      }
-    })();
+    iframe.contentDocument.open(); iframe.contentDocument.write(currentEditFile.content); iframe.contentDocument.close();
   } else {
-    pre.innerHTML = isLua ? luaHighlight(fileContent) : escHtml(fileContent);
-    editBodyEl.appendChild(pre);
+    editBodyEl.innerHTML = '';
+    const container = renderLinesInPanel(currentEditFile.content);
+    editBodyEl.appendChild(container);
   }
 }
 
@@ -820,122 +625,78 @@ function closeEditPanel() {
 editCloseBtn.onclick = closeEditPanel;
 editBackdrop.onclick = closeEditPanel;
 editDlBtn.onclick = () => {
-  const blob = new Blob([currentEditFile.content], { type: 'text/plain' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = currentEditFile.name;
-  a.click();
-  URL.revokeObjectURL(a.href);
+  const blob = new Blob([currentEditFile.content], {type:'text/plain'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = currentEditFile.name; a.click(); URL.revokeObjectURL(a.href);
+};
+editCopyBtn.onclick = () => {
+  navigator.clipboard.writeText(currentEditFile.content).then(() => {
+    editCopyBtn.textContent = 'copied!'; editCopyBtn.classList.add('copied');
+    setTimeout(() => { editCopyBtn.innerHTML = '<svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>copy'; editCopyBtn.classList.remove('copied'); }, 2000);
+  });
 };
 
 // ── [EDIT] block parser & diff applier ───────────────────────────────────────
-// Supported hunk types sent by the AI:
-//   @@start-end        → replace lines start..end with replacement (may be empty = DELETE)
-//   @@start+           → insert replacement lines BEFORE line start (ADD)
-//   @@start            → replace single line at start
-//
-// The AI teaches:
-//   - Remove lines  : @@start-end  with empty replacement block
-//   - Add lines     : @@start+     with new content
-//   - Replace lines : @@start-end  with new content
-//
-// We also pull from the editedFileStore so subsequent edits on an already-
-// edited file work off the patched version, not the original upload.
-
 function applyHunks(srcContent, hunks) {
-  const srcLines = srcContent.split('\n');
-  const result   = [...srcLines];
-
-  // Apply hunks from bottom-to-top so line numbers stay valid
-  const sorted = [...hunks].sort((a, b) => b.start - a.start);
-
+  const lines = srcContent.split('\n');
+  const result = [...lines];
+  const sorted = [...hunks].sort((a,b) => b.start - a.start);
   for (const h of sorted) {
-    const repLines = h.replacement.length ? h.replacement.split('\n') : [];
-
+    const rep = h.replacement.length ? h.replacement.split('\n') : [];
     if (h.mode === 'insert') {
-      // @@N+ — insert BEFORE line N (1-indexed)
-      result.splice(h.start - 1, 0, ...repLines);
+      result.splice(h.start - 1, 0, ...rep);
     } else {
-      // @@N-M or @@N — replace lines N..M inclusive
-      const deleteCount = h.end - h.start + 1;
-      result.splice(h.start - 1, deleteCount, ...repLines);
+      result.splice(h.start - 1, h.end - h.start + 1, ...rep);
     }
   }
-
   return result.join('\n');
 }
 
 function parseEditBlocks(text, knownFiles) {
   const edits = [];
-
-  // Match [EDIT: filename.lua] ... [/EDIT]
   const editRe = /\[EDIT:\s*([^\]]+)\]([\s\S]*?)\[\/EDIT\]/g;
-
   const cleanText = text.replace(editRe, (full, fileName, body) => {
     fileName = fileName.trim();
+    const entry = getFileEntry(fileName);
+    let srcContent = entry ? entry.content : (knownFiles.find(f => f.name.toLowerCase() === fileName.toLowerCase())?.content ?? '');
 
-    // Resolve source — prefer already-edited version, then uploaded files
-    const storedContent = getFileContent(fileName);
-    let srcContent;
-    if (storedContent !== null) {
-      srcContent = storedContent;
-    } else {
-      const srcFile = knownFiles.find(f => f.name.toLowerCase() === fileName.toLowerCase());
-      srcContent = srcFile ? srcFile.content : '';
-    }
-
-    // Parse hunks
-    // Supports:  @@N-M\n<replacement>  |  @@N\n<replacement>  |  @@N+\n<lines>
     const hunks = [];
     const hunkRe = /@@(\d+)(-(\d+)|(\+))?\n([\s\S]*?)(?=@@\d+|$)/g;
     let hm;
     while ((hm = hunkRe.exec(body.trim() + '\n')) !== null) {
       const start = parseInt(hm[1], 10);
       const isInsert = hm[4] === '+';
-      const end   = isInsert ? start : (hm[3] ? parseInt(hm[3], 10) : start);
-      // Strip trailing newline that acts as separator between hunks
-      const rawReplacement = hm[5].replace(/\n$/, '');
-      hunks.push({ start, end, mode: isInsert ? 'insert' : 'replace', replacement: rawReplacement });
+      const end = isInsert ? start : (hm[3] ? parseInt(hm[3], 10) : start);
+      hunks.push({start, end, mode: isInsert ? 'insert' : 'replace', replacement: hm[5].replace(/\n$/, '')});
     }
 
+    // Save old content for diff animation, then apply
+    const prevContent = srcContent;
     const resultContent = applyHunks(srcContent, hunks);
 
-    // Persist back to store so next edit operates on updated content
-    setFileContent(fileName, resultContent);
+    // Update store, stash prevContent for the animation
+    const key = fileName.toLowerCase();
+    if (!editedFileStore[key]) editedFileStore[key] = {content: resultContent, seenInPanel: false};
+    else { editedFileStore[key]._prevContent = prevContent; editedFileStore[key].content = resultContent; }
 
-    edits.push({
-      name: fileName,
-      hunks,
-      result: resultContent,
-      hadSource: srcContent.length > 0
-    });
-
+    edits.push({name: fileName, hunks, result: resultContent, prevContent, hadSource: srcContent.length > 0});
     return '__EDIT_CHIP_' + (edits.length - 1) + '__';
   });
-
-  return { cleanText, edits };
+  return {cleanText, edits};
 }
 
 function makeEditChip(edit) {
-  const chip = document.createElement('div');
-  chip.className = 'edit-chip';
+  const chip = document.createElement('div'); chip.className = 'edit-chip';
   const cl = edit.hunks.length + ' change' + (edit.hunks.length !== 1 ? 's' : '');
-  const ico = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
-    '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>' +
-    '<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
-  chip.innerHTML = ico + '<span>' + escHtml(edit.name) + '</span>' +
-    '<span style="opacity:.45;font-size:.6rem">' + cl + '</span>';
-  chip.onclick = () => openEditPanel(edit.name, edit.result, false);
+  chip.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>'
+    + `<span>${escHtml(edit.name)}</span><span style="opacity:.45;font-size:.6rem">${cl}</span>`;
+  chip.onclick = () => openEditPanel(edit.name, edit.result, edit.hunks);
   return chip;
 }
 
 function renderEditChips(container, edits) {
   const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
-  const nodes = [];
-  let n;
-  while ((n = walker.nextNode())) {
-    if (/__EDIT_CHIP_\d+__/.test(n.textContent)) nodes.push(n);
-  }
+  const nodes = []; let n;
+  while ((n = walker.nextNode())) { if (/__EDIT_CHIP_\d+__/.test(n.textContent)) nodes.push(n); }
   for (const nd of nodes) {
     const frag = document.createDocumentFragment();
     nd.textContent.split(/(__EDIT_CHIP_\d+__)/).forEach(part => {
@@ -951,53 +712,38 @@ function renderEditChips(container, edits) {
 async function doAiRequestWithEdits(promptText, files) {
   const thinkingMsg = appendLoadingMsg();
   const apiQuestion = buildApiQuestion(promptText, files);
-
   try {
     const encoded = btoa(unescape(encodeURIComponent(apiQuestion)));
     const selectedModel = document.getElementById('modelSelect').value;
     const res = await fetch('https://api.getcomet.space/ai?question=' + encoded + '&model=' + selectedModel);
     const data = await res.json();
-
     let content = '', reasoning = '';
     if (data.choices && data.choices[0]) {
       const msg = data.choices[0].message || {};
-      content   = msg.content || '';
+      content = msg.content || '';
       reasoning = msg.reasoning || msg.reasoning_content || '';
     }
-
     thinkingMsg.remove();
-    const { div: aiDiv, body } = createAiMsg();
-
+    const {div: aiDiv, body} = createAiMsg();
     if (reasoning) {
-      const block = document.createElement('div');
-      block.className = 'thinking-block';
-      const toggle = document.createElement('button');
-      toggle.className = 'thinking-toggle';
-      toggle.innerHTML = '<span>\u25b8</span> reasoning';
-      const thinkContent = document.createElement('div');
-      thinkContent.className = 'thinking-content';
-      thinkContent.textContent = reasoning;
-      toggle.addEventListener('click', () => {
-        const open = thinkContent.classList.toggle('open');
-        toggle.querySelector('span').textContent = open ? '\u25be' : '\u25b8';
-      });
+      const block = document.createElement('div'); block.className = 'thinking-block';
+      const toggle = document.createElement('button'); toggle.className = 'thinking-toggle'; toggle.innerHTML = '<span>▸</span> reasoning';
+      const thinkContent = document.createElement('div'); thinkContent.className = 'thinking-content'; thinkContent.textContent = reasoning;
+      toggle.addEventListener('click', () => { const open = thinkContent.classList.toggle('open'); toggle.querySelector('span').textContent = open ? '▾' : '▸'; });
       block.appendChild(toggle); block.appendChild(thinkContent); body.appendChild(block);
     }
-
     content = content.replace(/\s*\/n\s*/g, '\n');
-    const { cleanText, edits } = parseEditBlocks(content, files);
+    const {cleanText, edits} = parseEditBlocks(content, files);
     await revealContent(cleanText, body);
-
     if (edits.length > 0) {
       renderEditChips(body, edits);
-      setTimeout(() => openEditPanel(edits[0].name, edits[0].result, true), 350);
+      setTimeout(() => openEditPanel(edits[0].name, edits[0].result, edits[0].hunks), 350);
     }
   } catch(err) {
     thinkingMsg.remove();
-    const { body } = createAiMsg();
+    const {body} = createAiMsg();
     body.textContent = 'something went wrong. try again.';
   }
-
   sendBtn.disabled = false;
   inputEl.focus();
 }
@@ -1007,25 +753,17 @@ async function send() {
   if (!promptText && attachedFiles.length === 0) return;
   if (sendBtn.disabled) return;
   if (emptyState) { emptyState.remove(); emptyState = null; }
-
   const filesToSend = [...attachedFiles];
-
-  lastPromptText  = promptText;
-  lastFilesToSend = filesToSend;
-
+  lastPromptText = promptText; lastFilesToSend = filesToSend;
   renderUserMessage(promptText, filesToSend);
   inputEl.value = ''; inputEl.style.height = 'auto';
   attachedFiles = []; renderAttachBar();
   sendBtn.disabled = true;
-
   await doAiRequestWithEdits(promptText, filesToSend);
 }
 
-if (window.location.pathname === "/chat/") {
-  window.history.replaceState({}, "", "/");
-}
+if (window.location.pathname === '/chat/') window.history.replaceState({}, '', '/');
 
-// Retry delegation
 document.addEventListener('click', e => {
   const btn = e.target.closest('.retry-btn');
   if (!btn) return;
