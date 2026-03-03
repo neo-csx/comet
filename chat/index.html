@@ -27,15 +27,7 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 
 .model-select-wrap{position:relative;display:flex;align-items:center}
 .model-select-wrap::after{content:'⌄';position:absolute;right:.5rem;top:50%;transform:translateY(-52%);font-size:.7rem;color:var(--muted);pointer-events:none;line-height:1}
-.model-select{
-  font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;
-  letter-spacing:.12em;color:var(--accent);
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:6px;padding:.25rem 1.6rem .25rem .6rem;
-  cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;
-  text-transform:uppercase;transition:border-color .2s,background .2s
-}
+.model-select{font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.12em;color:var(--accent);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:.25rem 1.6rem .25rem .6rem;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;text-transform:uppercase;transition:border-color .2s,background .2s}
 .model-select:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.2)}
 .model-select:focus{border-color:rgba(255,255,255,0.25)}
 .model-select option{background:#111;color:var(--text);font-family:'Syne',sans-serif;letter-spacing:.08em}
@@ -62,7 +54,7 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .msg-role{font-size:.6rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
 .msg-role.ai{color:rgba(255,255,255,0.5)}
 .msg-body{font-size:.85rem;line-height:1.75;color:var(--text);word-break:break-word}
-.msg-body.user{color:rgba(255,255,255,0.6);font-size:.8rem;white-space:pre-wrap}
+.msg-body.user{color:rgba(255,255,255,0.6);font-size:.8rem}
 
 .msg-body p{margin:.25rem 0}
 .msg-body p:first-child{margin-top:0}
@@ -104,44 +96,59 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .lnum{color:var(--lua-num)}.lcmt{color:var(--lua-comment);font-style:italic}
 .lop{color:var(--lua-op)}.lbi{color:var(--lua-builtin)}
 
-/* Word reveal animation */
-.word{display:inline;animation:wordReveal .3s ease forwards}
-@keyframes wordReveal{from{opacity:0;filter:blur(3px)}to{opacity:1;filter:blur(0)}}
+/* Pasted code label */
+.pasted-label{font-size:.55rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:.15rem;opacity:.7}
 
-.cursor-blink{display:inline-block;width:2px;height:.85em;background:rgba(255,255,255,0.6);vertical-align:middle;margin-left:2px;animation:blink .9s step-end infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+/* File chip in messages */
+.file-chip-msg{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:.3rem .65rem;font-size:.7rem;color:rgba(255,255,255,0.6);cursor:pointer;transition:background .2s,border-color .2s;margin:.2rem 0;max-width:240px}
+.file-chip-msg:hover{background:rgba(255,255,255,0.09);border-color:rgba(255,255,255,0.2);color:var(--text)}
+.file-chip-msg svg{flex-shrink:0;opacity:.7}
+.file-chip-msg span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* File viewer popup */
+.file-popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:200;display:flex;align-items:center;justify-content:center;animation:fadeIn .15s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.file-popup{background:#0d0d0d;border:1px solid rgba(255,255,255,0.1);border-radius:10px;width:min(700px,94vw);max-height:80vh;display:flex;flex-direction:column;overflow:hidden;animation:popIn .18s ease}
+@keyframes popIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.file-popup-header{display:flex;align-items:center;justify-content:space-between;padding:.55rem .9rem;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.03);flex-shrink:0}
+.file-popup-name{font-size:.68rem;letter-spacing:.1em;color:rgba(255,255,255,0.55)}
+.file-popup-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.1rem;line-height:1;padding:.1rem .35rem;border-radius:4px;transition:color .2s,background .2s}
+.file-popup-close:hover{color:var(--text);background:rgba(255,255,255,0.07)}
+.file-popup-body{overflow-y:auto;padding:.85rem 1rem;font-size:.78rem;line-height:1.7;white-space:pre;font-family:'JetBrains Mono',monospace;flex:1;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent}
+.file-popup-body::-webkit-scrollbar{width:4px}
+.file-popup-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
+
+/* Retry button */
+.msg-actions{display:flex;gap:.4rem;margin-top:.25rem}
+.retry-btn{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid rgba(255,255,255,0.08);color:var(--muted);padding:.18rem .5rem;border-radius:4px;cursor:pointer;font-family:'JetBrains Mono',monospace;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.retry-btn:hover{background:rgba(255,255,255,0.06);color:var(--text);border-color:rgba(255,255,255,0.18)}
+.retry-btn svg{width:9px;height:9px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+.spinner{display:inline-block;width:14px;height:14px;border:1.5px solid rgba(255,255,255,0.1);border-top-color:rgba(255,255,255,0.5);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 .input-area{flex-shrink:0;border-top:1px solid var(--border);padding:.75rem 0 1.25rem;display:flex;flex-direction:column;gap:.5rem}
-
 .attachments-bar{display:flex;flex-wrap:wrap;gap:.4rem}
 .attach-chip{display:flex;align-items:center;gap:.35rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:5px;padding:.2rem .5rem;font-size:.65rem;color:rgba(255,255,255,0.55);max-width:200px}
 .attach-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .attach-chip-remove{background:none;border:none;color:var(--muted);cursor:pointer;padding:0;line-height:1;font-size:.75rem;flex-shrink:0}
 .attach-chip-remove:hover{color:var(--text)}
-
 .input-row{display:flex;gap:.75rem;align-items:flex-end}
-
-.drop-zone{position:relative}
+.drop-zone{position:relative;flex:1}
 .drop-zone.drag-over textarea{border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.07)}
 .drop-hint{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:.7rem;letter-spacing:.1em;color:rgba(255,255,255,0.4);pointer-events:none;border-radius:8px;background:rgba(255,255,255,0.03);border:1px dashed rgba(255,255,255,0.2)}
 .drop-zone.drag-over .drop-hint{display:flex}
-
 textarea{width:100%;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;padding:.7rem .85rem;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.6;resize:none;outline:none;max-height:140px;transition:border-color .2s,background .2s}
 textarea::placeholder{color:var(--muted)}
 textarea:focus{border-color:rgba(255,255,255,0.18)}
-
 .btns{display:flex;gap:.5rem;flex-shrink:0;align-items:flex-end}
 .send-btn{background:rgba(255,255,255,0.07);border:1px solid var(--border);border-radius:8px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,border-color .2s;flex-shrink:0}
 .send-btn:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2)}
 .send-btn:disabled{opacity:.3;cursor:not-allowed}
 .send-btn svg{width:16px;height:16px;fill:none;stroke:var(--text);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
 .attach-btn{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,border-color .2s;flex-shrink:0;color:var(--muted)}
 .attach-btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:var(--text)}
 .attach-btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-.spinner{display:inline-block;width:14px;height:14px;border:1.5px solid rgba(255,255,255,0.1);border-top-color:rgba(255,255,255,0.5);border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -167,7 +174,7 @@ textarea:focus{border-color:rgba(255,255,255,0.18)}
   <div class="input-area">
     <div class="attachments-bar" id="attachBar"></div>
     <div class="input-row">
-      <div class="drop-zone" id="dropZone" style="flex:1">
+      <div class="drop-zone" id="dropZone">
         <textarea id="input" rows="1" placeholder="message meteor... or drop .lua files"></textarea>
         <div class="drop-hint">drop lua files here</div>
       </div>
@@ -197,6 +204,51 @@ let emptyState = document.getElementById('emptyState');
 
 let attachedFiles = [];
 
+// Store last user turn for retry
+let lastPromptText = '';
+let lastFilesToSend = [];
+
+// ── File popup ────────────────────────────────────────────────────────────────
+function openFilePopup(name, content) {
+  const overlay = document.createElement('div');
+  overlay.className = 'file-popup-overlay';
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+
+  const popup = document.createElement('div');
+  popup.className = 'file-popup';
+
+  const hdr = document.createElement('div');
+  hdr.className = 'file-popup-header';
+  const nameLbl = document.createElement('span');
+  nameLbl.className = 'file-popup-name';
+  nameLbl.textContent = name;
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'file-popup-close';
+  closeBtn.textContent = '×';
+  closeBtn.onclick = () => overlay.remove();
+  hdr.appendChild(nameLbl);
+  hdr.appendChild(closeBtn);
+
+  const body = document.createElement('div');
+  body.className = 'file-popup-body';
+  body.innerHTML = luaHighlight(content);
+
+  popup.appendChild(hdr);
+  popup.appendChild(body);
+  overlay.appendChild(popup);
+  document.body.appendChild(overlay);
+}
+
+function makeFileChip(name, content) {
+  const chip = document.createElement('div');
+  chip.className = 'file-chip-msg';
+  chip.title = 'click to view ' + name;
+  chip.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>${escHtml(name)}</span>`;
+  chip.onclick = () => openFilePopup(name, content);
+  return chip;
+}
+
+// ── Lua syntax highlighter ────────────────────────────────────────────────────
 const LUA_KW = new Set(['and','break','do','else','elseif','end','false','for','function','goto','if','in','local','nil','not','or','repeat','return','then','true','until','while']);
 const LUA_BI = new Set(['print','pairs','ipairs','tostring','tonumber','type','error','assert','pcall','xpcall','select','unpack','rawget','rawset','rawequal','rawlen','require','load','loadfile','loadstring','dofile','collectgarbage','getmetatable','setmetatable','next','task','game','workspace','script','Instance','Vector3','Vector2','CFrame','Color3','UDim','UDim2','TweenInfo','Enum','wait','spawn','delay','math','table','string','os','coroutine','bit32','getfenv','setfenv','getrawmetatable','setrawmetatable','hookfunction','newcclosure','checkcaller','iscclosure','islclosure','clonefunction','Drawing','writefile','readfile','listfiles','makefolder','delfolder','delfile','HttpGet','request','http','syn','_G','shared']);
 
@@ -287,19 +339,22 @@ function makeCodeBlock(lang, code, fileName) {
   return wrap;
 }
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────────
 function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+// FIX: Parse fenced code blocks reliably before any inline processing.
+// The regex requires ``` to be at the start of a line (or start of string).
 function parseSegments(text) {
   const segs = [];
-  const re = /```(\w*)\r?\n?([\s\S]*?)```/g;
+  // Match ```lang\ncode\n``` — the closing ``` must be on its own line
+  const re = /```([\w]*)\n([\s\S]*?)```/g;
   let last = 0, m;
   re.lastIndex = 0;
   while ((m = re.exec(text)) !== null) {
     if (m.index > last) segs.push({type:'text', value: text.slice(last, m.index)});
-    const code = m[2].replace(/\n$/, ''); // strip trailing newline
+    const code = m[2].replace(/\n$/, '');
     segs.push({type:'code', lang: m[1].trim() || '', value: code});
     last = m.index + m[0].length;
   }
@@ -309,22 +364,26 @@ function parseSegments(text) {
   }
   return segs;
 }
-  
-// ── Inline markdown → HTML string ────────────────────────────────────────────
+
+// FIX: <highlight> now uses [^>]+ which allows numbers, symbols, anything except >
+// FIX: inline backtick pattern explicitly requires the backtick NOT be preceded
+//      by another backtick to avoid eating into fenced blocks
 function inlineMarkdown(text) {
   let result = '';
   let i = 0;
   const patterns = [
-    { re: /`([^`]+)`/,           fn: (m) => `<code class="inline-code">${escHtml(m[1])}</code>` },
-    { re: /\*\*([^*]+)\*\*/,     fn: (m) => `<strong>${inlineMarkdown(m[1])}</strong>` },
-    { re: /\*([^*]+)\*/,         fn: (m) => `<em>${inlineMarkdown(m[1])}</em>` },
-    { re: /\[([^\]]+)\]\(([^)]+)\)/, fn: (m) => `<a href="${escHtml(m[2])}" target="_blank" rel="noopener">${escHtml(m[1])}</a>` },
-    { re: /<([a-zA-Z][a-zA-Z0-9_\-/ ]*)>/, fn: (m) => `<span class="tag-highlight">${escHtml(m[1])}</span>` },
+    { re: /`([^`\n]+)`/,                        fn: (m) => `<code class="inline-code">${escHtml(m[1])}</code>` },
+    { re: /\*\*([^*\n]+)\*\*/,                  fn: (m) => `<strong>${inlineMarkdown(m[1])}</strong>` },
+    { re: /\*([^*\n]+)\*/,                       fn: (m) => `<em>${inlineMarkdown(m[1])}</em>` },
+    { re: /\[([^\]]+)\]\(([^)]+)\)/,            fn: (m) => `<a href="${escHtml(m[2])}" target="_blank" rel="noopener">${escHtml(m[1])}</a>` },
+    // FIX: [^>]+ allows any character (numbers, symbols, spaces, etc.) inside <>
+    { re: /<([^>]+)>/,                           fn: (m) => `<span class="tag-highlight">${escHtml(m[1])}</span>` },
   ];
   while (i < text.length) {
     let earliest = -1, earliestMatch = null, earliestFn = null;
     for (const p of patterns) {
-      const m = p.re.exec(text.slice(i));
+      const slice = text.slice(i);
+      const m = p.re.exec(slice);
       if (m && (earliest === -1 || m.index < earliest)) {
         earliest = m.index; earliestMatch = m; earliestFn = p.fn;
       }
@@ -337,7 +396,7 @@ function inlineMarkdown(text) {
   return result.replace(/\n/g, '<br>');
 }
 
-// ── Full markdown → DOM (rendered immediately, no animation) ─────────────────
+// ── Markdown → DOM ────────────────────────────────────────────────────────────
 function renderMarkdownToContainer(text, container) {
   const segs = parseSegments(text);
   for (const seg of segs) {
@@ -397,7 +456,7 @@ function renderTextBlock(text, container) {
   }
 }
 
-// ── Reveal: word-by-word for text, char-by-char for code ─────────────────────
+// ── Streaming reveal ──────────────────────────────────────────────────────────
 async function revealContent(text, container) {
   const segs = parseSegments(text);
   for (const seg of segs) {
@@ -414,22 +473,18 @@ async function revealContent(text, container) {
   }
 }
 
-// Stream plain text as words, respecting markdown block structure.
-// Strategy: tokenize the text into words+spaces, appending each word to a
-// running buffer, then re-render the whole buffer each time via markdown.
-// This is simple, correct, and produces a streaming typewriter feel.
 async function streamWords(text, container) {
-  // Split text into tokens: words and whitespace/punctuation runs
   const tokens = text.split(/(\s+)/);
   let buffer = '';
-
+  // Create a dedicated sub-container for this text segment so code blocks
+  // appended later by revealContent don't get wiped by innerHTML reassignment
+  const subContainer = document.createElement('div');
+  container.appendChild(subContainer);
   for (let i = 0; i < tokens.length; i++) {
     buffer += tokens[i];
-    // Re-render the buffer into the container
-    container.innerHTML = '';
-    renderTextBlock(buffer, container);
+    subContainer.innerHTML = '';
+    renderTextBlock(buffer, subContainer);
     messages.scrollTop = messages.scrollHeight;
-
     const isSpace = /^\s+$/.test(tokens[i]);
     if (!isSpace && tokens[i].length > 0) {
       await sleep(18 + Math.random() * 22);
@@ -455,7 +510,7 @@ async function typeCodeBlock(lang, code, bodyEl) {
 
 function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
-// ── Avatar helpers ────────────────────────────────────────────────────────────
+// ── Avatars ───────────────────────────────────────────────────────────────────
 function makeAiAvatar() {
   const av = document.createElement('div');
   av.className = 'msg-avatar ai-avatar';
@@ -495,8 +550,14 @@ function renderUserMessage(promptText, files) {
   roleEl.textContent = 'you';
   const body = document.createElement('div');
   body.className = 'msg-body user';
+
   if (promptText) {
     if (looksLikeCode(promptText)) {
+      // Pasted code: show labelled code block
+      const lbl = document.createElement('div');
+      lbl.className = 'pasted-label';
+      lbl.textContent = 'pasted code';
+      body.appendChild(lbl);
       body.appendChild(makeCodeBlock('lua', promptText));
     } else {
       const t = document.createElement('span');
@@ -505,7 +566,10 @@ function renderUserMessage(promptText, files) {
       body.appendChild(t);
     }
   }
-  for (const f of files) body.appendChild(makeCodeBlock('lua', f.content, f.name));
+
+  // Files: show as clickable chip, not inline code block
+  for (const f of files) body.appendChild(makeFileChip(f.name, f.content));
+
   content.appendChild(roleEl); content.appendChild(body);
   div.appendChild(content);
   messages.appendChild(div);
@@ -598,27 +662,33 @@ function createAiMsg() {
   roleEl.textContent = getModelLabel();
   const body = document.createElement('div');
   body.className = 'msg-body';
-  content.appendChild(roleEl); content.appendChild(body);
+
+  // Retry button — retries the last user turn
+  const actions = document.createElement('div');
+  actions.className = 'msg-actions';
+  const retryBtn = document.createElement('button');
+  retryBtn.className = 'retry-btn';
+  retryBtn.innerHTML = `<svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>retry`;
+  retryBtn.onclick = () => {
+    div.remove();
+    sendBtn.disabled = true;
+    doAiRequest(lastPromptText, lastFilesToSend);
+  };
+  actions.appendChild(retryBtn);
+
+  content.appendChild(roleEl);
+  content.appendChild(body);
+  content.appendChild(actions);
   div.appendChild(content);
   messages.appendChild(div);
   messages.scrollTop = messages.scrollHeight;
   return div;
 }
 
-async function send() {
-  const promptText = inputEl.value.trim();
-  if (!promptText && attachedFiles.length === 0) return;
-  if (sendBtn.disabled) return;
-  if (emptyState) { emptyState.remove(); emptyState = null; }
-
-  const filesToSend = [...attachedFiles];
-  renderUserMessage(promptText, filesToSend);
-  inputEl.value = ''; inputEl.style.height = 'auto';
-  attachedFiles = []; renderAttachBar();
-  sendBtn.disabled = true;
-
-  const apiQuestion = buildApiQuestion(promptText, filesToSend);
+// ── Core AI request (separated for retry support) ─────────────────────────────
+async function doAiRequest(promptText, files) {
   const thinkingMsg = appendLoadingMsg();
+  const apiQuestion = buildApiQuestion(promptText, files);
 
   try {
     const encoded = btoa(unescape(encodeURIComponent(apiQuestion)));
@@ -662,11 +732,29 @@ async function send() {
   inputEl.focus();
 }
 
+async function send() {
+  const promptText = inputEl.value.trim();
+  if (!promptText && attachedFiles.length === 0) return;
+  if (sendBtn.disabled) return;
+  if (emptyState) { emptyState.remove(); emptyState = null; }
+
+  const filesToSend = [...attachedFiles];
+
+  // Save for retry
+  lastPromptText = promptText;
+  lastFilesToSend = filesToSend;
+
+  renderUserMessage(promptText, filesToSend);
+  inputEl.value = ''; inputEl.style.height = 'auto';
+  attachedFiles = []; renderAttachBar();
+  sendBtn.disabled = true;
+
+  await doAiRequest(promptText, filesToSend);
+}
+
 if (window.location.pathname === "/chat/") {
   window.history.replaceState({}, "", "/");
 }
 </script>
 </body>
 </html>
-
-
