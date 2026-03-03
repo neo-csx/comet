@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Comet AI</title>
+<title>Comet AI - Meteor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -294,17 +294,22 @@ function escHtml(s) {
 
 function parseSegments(text) {
   const segs = [];
-  const re = /```(\w*)\n?([\s\S]*?)```/g;
+  const re = /```(\w*)\r?\n?([\s\S]*?)```/g;
   let last = 0, m;
+  re.lastIndex = 0;
   while ((m = re.exec(text)) !== null) {
     if (m.index > last) segs.push({type:'text', value: text.slice(last, m.index)});
-    segs.push({type:'code', lang: m[1]||'', value: m[2]});
+    const code = m[2].replace(/\n$/, ''); // strip trailing newline
+    segs.push({type:'code', lang: m[1].trim() || '', value: code});
     last = m.index + m[0].length;
   }
-  if (last < text.length) segs.push({type:'text', value: text.slice(last)});
+  if (last < text.length) {
+    const trailing = text.slice(last);
+    if (trailing.trim()) segs.push({type:'text', value: trailing});
+  }
   return segs;
 }
-
+  
 // ── Inline markdown → HTML string ────────────────────────────────────────────
 function inlineMarkdown(text) {
   let result = '';
@@ -397,6 +402,7 @@ async function revealContent(text, container) {
   const segs = parseSegments(text);
   for (const seg of segs) {
     if (seg.type === 'code') {
+      if (!seg.value.trim() && !seg.lang) continue;
       const cb = makeCodeBlock(seg.lang, '');
       const codeBodyEl = cb.querySelector('.code-body');
       container.appendChild(cb);
@@ -662,4 +668,5 @@ if (window.location.pathname === "/chat/") {
 </script>
 </body>
 </html>
+
 
