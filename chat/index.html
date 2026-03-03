@@ -93,10 +93,32 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .file-popup-body{overflow-y:auto;padding:.85rem 1rem;font-size:.78rem;line-height:1.7;white-space:pre;font-family:'JetBrains Mono',monospace;flex:1;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent}
 .file-popup-body::-webkit-scrollbar{width:4px}
 .file-popup-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
-.msg-actions{display:flex;gap:.4rem;margin-top:.25rem}
+.msg-actions{display:flex;gap:.4rem;margin-top:.25rem;align-items:center;flex-wrap:wrap}
 .retry-btn{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid rgba(255,255,255,0.08);color:var(--muted);padding:.18rem .5rem;border-radius:4px;cursor:pointer;font-family:'JetBrains Mono',monospace;transition:all .2s;display:flex;align-items:center;gap:.3rem}
 .retry-btn:hover{background:rgba(255,255,255,0.06);color:var(--text);border-color:rgba(255,255,255,0.18)}
 .retry-btn svg{width:9px;height:9px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Sources strip ─────────────────────────────────────────── */
+.sources-strip{display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;position:relative;margin-left:.1rem}
+.sources-favicons{display:flex;align-items:center}
+.sources-favicons .fav{width:18px;height:18px;border-radius:4px;border:1.5px solid rgba(255,255,255,0.12);background:#1a1a1a;object-fit:contain;flex-shrink:0;transition:transform .15s}
+.sources-favicons .fav:not(:first-child){margin-left:-6px}
+.sources-favicons .fav-fallback{width:18px;height:18px;border-radius:4px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sources-favicons .fav-fallback:not(:first-child){margin-left:-6px}
+.sources-favicons .fav-fallback svg{width:9px;height:9px;opacity:.45}
+.sources-more{font-size:.58rem;letter-spacing:.06em;color:var(--muted);white-space:nowrap;padding-left:.15rem}
+.sources-strip:hover .fav{transform:scale(1.1)}
+
+/* Sources popup */
+.sources-popup{position:absolute;bottom:calc(100% + 8px);left:0;background:#111;border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:.5rem;min-width:240px;max-width:320px;z-index:100;box-shadow:0 8px 32px rgba(0,0,0,0.6);animation:popIn .15s ease}
+.sources-popup-title{font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);padding:.2rem .4rem .45rem;border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:.35rem}
+.sources-popup-item{display:flex;align-items:center;gap:.55rem;padding:.3rem .4rem;border-radius:5px;text-decoration:none;transition:background .15s;cursor:pointer}
+.sources-popup-item:hover{background:rgba(255,255,255,0.06)}
+.sources-popup-item .si-fav{width:16px;height:16px;border-radius:3px;object-fit:contain;flex-shrink:0;background:#1a1a1a}
+.sources-popup-item .si-fav-fb{width:16px;height:16px;border-radius:3px;background:rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sources-popup-item .si-fav-fb svg{width:8px;height:8px;opacity:.4}
+.sources-popup-item .si-url{font-size:.65rem;color:rgba(255,255,255,0.55);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.sources-popup-item:hover .si-url{color:rgba(255,255,255,0.8)}
 
 /* Edit panel */
 .edit-panel{position:fixed;top:0;right:0;bottom:0;width:min(520px,90vw);background:#0a0a0a;border-left:1px solid rgba(255,255,255,0.09);z-index:150;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.22,.68,0,1.2)}
@@ -227,38 +249,122 @@ let lastPromptText  = '';
 let lastFilesToSend = [];
 
 // ── File store ────────────────────────────────────────────────────────────────
-// key (lowercase filename) → { content, prevContent }
-// prevContent is set just before applying a new round of edits so the
-// diff animation knows what the file looked like before.
 const fileStore = {};
-
 function getEntry(name) { return fileStore[name.toLowerCase()] ?? null; }
-
-function setContent(name, content) {
-  const k = name.toLowerCase();
-  fileStore[k] = fileStore[k] ?? {};
-  fileStore[k].content = content;
-}
-
-function setPrev(name, prev) {
-  const k = name.toLowerCase();
-  if (fileStore[k]) fileStore[k].prevContent = prev;
-}
-
-function seedStore(files) {
-  for (const f of files) setContent(f.name, f.content);
-}
+function setContent(name, content) { const k=name.toLowerCase(); fileStore[k]=fileStore[k]??{}; fileStore[k].content=content; }
+function setPrev(name, prev) { const k=name.toLowerCase(); if(fileStore[k])fileStore[k].prevContent=prev; }
+function seedStore(files) { for(const f of files)setContent(f.name,f.content); }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
-function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function sleep(ms)  { return new Promise(r => setTimeout(r, ms)); }
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+// ── Sources / favicons ────────────────────────────────────────────────────────
+function getDomain(url) {
+  try { return new URL(url).hostname; } catch { return url; }
+}
+function getFaviconUrl(url) {
+  try {
+    const domain = new URL(url).origin;
+    return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=32`;
+  } catch { return null; }
+}
+
+function makeFavImg(url, size) {
+  const favUrl = getFaviconUrl(url);
+  if (!favUrl) {
+    const fb = document.createElement('div');
+    fb.className = 'fav-fallback';
+    fb.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
+    return fb;
+  }
+  const img = document.createElement('img');
+  img.className = 'fav';
+  img.src = favUrl;
+  img.alt = getDomain(url);
+  img.width = size || 18;
+  img.height = size || 18;
+  img.onerror = () => { img.style.display='none'; };
+  return img;
+}
+
+let activeSourcesPopup = null;
+
+function closeSourcesPopup() {
+  if (activeSourcesPopup) { activeSourcesPopup.remove(); activeSourcesPopup = null; }
+}
+
+function makeSourcesStrip(visitedUrls) {
+  if (!visitedUrls || visitedUrls.length === 0) return null;
+
+  const MAX_SHOWN = 3;
+  const strip = document.createElement('div');
+  strip.className = 'sources-strip';
+
+  const favsWrap = document.createElement('div');
+  favsWrap.className = 'sources-favicons';
+
+  const shown = visitedUrls.slice(0, MAX_SHOWN);
+  for (const url of shown) favsWrap.appendChild(makeFavImg(url, 18));
+  strip.appendChild(favsWrap);
+
+  if (visitedUrls.length > MAX_SHOWN) {
+    const more = document.createElement('span');
+    more.className = 'sources-more';
+    more.textContent = `+${visitedUrls.length - MAX_SHOWN}`;
+    strip.appendChild(more);
+  }
+
+  // Click → toggle popup
+  strip.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (activeSourcesPopup && strip.contains(activeSourcesPopup)) {
+      closeSourcesPopup(); return;
+    }
+    closeSourcesPopup();
+
+    const popup = document.createElement('div');
+    popup.className = 'sources-popup';
+    const title = document.createElement('div');
+    title.className = 'sources-popup-title';
+    title.textContent = `${visitedUrls.length} source${visitedUrls.length !== 1 ? 's' : ''} visited`;
+    popup.appendChild(title);
+
+    for (const url of visitedUrls) {
+      const item = document.createElement('a');
+      item.className = 'sources-popup-item';
+      item.href = url;
+      item.target = '_blank';
+      item.rel = 'noopener noreferrer';
+
+      const favEl = makeFavImg(url, 16);
+      favEl.className = favEl.classList.contains('fav') ? 'si-fav' : 'si-fav-fb';
+      item.appendChild(favEl);
+
+      const label = document.createElement('span');
+      label.className = 'si-url';
+      label.textContent = getDomain(url);
+      label.title = url;
+      item.appendChild(label);
+
+      popup.appendChild(item);
+    }
+
+    strip.appendChild(popup);
+    activeSourcesPopup = popup;
+  });
+
+  return strip;
+}
+
+document.addEventListener('click', closeSourcesPopup);
 
 // ── Lua highlighter ───────────────────────────────────────────────────────────
-const LUA_KW = new Set(['and','break','do','else','elseif','end','false','for','function','goto','if','in','local','nil','not','or','repeat','return','then','true','until','while']);
-const LUA_BI = new Set(['print','pairs','ipairs','tostring','tonumber','type','error','assert','pcall','xpcall','select','unpack','rawget','rawset','rawequal','rawlen','require','load','loadfile','loadstring','dofile','collectgarbage','getmetatable','setmetatable','next','task','game','workspace','script','Instance','Vector3','Vector2','CFrame','Color3','UDim','UDim2','TweenInfo','Enum','wait','spawn','delay','math','table','string','os','coroutine','bit32','getfenv','setfenv','getrawmetatable','setrawmetatable','hookfunction','newcclosure','checkcaller','iscclosure','islclosure','clonefunction','Drawing','writefile','readfile','listfiles','makefolder','delfolder','delfile','HttpGet','request','http','syn','_G','shared']);
+const LUA_KW=new Set(['and','break','do','else','elseif','end','false','for','function','goto','if','in','local','nil','not','or','repeat','return','then','true','until','while']);
+const LUA_BI=new Set(['print','pairs','ipairs','tostring','tonumber','type','error','assert','pcall','xpcall','select','unpack','rawget','rawset','rawequal','rawlen','require','load','loadfile','loadstring','dofile','collectgarbage','getmetatable','setmetatable','next','task','game','workspace','script','Instance','Vector3','Vector2','CFrame','Color3','UDim','UDim2','TweenInfo','Enum','wait','spawn','delay','math','table','string','os','coroutine','bit32','getfenv','setfenv','getrawmetatable','setrawmetatable','hookfunction','newcclosure','checkcaller','iscclosure','islclosure','clonefunction','Drawing','writefile','readfile','listfiles','makefolder','delfolder','delfile','HttpGet','request','http','syn','_G','shared']);
 
-function luaHighlight(code) {
-  const out=[]; let i=0;
+function luaHighlight(code){
+  const out=[];let i=0;
   const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   while(i<code.length){
     if(code[i]==='-'&&code[i+1]==='-'){let e=code.indexOf('\n',i);if(e<0)e=code.length;out.push(`<span class="lcmt">${esc(code.slice(i,e))}</span>`);i=e;continue;}
@@ -274,51 +380,41 @@ function luaHighlight(code) {
   }
   return out.join('');
 }
-
-function hlLine(line, isLua) { return isLua ? luaHighlight(line) : escHtml(line); }
+function hlLine(line,isLua){return isLua?luaHighlight(line):escHtml(line);}
 
 // ── Code blocks (chat) ────────────────────────────────────────────────────────
-function makeCodeBlock(lang, code, fileName) {
-  const wrap=document.createElement('div'); wrap.className='code-block';
-  const hdr=document.createElement('div'); hdr.className='code-header';
-  const left=document.createElement('div'); left.style.cssText='display:flex;align-items:center;gap:.4rem';
-  const lbl=document.createElement('span'); lbl.className='code-lang'; lbl.textContent=lang||'code'; left.appendChild(lbl);
+function makeCodeBlock(lang,code,fileName){
+  const wrap=document.createElement('div');wrap.className='code-block';
+  const hdr=document.createElement('div');hdr.className='code-header';
+  const left=document.createElement('div');left.style.cssText='display:flex;align-items:center;gap:.4rem';
+  const lbl=document.createElement('span');lbl.className='code-lang';lbl.textContent=lang||'code';left.appendChild(lbl);
   if(fileName){const fn=document.createElement('span');fn.className='code-file-name';fn.textContent=fileName;left.appendChild(fn);}
-  const btn=document.createElement('button'); btn.className='copy-btn'; btn.textContent='copy';
-  // read finalCode from a ref so it works whether code is pre-filled or typed in later
-  const codeRef = { value: code };
+  const btn=document.createElement('button');btn.className='copy-btn';btn.textContent='copy';
+  const codeRef={value:code};
   btn.onclick=()=>navigator.clipboard.writeText(codeRef.value).then(()=>{btn.textContent='copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='copy';btn.classList.remove('copied');},2000);});
-  hdr.appendChild(left); hdr.appendChild(btn);
-  const body=document.createElement('div'); body.className='code-body';
+  hdr.appendChild(left);hdr.appendChild(btn);
+  const body=document.createElement('div');body.className='code-body';
   /^lua$/i.test(lang)?body.innerHTML=luaHighlight(code):body.textContent=code;
-  wrap.appendChild(hdr); wrap.appendChild(body);
-  wrap._codeRef = codeRef; // expose so typeCodeBlock can update it
+  wrap.appendChild(hdr);wrap.appendChild(body);
+  wrap._codeRef=codeRef;
   return wrap;
 }
 
-async function typeCodeBlock(lang, code, bodyEl) {
-  // update the codeRef on the parent wrap so copy button gets the full code
-  const wrap = bodyEl.closest('.code-block');
-  if(wrap?._codeRef) wrap._codeRef.value = code;
-  const isLua=/^lua$/i.test(lang); let typed='';
-  for(const ch of code){typed+=ch;isLua?bodyEl.innerHTML=luaHighlight(typed):bodyEl.textContent=typed;messages.scrollTop=messages.scrollHeight;let d=6;if(ch==='\n')d=14;else if(ch===' ')d=3;if(Math.random()<.04)d+=25;await sleep(d);}
-}
-
 // ── Markdown helpers ──────────────────────────────────────────────────────────
-function parseSegments(text) {
-  const segs=[],re=/```([\w]*)\n([\s\S]*?)```/g; let last=0,m; re.lastIndex=0;
+function parseSegments(text){
+  const segs=[],re=/```([\w]*)\n([\s\S]*?)```/g;let last=0,m;re.lastIndex=0;
   while((m=re.exec(text))!==null){if(m.index>last)segs.push({type:'text',value:text.slice(last,m.index)});segs.push({type:'code',lang:m[1].trim()||'',value:m[2].replace(/\n$/,'')});last=m.index+m[0].length;}
   if(last<text.length){const t=text.slice(last);if(t.trim())segs.push({type:'text',value:t});}
   return segs;
 }
-function inlineMarkdown(text) {
+function inlineMarkdown(text){
   let res='',i=0;
   const P=[
     {re:/`([^`\n]+)`/,fn:m=>`<code class="inline-code">${escHtml(m[1])}</code>`},
     {re:/\*\*([^*\n]+)\*\*/,fn:m=>`<strong>${inlineMarkdown(m[1])}</strong>`},
     {re:/\*([^*\n]+)\*/,fn:m=>`<em>${inlineMarkdown(m[1])}</em>`},
     {re:/\[([^\]]+)\]\(([^)]+)\)/,fn:m=>`<a href="${escHtml(m[2])}" target="_blank" rel="noopener">${escHtml(m[1])}</a>`},
-    {re:/<([^>]+)>/,fn:m=>`<span class="tag-highlight">${escHtml(m[1])}</span>`},
+    {re:/<([^>\/][^>]*)>/,fn:m=>`<span class="tag-highlight">${escHtml(m[1])}</span>`},
   ];
   while(i<text.length){
     let ei=-1,em=null,ef=null;
@@ -328,8 +424,8 @@ function inlineMarkdown(text) {
   }
   return res.replace(/\n/g,'<br>');
 }
-function renderTextBlock(text, container) {
-  const lines=text.split('\n'); let i=0;
+function renderTextBlock(text,container){
+  const lines=text.split('\n');let i=0;
   while(i<lines.length){
     const line=lines[i];
     if(!line.trim()){i++;continue;}
@@ -345,20 +441,22 @@ function renderTextBlock(text, container) {
 }
 
 // ── Chat streaming ────────────────────────────────────────────────────────────
-async function revealContent(text, container) {
+async function revealContent(text,container){
   for(const seg of parseSegments(text)){
     if(seg.type==='code'){if(!seg.value.trim()&&!seg.lang)continue;const cb=makeCodeBlock(seg.lang,'');const bodyEl=cb.querySelector('.code-body');container.appendChild(cb);await typeCodeBlock(seg.lang,seg.value,bodyEl);}
     else await streamWords(seg.value,container);
     messages.scrollTop=messages.scrollHeight;
   }
 }
-async function streamWords(text, container) {
-  const tokens=text.split(/(\s+)/); let buf='';
-  const sub=document.createElement('div'); container.appendChild(sub);
+async function streamWords(text,container){
+  const tokens=text.split(/(\s+)/);let buf='';
+  const sub=document.createElement('div');container.appendChild(sub);
   for(const tok of tokens){buf+=tok;sub.innerHTML='';renderTextBlock(buf,sub);messages.scrollTop=messages.scrollHeight;if(!/^\s+$/.test(tok)&&tok.length)await sleep(18+Math.random()*22);}
 }
-async function typeCodeBlock(lang, code, bodyEl) {
-  const isLua=/^lua$/i.test(lang); let typed='';
+async function typeCodeBlock(lang,code,bodyEl){
+  const wrap=bodyEl.closest('.code-block');
+  if(wrap?._codeRef)wrap._codeRef.value=code;
+  const isLua=/^lua$/i.test(lang);let typed='';
   for(const ch of code){typed+=ch;isLua?bodyEl.innerHTML=luaHighlight(typed):bodyEl.textContent=typed;messages.scrollTop=messages.scrollHeight;let d=6;if(ch==='\n')d=14;else if(ch===' ')d=3;if(Math.random()<.04)d+=25;await sleep(d);}
 }
 
@@ -367,7 +465,7 @@ function makeAiAvatar(){const av=document.createElement('div');av.className='msg
 function makeUserAvatar(){const av=document.createElement('div');av.className='msg-avatar user-avatar';av.innerHTML=`<svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>`;return av;}
 function looksLikeCode(t){const p=[/\blocal\s+\w+/,/\bfunction\s+\w+/,/\bend\b/,/\bfor\s+\w+\s*=/,/\bif\s+.+\bthen\b/,/game[:.]GetService/,/workspace\./,/Instance\.new/,/task\.wait/,/pairs\s*\(/];const m=p.filter(r=>r.test(t)).length;return m>=2||(t.split('\n').length>=4&&m>=1);}
 
-function renderUserMessage(promptText, files) {
+function renderUserMessage(promptText,files){
   const div=document.createElement('div');div.className='msg';div.appendChild(makeUserAvatar());
   const content=document.createElement('div');content.className='msg-content';
   const roleEl=document.createElement('div');roleEl.className='msg-role';roleEl.textContent='you';
@@ -377,7 +475,7 @@ function renderUserMessage(promptText, files) {
   content.appendChild(roleEl);content.appendChild(body);div.appendChild(content);messages.appendChild(div);messages.scrollTop=messages.scrollHeight;
 }
 
-function openFilePopup(name, content) {
+function openFilePopup(name,content){
   const overlay=document.createElement('div');overlay.className='file-popup-overlay';overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove();});
   const popup=document.createElement('div');popup.className='file-popup';
   const hdr=document.createElement('div');hdr.className='file-popup-header';
@@ -387,19 +485,19 @@ function openFilePopup(name, content) {
   const body=document.createElement('div');body.className='file-popup-body';body.innerHTML=luaHighlight(content);
   popup.appendChild(hdr);popup.appendChild(body);overlay.appendChild(popup);document.body.appendChild(overlay);
 }
-function makeFileChip(name, content) {
+function makeFileChip(name,content){
   const chip=document.createElement('div');chip.className='file-chip-msg';chip.title='click to view '+name;
   chip.innerHTML=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>${escHtml(name)}</span>`;
   chip.onclick=()=>openFilePopup(name,content);return chip;
 }
 
-function buildApiQuestion(promptText, files) {
+function buildApiQuestion(promptText,files){
   let q=promptText||'';
   for(const f of files){const e=getEntry(f.name);const c=e?e.content:f.content;const n=c.split('\n').map((l,i)=>`${String(i+1).padStart(4,' ')} | ${l}`).join('\n');q+=`\n\n[FILE: ${f.name}]\n\`\`\`lua\n${n}\n\`\`\``;}
   return q.trim();
 }
 
-function renderAttachBar() {
+function renderAttachBar(){
   attachBar.innerHTML='';
   attachedFiles.forEach((f,idx)=>{
     const chip=document.createElement('div');chip.className='attach-chip';
@@ -409,7 +507,7 @@ function renderAttachBar() {
     chip.appendChild(name);chip.appendChild(rm);attachBar.appendChild(chip);
   });
 }
-function addFiles(fileList) {
+function addFiles(fileList){
   const readers=[];
   for(const file of fileList){if(!/\.(lua|luau|txt)$/i.test(file.name))continue;readers.push(new Promise(res=>{const fr=new FileReader();fr.onload=e=>res({name:file.name,content:e.target.result});fr.readAsText(file);}));}
   Promise.all(readers).then(results=>{attachedFiles.push(...results);seedStore(results);renderAttachBar();});
@@ -441,7 +539,7 @@ function createAiMsg(){
   retryBtn.innerHTML=`<svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>retry`;
   retryBtn.onclick=()=>{div.remove();sendBtn.disabled=true;doAiRequest(lastPromptText,lastFilesToSend);};
   actions.appendChild(retryBtn);content.appendChild(roleEl);content.appendChild(body);content.appendChild(actions);div.appendChild(content);messages.appendChild(div);messages.scrollTop=messages.scrollHeight;
-  return{div,body};
+  return{div,body,actions};
 }
 
 // ── Edit panel ────────────────────────────────────────────────────────────────
@@ -453,39 +551,29 @@ const editBodyEl   = document.getElementById('editPanelBody');
 const editDlBtn    = document.getElementById('editDownloadBtn');
 const editCopyBtn  = document.getElementById('editCopyBtn');
 const editCloseBtn = document.getElementById('editCloseBtn');
-let currentEditFile = {name:'',content:''};
+let currentEditFile={name:'',content:''};
 
-// Render file as lines of <span class="ep-line"> (no animation, instant)
-function renderLinesInstant(content, name) {
+function renderLinesInstant(content,name){
   const isLua=/\.lua[u]?$/i.test(name);
   const wrap=document.createElement('div');wrap.className='ep-lines';
-  for(const line of content.split('\n')){
-    const s=document.createElement('span');s.className='ep-line';s.innerHTML=hlLine(line,isLua);wrap.appendChild(s);
-  }
+  for(const line of content.split('\n')){const s=document.createElement('span');s.className='ep-line';s.innerHTML=hlLine(line,isLua);wrap.appendChild(s);}
   return wrap;
 }
 
-// Animate a diff: show old content, then animate hunks
-async function animateDiff(prevContent, newContent, hunks, name) {
+async function animateDiff(prevContent,newContent,hunks,name){
   const isLua=/\.lua[u]?$/i.test(name);
   editBodyEl.innerHTML='';
   const wrap=renderLinesInstant(prevContent,name);
   editBodyEl.appendChild(wrap);
-
-  // Process hunks bottom-to-top so indices stay valid
   for(const h of [...hunks].sort((a,b)=>b.start-a.start)){
     const allLines=wrap.querySelectorAll('.ep-line');
-    const removeStart=h.mode==='insert'?h.start-1:h.start-1;
+    const removeStart=h.start-1;
     const removeCount=h.mode==='insert'?0:h.end-h.start+1;
-
-    // Animate out
     const toRemove=[];
     for(let i=removeStart;i<removeStart+removeCount;i++){if(allLines[i])toRemove.push(allLines[i]);}
     for(const el of toRemove)el.classList.add('removing');
     if(toRemove.length)await sleep(260);
     for(const el of toRemove)el.remove();
-
-    // Type in replacements
     const repLines=h.replacement?h.replacement.split('\n'):[];
     const refNode=wrap.querySelectorAll('.ep-line')[removeStart]??null;
     for(const repLine of repLines){
@@ -498,54 +586,34 @@ async function animateDiff(prevContent, newContent, hunks, name) {
   }
 }
 
-// Open panel — no animation, just show current content instantly.
-// Animation only ever happens during generation (called from doAiRequest).
-function openEditPanel(name) {
-  const entry=getEntry(name);
-  const content=entry?entry.content:'';
-  currentEditFile={name,content};
-  editTitle.textContent=name;
-
+function openEditPanel(name){
+  const entry=getEntry(name);const content=entry?entry.content:'';
+  currentEditFile={name,content};editTitle.textContent=name;
   const isHtml=/\.html?$/i.test(name);
   editTabs.innerHTML='';
   ['code',...(isHtml?['preview']:[])].forEach(tab=>{
     const btn=document.createElement('button');btn.className='edit-panel-tab'+(tab==='code'?' active':'');btn.dataset.tab=tab;btn.textContent=tab;
     btn.onclick=()=>switchEditTab(tab);editTabs.appendChild(btn);
   });
-
-  editBodyEl.innerHTML='';
-  editBodyEl.appendChild(renderLinesInstant(content,name));
-  editPanel.classList.add('open');
-  editBackdrop.classList.add('visible');
+  editBodyEl.innerHTML='';editBodyEl.appendChild(renderLinesInstant(content,name));
+  editPanel.classList.add('open');editBackdrop.classList.add('visible');
 }
 
-// Used during generation: open panel and play the appropriate animation.
-// firstTime=true → type out whole file. firstTime=false → diff animation.
-async function openEditPanelAnimated(name, hunks, firstTime) {
-  const entry=getEntry(name);
-  const content=entry?entry.content:'';
-  const prev=entry?entry.prevContent??content:content;
-  currentEditFile={name,content};
-  editTitle.textContent=name;
-
+async function openEditPanelAnimated(name,hunks,firstTime){
+  const entry=getEntry(name);const content=entry?entry.content:'';const prev=entry?entry.prevContent??content:content;
+  currentEditFile={name,content};editTitle.textContent=name;
   const isHtml=/\.html?$/i.test(name);
   editTabs.innerHTML='';
   ['code',...(isHtml?['preview']:[])].forEach(tab=>{
     const btn=document.createElement('button');btn.className='edit-panel-tab'+(tab==='code'?' active':'');btn.dataset.tab=tab;btn.textContent=tab;
     btn.onclick=()=>switchEditTab(tab);editTabs.appendChild(btn);
   });
-
-  editPanel.classList.add('open');
-  editBackdrop.classList.add('visible');
-
+  editPanel.classList.add('open');editBackdrop.classList.add('visible');
   if(firstTime){
-    // Type out entire file
-    const isLua=/\.lua[u]?$/i.test(name);
-    editBodyEl.innerHTML='';
+    const isLua=/\.lua[u]?$/i.test(name);editBodyEl.innerHTML='';
     const wrap=document.createElement('div');wrap.className='ep-lines';editBodyEl.appendChild(wrap);
     for(const line of content.split('\n')){
-      const s=document.createElement('span');s.className='ep-line';wrap.appendChild(s);
-      let typed='';
+      const s=document.createElement('span');s.className='ep-line';wrap.appendChild(s);let typed='';
       for(const ch of line){typed+=ch;s.innerHTML=hlLine(typed,isLua);editBodyEl.scrollTop=editBodyEl.scrollHeight;let d=4;if(Math.random()<.03)d+=18;await sleep(d);}
       await sleep(9);
     }
@@ -556,22 +624,14 @@ async function openEditPanelAnimated(name, hunks, firstTime) {
 
 function switchEditTab(tab){
   editTabs.querySelectorAll('.edit-panel-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
-  if(tab==='preview'){
-    editBodyEl.innerHTML='';
-    const iframe=document.createElement('iframe');iframe.className='edit-panel-preview';iframe.sandbox='allow-scripts allow-same-origin';
-    editBodyEl.appendChild(iframe);iframe.contentDocument.open();iframe.contentDocument.write(currentEditFile.content);iframe.contentDocument.close();
-  } else {
-    editBodyEl.innerHTML='';
-    editBodyEl.appendChild(renderLinesInstant(currentEditFile.content,currentEditFile.name));
-  }
+  if(tab==='preview'){editBodyEl.innerHTML='';const iframe=document.createElement('iframe');iframe.className='edit-panel-preview';iframe.sandbox='allow-scripts allow-same-origin';editBodyEl.appendChild(iframe);iframe.contentDocument.open();iframe.contentDocument.write(currentEditFile.content);iframe.contentDocument.close();}
+  else{editBodyEl.innerHTML='';editBodyEl.appendChild(renderLinesInstant(currentEditFile.content,currentEditFile.name));}
 }
 
 function closeEditPanel(){editPanel.classList.remove('open');editBackdrop.classList.remove('visible');}
 editCloseBtn.onclick=closeEditPanel;
 editBackdrop.onclick=closeEditPanel;
-editDlBtn.onclick=()=>{
-  const blob=new Blob([currentEditFile.content],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=currentEditFile.name;a.click();URL.revokeObjectURL(a.href);
-};
+editDlBtn.onclick=()=>{const blob=new Blob([currentEditFile.content],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=currentEditFile.name;a.click();URL.revokeObjectURL(a.href);};
 editCopyBtn.onclick=()=>{
   navigator.clipboard.writeText(currentEditFile.content).then(()=>{
     editCopyBtn.textContent='copied!';editCopyBtn.classList.add('copied');
@@ -580,7 +640,7 @@ editCopyBtn.onclick=()=>{
 };
 
 // ── [EDIT] diff parser ────────────────────────────────────────────────────────
-function applyHunks(srcContent, hunks) {
+function applyHunks(srcContent,hunks){
   const lines=[...srcContent.split('\n')];
   for(const h of [...hunks].sort((a,b)=>b.start-a.start)){
     const rep=h.replacement?h.replacement.split('\n'):[];
@@ -589,26 +649,22 @@ function applyHunks(srcContent, hunks) {
   return lines.join('\n');
 }
 
-function parseEditBlocks(text, knownFiles) {
+function parseEditBlocks(text,knownFiles){
   const edits=[];
   const cleanText=text.replace(/\[EDIT:\s*([^\]]+)\]([\s\S]*?)\[\/EDIT\]/g,(full,fileName,body)=>{
     fileName=fileName.trim();
     const e=getEntry(fileName);
     const src=e?e.content:(knownFiles.find(f=>f.name.toLowerCase()===fileName.toLowerCase())?.content??'');
-
     const hunks=[];
-    const re=/@@(\d+)(-(\d+)|(\+))?\n([\s\S]*?)(?=@@\d+|$)/g; let m;
+    const re=/@@(\d+)(-(\d+)|(\+))?\n([\s\S]*?)(?=@@\d+|$)/g;let m;
     while((m=re.exec(body.trim()+'\n'))!==null){
       const start=parseInt(m[1],10),isIns=m[4]==='+',end=isIns?start:(m[3]?parseInt(m[3],10):start);
       hunks.push({start,end,mode:isIns?'insert':'replace',replacement:m[5].replace(/\n$/,'')});
     }
-
-    // Stash prev before applying
     setPrev(fileName,src);
     const result=applyHunks(src,hunks);
     setContent(fileName,result);
-
-    const isFirst=!e;  // first time this file has been edited
+    const isFirst=!e;
     edits.push({name:fileName,hunks,isFirst});
     return '__EDIT_CHIP_'+(edits.length-1)+'__';
   });
@@ -620,40 +676,39 @@ function makeEditChip(edit){
   const cl=edit.hunks.length+' change'+(edit.hunks.length!==1?'s':'');
   chip.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>'
     +`<span>${escHtml(edit.name)}</span><span style="opacity:.45;font-size:.6rem">${cl}</span>`;
-  // Clicking a chip after generation = instant, no animation
   chip.onclick=()=>openEditPanel(edit.name);
   return chip;
 }
 
-function renderEditChips(container, edits){
-  const walker=document.createTreeWalker(container,NodeFilter.SHOW_TEXT);
-  const nodes=[];let n;
-  while((n=walker.nextNode()))if(/__EDIT_CHIP_\d+__/.test(n.textContent))nodes.push(n);
-  for(const nd of nodes){
-    const frag=document.createDocumentFragment();
-    nd.textContent.split(/(__EDIT_CHIP_\d+__)/).forEach(part=>{
-      const m=part.match(/^__EDIT_CHIP_(\d+)__$/);
-      if(m&&edits[+m[1]])frag.appendChild(makeEditChip(edits[+m[1]]));
-      else if(part)frag.appendChild(document.createTextNode(part));
-    });
-    nd.parentNode.replaceChild(frag,nd);
-  }
+// ── Strip fetch tags from displayed content (safety net) ──────────────────────
+function stripFetchTagsFromDisplay(text) {
+  return text
+    .replace(/\[FETCH(?:JSON)?:\s*https?:\/\/[^\]]+\]/gi, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 }
 
 // ── Core AI request ───────────────────────────────────────────────────────────
-async function doAiRequest(promptText, files) {
+async function doAiRequest(promptText,files){
   const loading=appendLoadingMsg();
-  try {
+  try{
     const model=document.getElementById('modelSelect').value;
-    const data = await fetch('https://api.getcomet.space/ai', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question: buildApiQuestion(promptText, files), model })
-    }).then(r => r.json());
+    const data=await fetch('https://api.getcomet.space/ai',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({question:buildApiQuestion(promptText,files),model})
+    }).then(r=>r.json());
+
     let content='',reasoning='';
     if(data.choices?.[0]){const msg=data.choices[0].message||{};content=msg.content||'';reasoning=msg.reasoning||msg.reasoning_content||'';}
+
+    // Strip any [FETCH:] tags that leaked into the final content
+    content = stripFetchTagsFromDisplay(content);
+
+    const visitedUrls = Array.isArray(data.visitedUrls) ? data.visitedUrls : [];
+
     loading.remove();
-    const{body}=createAiMsg();
+    const{body,actions}=createAiMsg();
 
     if(reasoning){
       const block=document.createElement('div');block.className='thinking-block';
@@ -665,39 +720,30 @@ async function doAiRequest(promptText, files) {
 
     content=content.replace(/\s*\/n\s*/g,'\n');
 
-    // Split content into segments: text runs and [EDIT] blocks (in order)
-    // We process them sequentially so text before an edit plays out first,
-    // the edit panel opens and finishes, then text after continues.
     const editRe=/(\[EDIT:\s*[^\]]+\][\s\S]*?\[\/EDIT\])/g;
     const rawParts=content.split(editRe);
+    const{edits}=parseEditBlocks(content,files);
 
-    // Pre-parse all edit blocks so store is updated (needed for chip onclick)
-    // We do a dry-run parse to get the edits metadata, then replay in order.
-    const{edits}=parseEditBlocks(content, files);
-
-    // Reset store to before-edits state for the sequential replay.
-    // We do this by re-seeding from files (prevContent was already stashed in parseEditBlocks).
-    // Actually, edits are already applied — we just need to animate them in order.
-    // Walk rawParts: text parts get streamed, edit parts get animated.
     let editIdx=0;
     for(const part of rawParts){
       if(/^\[EDIT:/i.test(part)){
-        // This is an edit block — animate it, wait for finish
         const edit=edits[editIdx++];
-        if(edit){
-          await openEditPanelAnimated(edit.name, edit.hunks, edit.isFirst);
-        }
+        if(edit)await openEditPanelAnimated(edit.name,edit.hunks,edit.isFirst);
       } else if(part.trim()){
         await revealContent(part,body);
       }
     }
 
-    // Render chips inline (replaces __EDIT_CHIP_N__ placeholders)
-    // Since we didn't inject placeholders into body this pass, append chips after body text
     if(edits.length){
       const chipRow=document.createElement('div');chipRow.style.cssText='display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.3rem';
       for(const e of edits)chipRow.appendChild(makeEditChip(e));
       body.appendChild(chipRow);
+    }
+
+    // Append sources strip to actions bar if there were any fetches
+    if(visitedUrls.length > 0){
+      const strip = makeSourcesStrip(visitedUrls);
+      if(strip) actions.appendChild(strip);
     }
 
   } catch(err){
@@ -727,7 +773,3 @@ if(window.location.pathname==='/chat/')window.history.replaceState({},'','/');
 </script>
 </body>
 </html>
-
-
-
-
