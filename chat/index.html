@@ -59,6 +59,20 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .msg-body a:hover{color:#fff}
 .msg-body code.inline-code{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:.1em .35em;font-family:'JetBrains Mono',monospace;font-size:.8em;color:#c3e88d}
 .msg-body .tag-highlight{background:#fff;color:#000;border-radius:3px;padding:.05em .3em;font-size:.82em;font-family:'JetBrains Mono',monospace;font-weight:500}
+/* ── tables ── */
+.msg-body table{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.8rem}
+.msg-body thead tr{border-bottom:1px solid rgba(255,255,255,0.18)}
+.msg-body th{text-align:left;padding:.35rem .65rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);white-space:nowrap}
+.msg-body td{padding:.32rem .65rem;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--text);vertical-align:top;line-height:1.55}
+.msg-body tbody tr:last-child td{border-bottom:none}
+.msg-body tbody tr:hover td{background:rgba(255,255,255,0.025)}
+.msg-body td:first-child,.msg-body th:first-child{padding-left:.3rem}
+/* ── blockquote ── */
+.msg-body blockquote{border-left:2px solid rgba(255,255,255,0.2);margin:.4rem 0;padding:.3rem 0 .3rem .75rem;color:rgba(255,255,255,0.5);font-style:italic}
+/* ── section divider ── */
+.msg-body .section-divider{display:flex;align-items:center;gap:.6rem;margin:.6rem 0;opacity:.45}
+.msg-body .section-divider::before,.msg-body .section-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.15)}
+.msg-body .section-divider span{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;white-space:nowrap;color:var(--muted)}
 .thinking-block{margin-bottom:.6rem;border-left:2px solid rgba(255,255,255,0.1);padding-left:.75rem}
 .thinking-toggle{font-size:.6rem;letter-spacing:.12em;cursor:pointer;text-transform:uppercase;display:flex;align-items:center;gap:.4rem;background:none;border:none;color:var(--muted);font-family:'JetBrains Mono',monospace;padding:0;margin-bottom:.3rem}
 .thinking-toggle:hover{color:rgba(255,255,255,0.5)}
@@ -339,45 +353,208 @@ function parseSegments(text){
   if(last<text.length){const t=text.slice(last);if(t.trim())segs.push({type:'text',value:t});}
   return segs;
 }
-function inlineMarkdown(text){
-  let res='',i=0;
-  const P=[
-    {re:/`([^`\n]+)`/,fn:m=>`<code class="inline-code">${escHtml(m[1])}</code>`},
-    {re:/\*\*([^*\n]+)\*\*/,fn:m=>`<strong>${inlineMarkdown(m[1])}</strong>`},
-    {re:/\*([^*\n]+)\*/,fn:m=>`<em>${inlineMarkdown(m[1])}</em>`},
-    {re:/\[([^\]]+)\]\(([^)]+)\)/,fn:m=>`<a href="${escHtml(m[2])}" target="_blank" rel="noopener">${escHtml(m[1])}</a>`},
-    {re:/<([^>\/][^>]*)>/,fn:m=>`<span class="tag-highlight">${escHtml(m[1])}</span>`},
+
+// ── FIXED inlineMarkdown — bold + links now allow symbols inside ──
+function inlineMarkdown(text) {
+  let res = '', i = 0;
+  const P = [
+    // inline code — highest priority, prevents other patterns matching inside backticks
+    { re: /`([^`\n]+)`/, fn: m => `<code class="inline-code">${escHtml(m[1])}</code>` },
+    // bold — allow any chars (including symbols like @, #, !, etc) except newline between **
+    // uses non-greedy match and allows a single * inside if not followed by another *
+    { re: /\*\*([^*\n]+(?:\*(?!\*)[^*\n]*)*)\*\*/, fn: m => `<strong>${inlineMarkdown(m[1])}</strong>` },
+    // italic — single *, content cannot contain another * or newline
+    { re: /\*([^*\n]+)\*/, fn: m => `<em>${inlineMarkdown(m[1])}</em>` },
+    // links — [label](url) — label allows ANY chars except ] and newline (fixes @, #, !, etc)
+    { re: /\[([^\]\n]+)\]\((https?:\/\/[^)\s]+)\)/, fn: m => `<a href="${escHtml(m[2])}" target="_blank" rel="noopener">${escHtml(m[1])}</a>` },
+    // <highlight> — allow any chars except >, <, / and newline (prevents matching HTML tags)
+    { re: /<([^>\/<\n][^>\n]*)>/, fn: m => `<span class="tag-highlight">${escHtml(m[1])}</span>` },
   ];
-  while(i<text.length){
-    let ei=-1,em=null,ef=null;
-    for(const p of P){const m=p.re.exec(text.slice(i));if(m&&(ei<0||m.index<ei)){ei=m.index;em=m;ef=p.fn;}}
-    if(ei<0){res+=escHtml(text.slice(i));break;}
-    res+=escHtml(text.slice(i,i+ei))+ef(em);i+=ei+em[0].length;
+  while (i < text.length) {
+    let ei = -1, em = null, ef = null;
+    for (const p of P) {
+      const m = p.re.exec(text.slice(i));
+      if (m && (ei < 0 || m.index < ei)) { ei = m.index; em = m; ef = p.fn; }
+    }
+    if (ei < 0) { res += escHtml(text.slice(i)); break; }
+    res += escHtml(text.slice(i, i + ei)) + ef(em);
+    i += ei + em[0].length;
   }
-  return res.replace(/\n/g,'<br>');
+  return res.replace(/\n/g, '<br>');
 }
-function renderTextBlock(text,container){
-  const lines=text.split('\n');let i=0;
-  while(i<lines.length){
-    const line=lines[i];
-    if(!line.trim()){i++;continue;}
-    const hm=line.match(/^(#{1,4})\s+(.+)/);
-    if(hm){const el=document.createElement('h'+hm[1].length);el.innerHTML=inlineMarkdown(hm[2]);container.appendChild(el);i++;continue;}
-    if(/^[-*_]{3,}$/.test(line.trim())){container.appendChild(document.createElement('hr'));i++;continue;}
-    if(/^[\-\*\+]\s/.test(line)){const ul=document.createElement('ul');while(i<lines.length&&/^[\-\*\+]\s/.test(lines[i])){const li=document.createElement('li');li.innerHTML=inlineMarkdown(lines[i].replace(/^[\-\*\+]\s/,''));ul.appendChild(li);i++;}container.appendChild(ul);continue;}
-    if(/^\d+\.\s/.test(line)){const ol=document.createElement('ol');while(i<lines.length&&/^\d+\.\s/.test(lines[i])){const li=document.createElement('li');li.innerHTML=inlineMarkdown(lines[i].replace(/^\d+\.\s/,''));ol.appendChild(li);i++;}container.appendChild(ol);continue;}
-    let pl=[];
-    while(i<lines.length){const l=lines[i];if(!l.trim()){i++;break;}if(/^#{1,4}\s/.test(l)||/^[\-\*\+]\s/.test(l)||/^\d+\.\s/.test(l)||/^[-*_]{3,}$/.test(l.trim()))break;pl.push(l);i++;}
-    if(pl.length){const p=document.createElement('p');p.innerHTML=inlineMarkdown(pl.join('\n'));container.appendChild(p);}
+
+// ── FIXED + EXTENDED renderTextBlock — tables, blockquotes, dividers ──
+function renderTextBlock(text, container) {
+  const lines = text.split('\n');
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+
+    // blank line
+    if (!line.trim()) { i++; continue; }
+
+    // heading (#, ##, ###, ####)
+    const hm = line.match(/^(#{1,4})\s+(.+)/);
+    if (hm) {
+      const el = document.createElement('h' + hm[1].length);
+      el.innerHTML = inlineMarkdown(hm[2]);
+      container.appendChild(el);
+      i++; continue;
+    }
+
+    // horizontal rule (---, ***, ___ on their own line with no label)
+    if (/^[-*_]{3,}$/.test(line.trim())) {
+      container.appendChild(document.createElement('hr'));
+      i++; continue;
+    }
+
+    // section divider with label: ---title--- or ===title===
+    const sdm = line.match(/^-{3,}\s*(.+?)\s*-{3,}$/) || line.match(/^={3,}\s*(.+?)\s*={3,}$/);
+    if (sdm) {
+      const div = document.createElement('div');
+      div.className = 'section-divider';
+      const span = document.createElement('span');
+      span.textContent = sdm[1];
+      div.appendChild(span);
+      container.appendChild(div);
+      i++; continue;
+    }
+
+    // blockquote (> text)
+    if (/^>\s?/.test(line)) {
+      const bq = document.createElement('blockquote');
+      const bqLines = [];
+      while (i < lines.length && /^>\s?/.test(lines[i])) {
+        bqLines.push(lines[i].replace(/^>\s?/, ''));
+        i++;
+      }
+      bq.innerHTML = inlineMarkdown(bqLines.join('\n'));
+      container.appendChild(bq);
+      continue;
+    }
+
+    // TABLE — detect pipe-delimited rows
+    if (/^\|.+\|/.test(line)) {
+      const tableLines = [];
+      while (i < lines.length && /^\|/.test(lines[i].trim())) {
+        tableLines.push(lines[i]);
+        i++;
+      }
+
+      // find separator row: | --- | :---: | ---: |
+      const sepIdx = tableLines.findIndex(l => /^\|\s*[-:]+[-\s:|]*\|/.test(l));
+      const table = document.createElement('table');
+
+      if (sepIdx === 1) {
+        // parse column alignments from separator row
+        const aligns = tableLines[1]
+          .split('|').slice(1, -1)
+          .map(c => {
+            const t = c.trim();
+            if (t.startsWith(':') && t.endsWith(':')) return 'center';
+            if (t.endsWith(':')) return 'right';
+            return 'left';
+          });
+
+        // thead
+        const thead = document.createElement('thead');
+        const headRow = document.createElement('tr');
+        tableLines[0].split('|').slice(1, -1).forEach((h, idx) => {
+          const th = document.createElement('th');
+          th.innerHTML = inlineMarkdown(h.trim());
+          th.style.textAlign = aligns[idx] || 'left';
+          headRow.appendChild(th);
+        });
+        thead.appendChild(headRow);
+        table.appendChild(thead);
+
+        // tbody
+        const tbody = document.createElement('tbody');
+        tableLines.slice(2).forEach(rowLine => {
+          if (!rowLine.trim() || /^\|\s*[-:]+[-\s:|]*\|/.test(rowLine)) return;
+          const tr = document.createElement('tr');
+          rowLine.split('|').slice(1, -1).forEach((c, idx) => {
+            const td = document.createElement('td');
+            td.innerHTML = inlineMarkdown(c.trim());
+            td.style.textAlign = aligns[idx] || 'left';
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+      } else {
+        // no separator — all rows as body cells
+        const tbody = document.createElement('tbody');
+        tableLines.forEach(rowLine => {
+          if (!rowLine.trim()) return;
+          const tr = document.createElement('tr');
+          rowLine.split('|').slice(1, -1).forEach(c => {
+            const td = document.createElement('td');
+            td.innerHTML = inlineMarkdown(c.trim());
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+      }
+
+      container.appendChild(table);
+      continue;
+    }
+
+    // unordered list (-, *, +)
+    if (/^[\-\*\+]\s/.test(line)) {
+      const ul = document.createElement('ul');
+      while (i < lines.length && /^[\-\*\+]\s/.test(lines[i])) {
+        const li = document.createElement('li');
+        li.innerHTML = inlineMarkdown(lines[i].replace(/^[\-\*\+]\s/, ''));
+        ul.appendChild(li);
+        i++;
+      }
+      container.appendChild(ul);
+      continue;
+    }
+
+    // ordered list (1. 2. etc)
+    if (/^\d+\.\s/.test(line)) {
+      const ol = document.createElement('ol');
+      while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
+        const li = document.createElement('li');
+        li.innerHTML = inlineMarkdown(lines[i].replace(/^\d+\.\s/, ''));
+        ol.appendChild(li);
+        i++;
+      }
+      container.appendChild(ol);
+      continue;
+    }
+
+    // paragraph — accumulate until blank line or block-level element starts
+    const pl = [];
+    while (i < lines.length) {
+      const l = lines[i];
+      if (!l.trim()) { i++; break; }
+      if (
+        /^#{1,4}\s/.test(l) ||
+        /^[\-\*\+]\s/.test(l) ||
+        /^\d+\.\s/.test(l) ||
+        /^[-*_]{3,}$/.test(l.trim()) ||
+        /^>\s?/.test(l) ||
+        /^\|.+\|/.test(l) ||
+        /^-{3,}\s*.+\s*-{3,}$/.test(l) ||
+        /^={3,}\s*.+\s*={3,}$/.test(l)
+      ) break;
+      pl.push(l);
+      i++;
+    }
+    if (pl.length) {
+      const p = document.createElement('p');
+      p.innerHTML = inlineMarkdown(pl.join('\n'));
+      container.appendChild(p);
+    }
   }
 }
 
-// ── Chat streaming — FIXED ────────────────────────────────────────
-// Previous bug: streamWords re-rendered full markdown DOM on EVERY word token.
-// With long AI responses (especially after web searches) this caused exponential
-// DOM work and froze the tab. Fix: stream raw text into a live text node,
-// do ONE markdown render per paragraph block when streaming is done.
-
+// ── Chat streaming ────────────────────────────────────────────────
 async function revealContent(text, container) {
   for (const seg of parseSegments(text)) {
     if (seg.type === 'code') {
@@ -395,28 +572,17 @@ async function revealContent(text, container) {
 
 async function streamTextSegment(text, container) {
   if (!text.trim()) return;
-
-  // Split on double-newlines (paragraph boundaries) so each block streams
-  // independently and renders to markdown once complete.
-  // This avoids re-rendering the entire accumulated buffer on every character.
   const paragraphs = text.split(/\n\n+/);
-
   for (const para of paragraphs) {
     if (!para.trim()) continue;
-
-    // Detect if this paragraph will just be a header or bullet list —
-    // stream it but render markdown at end rather than live-update markdown.
     const live = document.createElement('span');
     live.style.cssText = 'white-space:pre-wrap;font-size:.85rem;line-height:1.75;color:var(--text);word-break:break-word;display:block;margin:.2rem 0';
     container.appendChild(live);
-
     let typed = '';
     for (const ch of para) {
       typed += ch;
       live.textContent = typed;
       messages.scrollTop = messages.scrollHeight;
-
-      // Vary delay by character type for natural feel
       let d = 11;
       if (ch === '\n') d = 4;
       else if (ch === ' ') d = 5;
@@ -425,14 +591,12 @@ async function streamTextSegment(text, container) {
       if (Math.random() < 0.015) d += 25;
       await sleep(d);
     }
-
-    // Replace live span with properly rendered markdown — one DOM op per block
     const rendered = document.createElement('div');
     rendered.style.cssText = 'display:contents';
     renderTextBlock(para, rendered);
     live.replaceWith(rendered);
     messages.scrollTop = messages.scrollHeight;
-    await sleep(20); // tiny pause between blocks
+    await sleep(20);
   }
 }
 
@@ -441,7 +605,6 @@ async function typeCodeBlock(lang, code, bodyEl) {
   if (wrap?._codeRef) wrap._codeRef.value = code;
   const isLua = /^lua$/i.test(lang);
   let typed = '';
-  // Only re-highlight every N chars or on newline — prevents long scripts from freezing
   const HIGHLIGHT_INTERVAL = 6;
   for (const ch of code) {
     typed += ch;
@@ -456,7 +619,6 @@ async function typeCodeBlock(lang, code, bodyEl) {
     if (Math.random() < 0.025) d += 18;
     await sleep(d);
   }
-  // Ensure final state is fully highlighted
   isLua ? bodyEl.innerHTML = luaHighlight(typed) : bodyEl.textContent = typed;
 }
 
