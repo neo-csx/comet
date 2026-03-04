@@ -523,11 +523,9 @@ function renderTextBlock(text,container){
     function splitPipeRow(line){let s=line.trim();if(s.startsWith('|'))s=s.slice(1);if(s.endsWith('|'))s=s.slice(0,-1);return s.split('|').map(c=>c.trim());}
     function isSepRow(line){return/^\|?\s*[-:]+[-\s:|]*\|/.test(line);}
     const isPipeTable=/^\|.+\|/.test(line);
-    const isImplicitTable=!isPipeTable&&/^[^|]+\|[^|]/.test(line)&&!(/^[-*+]\s/.test(line))&&!(/^\d+\.\s/.test(line));
-    if(isPipeTable||isImplicitTable){
+    if(isPipeTable){
       const tableLines=[];
-      if(isPipeTable){while(i<lines.length&&/^\|/.test(lines[i].trim())){tableLines.push(lines[i]);i++;}}
-      else{while(i<lines.length){const l=lines[i];if(!l.trim())break;if(/^\|/.test(l.trim()))break;if(/^[-*+]\s|^\d+\.\s|^#{1,4}\s|^>\s/.test(l))break;if(!/\|/.test(l))break;tableLines.push(l);i++;}}
+      while(i<lines.length&&/^\|/.test(lines[i].trim())){tableLines.push(lines[i]);i++;}
       if(!tableLines.length)continue;
       const table=document.createElement('table');const sepIdx=tableLines.findIndex(l=>isSepRow(l));
       if(sepIdx===1){
@@ -538,25 +536,20 @@ function renderTextBlock(text,container){
         const tbody=document.createElement('tbody');
         tableLines.slice(2).forEach(rowLine=>{if(!rowLine.trim()||isSepRow(rowLine))return;const tr=document.createElement('tr');splitPipeRow(rowLine).forEach((c,idx)=>{const td=document.createElement('td');td.innerHTML=inlineMarkdown(c);td.style.textAlign=aligns[idx]||'left';tr.appendChild(td);});tbody.appendChild(tr);});
         table.appendChild(tbody);
-      } else if(isPipeTable){
+      } else {
         const dataRows=tableLines.filter(l=>!isSepRow(l));
         if(dataRows.length===0){container.appendChild(table);continue;}
         const thead=document.createElement('thead');const headRow=document.createElement('tr');
         splitPipeRow(dataRows[0]).forEach(h=>{const th=document.createElement('th');th.innerHTML=inlineMarkdown(h);headRow.appendChild(th);});
         thead.appendChild(headRow);table.appendChild(thead);
         if(dataRows.length>1){const tbody=document.createElement('tbody');dataRows.slice(1).forEach(rowLine=>{const tr=document.createElement('tr');splitPipeRow(rowLine).forEach(c=>{const td=document.createElement('td');td.innerHTML=inlineMarkdown(c);tr.appendChild(td);});tbody.appendChild(tr);});table.appendChild(tbody);}
-      } else {
-        const wrap=document.createElement('div');wrap.style.cssText='border:1px solid rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;margin:.4rem 0';
-        const validRows=tableLines.filter(l=>l.trim()&&l.includes('|'));
-        validRows.forEach((rowLine,idx)=>{const pipeIdx=rowLine.indexOf('|');if(pipeIdx<0)return;const key=rowLine.slice(0,pipeIdx).trim();const val=rowLine.slice(pipeIdx+1).trim();const row=document.createElement('div');row.style.cssText='padding:.45rem .7rem'+(idx<validRows.length-1?';border-bottom:1px solid rgba(255,255,255,0.06)':'');const keyEl=document.createElement('div');keyEl.innerHTML=inlineMarkdown(key);keyEl.style.cssText='font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:.18rem;font-family:"Syne",sans-serif';const valEl=document.createElement('div');valEl.innerHTML=inlineMarkdown(val);valEl.style.cssText='font-size:.82rem;color:var(--text);font-weight:500';row.appendChild(keyEl);row.appendChild(valEl);wrap.appendChild(row);});
-        container.appendChild(wrap);continue;
       }
       container.appendChild(table);continue;
     }
     if(/^[\-\*\+]\s/.test(line)){const ul=document.createElement('ul');while(i<lines.length&&/^[\-\*\+]\s/.test(lines[i])){const li=document.createElement('li');li.innerHTML=inlineMarkdown(lines[i].replace(/^[\-\*\+]\s/,''));ul.appendChild(li);i++;}container.appendChild(ul);continue;}
     if(/^\d+\.\s/.test(line)){const ol=document.createElement('ol');while(i<lines.length&&/^\d+\.\s/.test(lines[i])){const li=document.createElement('li');li.innerHTML=inlineMarkdown(lines[i].replace(/^\d+\.\s/,''));ol.appendChild(li);i++;}container.appendChild(ol);continue;}
     const pl=[];
-    while(i<lines.length){const l=lines[i];if(!l.trim()){i++;break;}if(/^#{1,4}\s/.test(l)||/^[\-\*\+]\s/.test(l)||/^\d+\.\s/.test(l)||/^[-*_]{3,}$/.test(l.trim())||/^>\s?/.test(l)||/^\|.+\|/.test(l)||(/^[^|]+\|[^|]/.test(l)&&!/^[-*+]\s/.test(l)&&!/^\d+\.\s/.test(l))||/^-{3,}\s*.+\s*-{3,}$/.test(l)||/^={3,}\s*.+\s*={3,}$/.test(l))break;pl.push(l);i++;}
+    while(i<lines.length){const l=lines[i];if(!l.trim()){i++;break;}if(/^#{1,4}\s/.test(l)||/^[\-\*\+]\s/.test(l)||/^\d+\.\s/.test(l)||/^[-*_]{3,}$/.test(l.trim())||/^>\s?/.test(l)||/^\|.+\|/.test(l)||/^-{3,}\s*.+\s*-{3,}$/.test(l)||/^={3,}\s*.+\s*={3,}$/.test(l))break;pl.push(l);i++;}
     if(pl.length){const p=document.createElement('p');p.innerHTML=inlineMarkdown(pl.join('\n'));container.appendChild(p);}
   }
 }
@@ -581,17 +574,22 @@ async function revealContent(text,container){
 }
 async function streamTextSegment(text,container){
   if(!text.trim())return;
-  const paragraphs=text.split(/\n\n+/);
-  for(const para of paragraphs){
-    if(!para.trim())continue;
-    const live=document.createElement('span');live.style.cssText='white-space:pre-wrap;font-size:.85rem;line-height:1.75;color:var(--text);word-break:break-word;display:block;margin:.2rem 0';container.appendChild(live);
-    let typed='';
-    for(const ch of para){
-      typed+=ch;live.textContent=typed;messages.scrollTop=messages.scrollHeight;
-      let d=11;if(ch==='\n')d=4;else if(ch===' ')d=5;else if(ch==='.'||ch==='!'||ch==='?')d=28;else if(ch===',')d=16;if(Math.random()<.015)d+=25;await sleep(d);
-    }
-    const rendered=document.createElement('div');rendered.style.cssText='display:contents';renderTextBlock(para,rendered);live.replaceWith(rendered);messages.scrollTop=messages.scrollHeight;await sleep(20);
+  // Stream the whole block character-by-character into a live span,
+  // then replace it with the fully-rendered markdown (tables, lists, etc.)
+  // Splitting on \n\n before rendering breaks multi-line constructs like tables.
+  const live=document.createElement('span');
+  live.style.cssText='white-space:pre-wrap;font-size:.85rem;line-height:1.75;color:var(--text);word-break:break-word;display:block;margin:.2rem 0';
+  container.appendChild(live);
+  let typed='';
+  for(const ch of text){
+    typed+=ch;live.textContent=typed;messages.scrollTop=messages.scrollHeight;
+    let d=9;if(ch==='\n')d=4;else if(ch===' ')d=4;else if(ch==='.'||ch==='!'||ch==='?')d=22;else if(ch===',')d=12;if(Math.random()<.012)d+=20;await sleep(d);
   }
+  const rendered=document.createElement('div');rendered.style.cssText='display:contents';
+  renderTextBlock(text,rendered);
+  live.replaceWith(rendered);
+  messages.scrollTop=messages.scrollHeight;
+  await sleep(20);
 }
 async function typeCodeBlock(lang,code,bodyEl){
   const wrap=bodyEl.closest('.code-block');if(wrap?._codeRef)wrap._codeRef.value=code;
@@ -616,14 +614,12 @@ function renderContentInstant(text,container){
       const parts=splitOnImageTags(seg.value);
       for(const part of parts){
         if(part.type==='image'){
-          // in shared view, show a placeholder note instead of regenerating
-          const note=document.createElement('div');
-          note.style.cssText='font-size:.72rem;color:rgba(255,255,255,0.25);font-style:italic;padding:.4rem 0';
-          note.textContent='[generated image — not available in shared view]';
-          container.appendChild(note);
+          // Actually generate the image (same as live chat)
+          const imgBlock=makeImageBlock(part.prompt);
+          container.appendChild(imgBlock);
         } else {
-          const segs2=part.value.split(/\n\n+/);
-          for(const para of segs2){if(para.trim()){const d=document.createElement('div');d.style.cssText='display:contents';renderTextBlock(para,d);container.appendChild(d);}}
+          const d=document.createElement('div');d.style.cssText='display:contents';
+          renderTextBlock(part.value,d);container.appendChild(d);
         }
       }
     }
