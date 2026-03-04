@@ -29,6 +29,52 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .model-select{font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.12em;color:var(--accent);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:.25rem 1.6rem .25rem .6rem;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;text-transform:uppercase;transition:border-color .2s,background .2s}
 .model-select:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.2)}
 .model-select option{background:#111;color:var(--text)}
+
+/* ── Share button in header ── */
+.share-header-btn{background:none;border:1px solid rgba(255,255,255,0.08);color:var(--muted);width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0}
+.share-header-btn:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.18);color:var(--text)}
+.share-header-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Share modal ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:300;display:flex;align-items:center;justify-content:center;animation:fadeIn .15s ease}
+.modal-overlay.hidden{display:none}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.share-modal{background:#0d0d0d;border:1px solid rgba(255,255,255,0.1);border-radius:12px;width:min(420px,90vw);padding:1.5rem;display:flex;flex-direction:column;gap:1.1rem;animation:popIn .18s ease}
+@keyframes popIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.share-modal-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;letter-spacing:.05em;color:#fff}
+.share-modal-sub{font-size:.68rem;color:var(--muted);line-height:1.6;margin-top:-.4rem}
+.share-duration-label{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.share-duration-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem}
+.duration-opt{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:.55rem .4rem;text-align:center;cursor:pointer;transition:all .18s;display:flex;flex-direction:column;gap:.18rem}
+.duration-opt:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2)}
+.duration-opt.selected{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.4)}
+.duration-opt .d-val{font-family:'Syne',sans-serif;font-weight:700;font-size:.82rem;color:#fff;line-height:1}
+.duration-opt .d-lbl{font-size:.58rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.share-modal-footer{display:flex;gap:.6rem;justify-content:flex-end;padding-top:.2rem}
+.share-modal-cancel{background:none;border:1px solid rgba(255,255,255,0.08);color:var(--muted);padding:.4rem .9rem;border-radius:6px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;transition:all .2s}
+.share-modal-cancel:hover{background:rgba(255,255,255,0.06);color:var(--text);border-color:rgba(255,255,255,0.18)}
+.share-modal-confirm{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:.4rem .9rem;border-radius:6px;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;transition:all .2s;display:flex;align-items:center;gap:.4rem}
+.share-modal-confirm:hover{background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.4)}
+.share-modal-confirm:disabled{opacity:.4;cursor:not-allowed}
+
+/* ── Share result (after link generated) ── */
+.share-result{display:flex;flex-direction:column;gap:.8rem}
+.share-result-label{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.share-link-row{display:flex;gap:.5rem;align-items:center}
+.share-link-input{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:.45rem .65rem;color:rgba(255,255,255,0.7);font-family:'JetBrains Mono',monospace;font-size:.7rem;outline:none;cursor:text;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.share-copy-btn{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:var(--text);padding:.4rem .75rem;border-radius:6px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;transition:all .2s;flex-shrink:0;white-space:nowrap}
+.share-copy-btn:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.3)}
+.share-copy-btn.copied{color:#c3e88d;border-color:rgba(195,232,141,0.35)}
+.share-expiry-note{font-size:.62rem;color:rgba(255,255,255,0.3);line-height:1.5}
+
+/* ── Shared chat banner (read-only view) ── */
+.shared-banner{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:.6rem .9rem;display:flex;align-items:center;gap:.65rem;margin-bottom:.25rem;flex-shrink:0}
+.shared-banner svg{flex-shrink:0;opacity:.5;width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.shared-banner-text{font-size:.65rem;color:var(--muted);flex:1;line-height:1.5}
+.shared-banner-text strong{color:rgba(255,255,255,0.55)}
+.shared-dismiss{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem;line-height:1;padding:.1rem .3rem;border-radius:4px;transition:color .15s}
+.shared-dismiss:hover{color:var(--text)}
+
 .messages{flex:1;overflow-y:auto;padding:1.5rem 0;display:flex;flex-direction:column;gap:1.5rem;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent}
 .messages::-webkit-scrollbar{width:4px}
 .messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
@@ -59,7 +105,6 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .msg-body a:hover{color:#fff}
 .msg-body code.inline-code{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:.1em .35em;font-family:'JetBrains Mono',monospace;font-size:.8em;color:#c3e88d}
 .msg-body .tag-highlight{background:#fff;color:#000;border-radius:3px;padding:.05em .3em;font-size:.82em;font-family:'JetBrains Mono',monospace;font-weight:500}
-/* ── tables ── */
 .msg-body table{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.8rem}
 .msg-body thead tr{border-bottom:1px solid rgba(255,255,255,0.18)}
 .msg-body th{text-align:left;padding:.35rem .65rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);white-space:nowrap}
@@ -67,9 +112,7 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .msg-body tbody tr:last-child td{border-bottom:none}
 .msg-body tbody tr:hover td{background:rgba(255,255,255,0.025)}
 .msg-body td:first-child,.msg-body th:first-child{padding-left:.3rem}
-/* ── blockquote ── */
 .msg-body blockquote{border-left:2px solid rgba(255,255,255,0.2);margin:.4rem 0;padding:.3rem 0 .3rem .75rem;color:rgba(255,255,255,0.5);font-style:italic}
-/* ── section divider ── */
 .msg-body .section-divider{display:flex;align-items:center;gap:.6rem;margin:.6rem 0;opacity:.45}
 .msg-body .section-divider::before,.msg-body .section-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.15)}
 .msg-body .section-divider span{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;white-space:nowrap;color:var(--muted)}
@@ -97,9 +140,7 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .file-chip-msg svg{flex-shrink:0;opacity:.7}
 .file-chip-msg span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .file-popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:200;display:flex;align-items:center;justify-content:center;animation:fadeIn .15s ease}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .file-popup{background:#0d0d0d;border:1px solid rgba(255,255,255,0.1);border-radius:10px;width:min(700px,94vw);max-height:80vh;display:flex;flex-direction:column;overflow:hidden;animation:popIn .18s ease}
-@keyframes popIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
 .file-popup-header{display:flex;align-items:center;justify-content:space-between;padding:.55rem .9rem;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.03);flex-shrink:0}
 .file-popup-name{font-size:.68rem;letter-spacing:.1em;color:rgba(255,255,255,0.55)}
 .file-popup-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.1rem;line-height:1;padding:.1rem .35rem;border-radius:4px;transition:color .2s}
@@ -207,6 +248,10 @@ textarea:focus{border-color:rgba(255,255,255,0.18)}
 <div class="noise"></div>
 <div class="wrap">
   <header>
+    <!-- Share button on the left -->
+    <button class="share-header-btn" id="shareBtn" title="share this chat">
+      <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    </button>
     <img class="logo" src="assets/comet_2.png" alt="Comet" />
     <div class="model-select-wrap">
       <select id="modelSelect" class="model-select"><option value="1A">Meteor-1A</option></select>
@@ -219,7 +264,7 @@ textarea:focus{border-color:rgba(255,255,255,0.18)}
       <span class="empty-label">Ask Meteor anything</span>
     </div>
   </div>
-  <div class="input-area">
+  <div class="input-area" id="inputArea">
     <div class="attachments-bar" id="attachBar"></div>
     <div class="input-row">
       <div class="drop-zone" id="dropZone">
@@ -233,6 +278,45 @@ textarea:focus{border-color:rgba(255,255,255,0.18)}
         <button class="send-btn" id="sendBtn">
           <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Share modal ── -->
+<div class="modal-overlay hidden" id="shareModalOverlay">
+  <div class="share-modal" id="shareModal">
+    <div>
+      <div class="share-modal-title">share chat</div>
+      <div class="share-modal-sub">choose how long your shared link stays active. anyone with the link can view this conversation.</div>
+    </div>
+    <div id="sharePickerWrap">
+      <div class="share-duration-label">link expires after</div>
+      <div class="share-duration-grid" id="durationGrid">
+        <div class="duration-opt" data-ttl="3600"><span class="d-val">1</span><span class="d-lbl">hour</span></div>
+        <div class="duration-opt" data-ttl="21600"><span class="d-val">6</span><span class="d-lbl">hours</span></div>
+        <div class="duration-opt selected" data-ttl="86400"><span class="d-val">1</span><span class="d-lbl">day</span></div>
+        <div class="duration-opt" data-ttl="259200"><span class="d-val">3</span><span class="d-lbl">days</span></div>
+        <div class="duration-opt" data-ttl="432000"><span class="d-val">5</span><span class="d-lbl">days</span></div>
+        <div class="duration-opt" data-ttl="604800"><span class="d-val">7</span><span class="d-lbl">days</span></div>
+      </div>
+      <div class="share-modal-footer">
+        <button class="share-modal-cancel" id="shareCancelBtn">cancel</button>
+        <button class="share-modal-confirm" id="shareConfirmBtn">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          generate link
+        </button>
+      </div>
+    </div>
+    <div id="shareResultWrap" class="share-result" style="display:none">
+      <div class="share-result-label">your link</div>
+      <div class="share-link-row">
+        <input class="share-link-input" id="shareLinkInput" readonly />
+        <button class="share-copy-btn" id="shareCopyLinkBtn">copy</button>
+      </div>
+      <div class="share-expiry-note" id="shareExpiryNote"></div>
+      <div class="share-modal-footer" style="padding-top:0">
+        <button class="share-modal-cancel" id="shareDoneBtn">done</button>
       </div>
     </div>
   </div>
@@ -365,420 +449,185 @@ function makeCodeBlock(lang,code,fileName){
 }
 
 // ── Image generation block ────────────────────────────────────────
-function makeImageBlock(prompt) {
-  const wrap = document.createElement('div');
-  wrap.className = 'img-gen-wrap';
-
-  // placeholder with blurred logo + spinner
-  const placeholder = document.createElement('div');
-  placeholder.className = 'img-gen-placeholder';
-
-  const blurLogo = document.createElement('div');
-  blurLogo.className = 'blur-logo';
-  const logoImg = document.createElement('img');
-  logoImg.src = 'assets/comet_2.png';
-  logoImg.alt = '';
-  blurLogo.appendChild(logoImg);
-
-  const spinnerWrap = document.createElement('div');
-  spinnerWrap.className = 'gen-spinner-wrap';
-  const spinner = document.createElement('div');
-  spinner.className = 'gen-spinner';
-  const genLabel = document.createElement('div');
-  genLabel.className = 'gen-label';
-  genLabel.textContent = 'generating...';
-  spinnerWrap.appendChild(spinner);
-  spinnerWrap.appendChild(genLabel);
-
-  placeholder.appendChild(blurLogo);
-  placeholder.appendChild(spinnerWrap);
-
-  // result img (hidden until loaded)
-  const resultImg = document.createElement('img');
-  resultImg.className = 'img-gen-result';
-  resultImg.alt = prompt;
-  resultImg.style.display = 'none';
-
-  // footer
-  const footer = document.createElement('div');
-  footer.className = 'img-gen-footer';
-  const promptLabel = document.createElement('div');
-  promptLabel.className = 'img-gen-prompt';
-  promptLabel.textContent = prompt;
-  promptLabel.title = prompt;
-  const dlBtn = document.createElement('button');
-  dlBtn.className = 'img-gen-dl';
-  dlBtn.disabled = true;
-  dlBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>save`;
-  footer.appendChild(promptLabel);
-  footer.appendChild(dlBtn);
-
-  wrap.appendChild(placeholder);
-  wrap.appendChild(resultImg);
-  wrap.appendChild(footer);
-
-  // kick off generation
-  fetchGeneratedImage(prompt, placeholder, resultImg, dlBtn);
-
+function makeImageBlock(prompt){
+  const wrap=document.createElement('div');wrap.className='img-gen-wrap';
+  const placeholder=document.createElement('div');placeholder.className='img-gen-placeholder';
+  const blurLogo=document.createElement('div');blurLogo.className='blur-logo';
+  const logoImg=document.createElement('img');logoImg.src='assets/comet_2.png';logoImg.alt='';blurLogo.appendChild(logoImg);
+  const spinnerWrap=document.createElement('div');spinnerWrap.className='gen-spinner-wrap';
+  const spinner=document.createElement('div');spinner.className='gen-spinner';
+  const genLabel=document.createElement('div');genLabel.className='gen-label';genLabel.textContent='generating...';
+  spinnerWrap.appendChild(spinner);spinnerWrap.appendChild(genLabel);
+  placeholder.appendChild(blurLogo);placeholder.appendChild(spinnerWrap);
+  const resultImg=document.createElement('img');resultImg.className='img-gen-result';resultImg.alt=prompt;resultImg.style.display='none';
+  const footer=document.createElement('div');footer.className='img-gen-footer';
+  const promptLabel=document.createElement('div');promptLabel.className='img-gen-prompt';promptLabel.textContent=prompt;promptLabel.title=prompt;
+  const dlBtn=document.createElement('button');dlBtn.className='img-gen-dl';dlBtn.disabled=true;
+  dlBtn.innerHTML=`<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>save`;
+  footer.appendChild(promptLabel);footer.appendChild(dlBtn);
+  wrap.appendChild(placeholder);wrap.appendChild(resultImg);wrap.appendChild(footer);
+  fetchGeneratedImage(prompt,placeholder,resultImg,dlBtn);
   return wrap;
 }
-
-async function fetchGeneratedImage(prompt, placeholder, resultImg, dlBtn) {
-  try {
-    const res = await fetch(`${API_BASE}/image`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt, width: 1024, height: 1024, steps: 4 })
-    });
-    const data = await res.json();
-    if (data.error) throw new Error(data.error);
-
-    const b64 = data.image;
-    const src = `data:image/png;base64,${b64}`;
-
-    resultImg.onload = () => {
-      placeholder.style.display = 'none';
-      resultImg.style.display = 'block';
-      resultImg.classList.add('revealed');
-      dlBtn.disabled = false;
-      dlBtn.onclick = () => {
-        const a = document.createElement('a');
-        a.href = src;
-        a.download = 'meteor-gen.png';
-        a.click();
-      };
-    };
-    resultImg.src = src;
-  } catch (err) {
-    placeholder.querySelector('.gen-label').textContent = 'generation failed';
-    placeholder.querySelector('.gen-spinner').style.display = 'none';
-    console.error('image gen error:', err);
-  }
+async function fetchGeneratedImage(prompt,placeholder,resultImg,dlBtn){
+  try{
+    const res=await fetch(`${API_BASE}/image`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt,width:1024,height:1024,steps:4})});
+    const data=await res.json();if(data.error)throw new Error(data.error);
+    const src=`data:image/png;base64,${data.image}`;
+    resultImg.onload=()=>{placeholder.style.display='none';resultImg.style.display='block';resultImg.classList.add('revealed');dlBtn.disabled=false;dlBtn.onclick=()=>{const a=document.createElement('a');a.href=src;a.download='meteor-gen.png';a.click();};};
+    resultImg.src=src;
+  }catch(err){placeholder.querySelector('.gen-label').textContent='generation failed';placeholder.querySelector('.gen-spinner').style.display='none';console.error('image gen error:',err);}
 }
 
 // ── Markdown helpers ──────────────────────────────────────────────
-function parseSegments(text) {
-  const segs = [], re = /```([\w]*)\n([\s\S]*?)```/g;
-  let last = 0, m;
-  re.lastIndex = 0;
-  while ((m = re.exec(text)) !== null) {
-    if (m.index > last) segs.push({ type: 'text', value: text.slice(last, m.index) });
-    segs.push({ type: 'code', lang: m[1].trim() || '', value: m[2].replace(/\n$/, '') });
-    last = m.index + m[0].length;
-  }
-  if (last < text.length) {
-    const t = text.slice(last);
-    if (t.trim()) segs.push({ type: 'text', value: t });
-  }
+function parseSegments(text){
+  const segs=[],re=/```([\w]*)\n([\s\S]*?)```/g;let last=0,m;re.lastIndex=0;
+  while((m=re.exec(text))!==null){if(m.index>last)segs.push({type:'text',value:text.slice(last,m.index)});segs.push({type:'code',lang:m[1].trim()||'',value:m[2].replace(/\n$/,'')});last=m.index+m[0].length;}
+  if(last<text.length){const t=text.slice(last);if(t.trim())segs.push({type:'text',value:t});}
   return segs;
 }
-
-// ── Image tag splitting ───────────────────────────────────────────
-// Splits text segments further on [IMAGE: ...] tags
-function splitOnImageTags(text) {
-  const parts = [];
-  const re = /\[IMAGE:\s*([\s\S]*?)\]/gi;
-  let last = 0, m;
-  re.lastIndex = 0;
-  while ((m = re.exec(text)) !== null) {
-    if (m.index > last) parts.push({ type: 'text', value: text.slice(last, m.index) });
-    parts.push({ type: 'image', prompt: m[1].trim() });
-    last = m.index + m[0].length;
-  }
-  if (last < text.length) {
-    const t = text.slice(last);
-    if (t.trim()) parts.push({ type: 'text', value: t });
-  }
+function splitOnImageTags(text){
+  const parts=[],re=/\[IMAGE:\s*([\s\S]*?)\]/gi;let last=0,m;re.lastIndex=0;
+  while((m=re.exec(text))!==null){if(m.index>last)parts.push({type:'text',value:text.slice(last,m.index)});parts.push({type:'image',prompt:m[1].trim()});last=m.index+m[0].length;}
+  if(last<text.length){const t=text.slice(last);if(t.trim())parts.push({type:'text',value:t});}
   return parts;
 }
-
-function inlineMarkdown(text) {
-  let res = '', i = 0;
-  const P = [
-    { re: /`([^`\n]+)`/, fn: m => `<code class="inline-code">${escHtml(m[1])}</code>` },
-    { re: /\*\*([^*\n]+(?:\*(?!\*)[^*\n]*)*)\*\*/, fn: m => `<strong>${inlineMarkdown(m[1])}</strong>` },
-    { re: /\*([^*\n]+)\*/, fn: m => `<em>${inlineMarkdown(m[1])}</em>` },
-    { re: /\[([^\]\n]+)\]\((https?:\/\/[^)\s]+)\)/, fn: m => `<a href="${escHtml(m[2])}" target="_blank" rel="noopener">${escHtml(m[1])}</a>` },
-    { re: /<([^>\/<\n][^>\n]*)>/, fn: m => `<span class="tag-highlight">${escHtml(m[1])}</span>` },
+function inlineMarkdown(text){
+  let res='',i=0;
+  const P=[
+    {re:/`([^`\n]+)`/,fn:m=>`<code class="inline-code">${escHtml(m[1])}</code>`},
+    {re:/\*\*([^*\n]+(?:\*(?!\*)[^*\n]*)*)\*\*/,fn:m=>`<strong>${inlineMarkdown(m[1])}</strong>`},
+    {re:/\*([^*\n]+)\*/,fn:m=>`<em>${inlineMarkdown(m[1])}</em>`},
+    {re:/\[([^\]\n]+)\]\((https?:\/\/[^)\s]+)\)/,fn:m=>`<a href="${escHtml(m[2])}" target="_blank" rel="noopener">${escHtml(m[1])}</a>`},
+    {re:/<([^>\/<\n][^>\n]*)>/,fn:m=>`<span class="tag-highlight">${escHtml(m[1])}</span>`},
   ];
-  while (i < text.length) {
-    let ei = -1, em = null, ef = null;
-    for (const p of P) {
-      const m = p.re.exec(text.slice(i));
-      if (m && (ei < 0 || m.index < ei)) { ei = m.index; em = m; ef = p.fn; }
-    }
-    if (ei < 0) { res += escHtml(text.slice(i)); break; }
-    res += escHtml(text.slice(i, i + ei)) + ef(em);
-    i += ei + em[0].length;
+  while(i<text.length){
+    let ei=-1,em=null,ef=null;
+    for(const p of P){const m=p.re.exec(text.slice(i));if(m&&(ei<0||m.index<ei)){ei=m.index;em=m;ef=p.fn;}}
+    if(ei<0){res+=escHtml(text.slice(i));break;}
+    res+=escHtml(text.slice(i,i+ei))+ef(em);i+=ei+em[0].length;
   }
-  return res.replace(/\n/g, '<br>');
+  return res.replace(/\n/g,'<br>');
 }
-
-function renderTextBlock(text, container) {
-  const lines = text.split('\n');
-  let i = 0;
-  while (i < lines.length) {
-    const line = lines[i];
-    if (!line.trim()) { i++; continue; }
-
-    const hm = line.match(/^(#{1,4})\s+(.+)/);
-    if (hm) {
-      const el = document.createElement('h' + hm[1].length);
-      el.innerHTML = inlineMarkdown(hm[2]);
-      container.appendChild(el); i++; continue;
-    }
-
-    if (/^[-*_]{3,}$/.test(line.trim())) {
-      container.appendChild(document.createElement('hr')); i++; continue;
-    }
-
-    const sdm = line.match(/^-{3,}\s*(.+?)\s*-{3,}$/) || line.match(/^={3,}\s*(.+?)\s*={3,}$/);
-    if (sdm) {
-      const div = document.createElement('div');
-      div.className = 'section-divider';
-      const span = document.createElement('span');
-      span.textContent = sdm[1];
-      div.appendChild(span);
-      container.appendChild(div); i++; continue;
-    }
-
-    if (/^>\s?/.test(line)) {
-      const bq = document.createElement('blockquote');
-      const bqLines = [];
-      while (i < lines.length && /^>\s?/.test(lines[i])) {
-        bqLines.push(lines[i].replace(/^>\s?/, '')); i++;
-      }
-      bq.innerHTML = inlineMarkdown(bqLines.join('\n'));
-      container.appendChild(bq); continue;
-    }
-
-    function splitPipeRow(line) {
-      let s = line.trim();
-      if (s.startsWith('|')) s = s.slice(1);
-      if (s.endsWith('|')) s = s.slice(0, -1);
-      return s.split('|').map(c => c.trim());
-    }
-    function isSepRow(line) { return /^\|?\s*[-:]+[-\s:|]*\|/.test(line); }
-
-    const isPipeTable = /^\|.+\|/.test(line);
-    const isImplicitTable = !isPipeTable && /^[^|]+\|[^|]/.test(line) && !(/^[-*+]\s/.test(line)) && !(/^\d+\.\s/.test(line));
-
-    if (isPipeTable || isImplicitTable) {
-      const tableLines = [];
-      if (isPipeTable) {
-        while (i < lines.length && /^\|/.test(lines[i].trim())) { tableLines.push(lines[i]); i++; }
-      } else {
-        while (i < lines.length) {
-          const l = lines[i];
-          if (!l.trim()) break;
-          if (/^\|/.test(l.trim())) break;
-          if (/^[-*+]\s|^\d+\.\s|^#{1,4}\s|^>\s/.test(l)) break;
-          if (!/\|/.test(l)) break;
-          tableLines.push(l); i++;
-        }
-      }
-      if (!tableLines.length) continue;
-
-      const table = document.createElement('table');
-      const sepIdx = tableLines.findIndex(l => isSepRow(l));
-
-      if (sepIdx === 1) {
-        const aligns = splitPipeRow(tableLines[1]).map(c => {
-          if (c.startsWith(':') && c.endsWith(':')) return 'center';
-          if (c.endsWith(':')) return 'right';
-          return 'left';
-        });
-        const thead = document.createElement('thead');
-        const headRow = document.createElement('tr');
-        splitPipeRow(tableLines[0]).forEach((h, idx) => {
-          const th = document.createElement('th');
-          th.innerHTML = inlineMarkdown(h);
-          th.style.textAlign = aligns[idx] || 'left';
-          headRow.appendChild(th);
-        });
-        thead.appendChild(headRow);
-        table.appendChild(thead);
-        const tbody = document.createElement('tbody');
-        tableLines.slice(2).forEach(rowLine => {
-          if (!rowLine.trim() || isSepRow(rowLine)) return;
-          const tr = document.createElement('tr');
-          splitPipeRow(rowLine).forEach((c, idx) => {
-            const td = document.createElement('td');
-            td.innerHTML = inlineMarkdown(c);
-            td.style.textAlign = aligns[idx] || 'left';
-            tr.appendChild(td);
-          });
-          tbody.appendChild(tr);
-        });
+function renderTextBlock(text,container){
+  const lines=text.split('\n');let i=0;
+  while(i<lines.length){
+    const line=lines[i];
+    if(!line.trim()){i++;continue;}
+    const hm=line.match(/^(#{1,4})\s+(.+)/);
+    if(hm){const el=document.createElement('h'+hm[1].length);el.innerHTML=inlineMarkdown(hm[2]);container.appendChild(el);i++;continue;}
+    if(/^[-*_]{3,}$/.test(line.trim())){container.appendChild(document.createElement('hr'));i++;continue;}
+    const sdm=line.match(/^-{3,}\s*(.+?)\s*-{3,}$/)||line.match(/^={3,}\s*(.+?)\s*={3,}$/);
+    if(sdm){const div=document.createElement('div');div.className='section-divider';const span=document.createElement('span');span.textContent=sdm[1];div.appendChild(span);container.appendChild(div);i++;continue;}
+    if(/^>\s?/.test(line)){const bq=document.createElement('blockquote');const bqLines=[];while(i<lines.length&&/^>\s?/.test(lines[i])){bqLines.push(lines[i].replace(/^>\s?/,''));i++;}bq.innerHTML=inlineMarkdown(bqLines.join('\n'));container.appendChild(bq);continue;}
+    function splitPipeRow(line){let s=line.trim();if(s.startsWith('|'))s=s.slice(1);if(s.endsWith('|'))s=s.slice(0,-1);return s.split('|').map(c=>c.trim());}
+    function isSepRow(line){return/^\|?\s*[-:]+[-\s:|]*\|/.test(line);}
+    const isPipeTable=/^\|.+\|/.test(line);
+    const isImplicitTable=!isPipeTable&&/^[^|]+\|[^|]/.test(line)&&!(/^[-*+]\s/.test(line))&&!(/^\d+\.\s/.test(line));
+    if(isPipeTable||isImplicitTable){
+      const tableLines=[];
+      if(isPipeTable){while(i<lines.length&&/^\|/.test(lines[i].trim())){tableLines.push(lines[i]);i++;}}
+      else{while(i<lines.length){const l=lines[i];if(!l.trim())break;if(/^\|/.test(l.trim()))break;if(/^[-*+]\s|^\d+\.\s|^#{1,4}\s|^>\s/.test(l))break;if(!/\|/.test(l))break;tableLines.push(l);i++;}}
+      if(!tableLines.length)continue;
+      const table=document.createElement('table');const sepIdx=tableLines.findIndex(l=>isSepRow(l));
+      if(sepIdx===1){
+        const aligns=splitPipeRow(tableLines[1]).map(c=>{if(c.startsWith(':')&&c.endsWith(':'))return'center';if(c.endsWith(':'))return'right';return'left';});
+        const thead=document.createElement('thead');const headRow=document.createElement('tr');
+        splitPipeRow(tableLines[0]).forEach((h,idx)=>{const th=document.createElement('th');th.innerHTML=inlineMarkdown(h);th.style.textAlign=aligns[idx]||'left';headRow.appendChild(th);});
+        thead.appendChild(headRow);table.appendChild(thead);
+        const tbody=document.createElement('tbody');
+        tableLines.slice(2).forEach(rowLine=>{if(!rowLine.trim()||isSepRow(rowLine))return;const tr=document.createElement('tr');splitPipeRow(rowLine).forEach((c,idx)=>{const td=document.createElement('td');td.innerHTML=inlineMarkdown(c);td.style.textAlign=aligns[idx]||'left';tr.appendChild(td);});tbody.appendChild(tr);});
         table.appendChild(tbody);
-      } else if (isPipeTable) {
-        const dataRows = tableLines.filter(l => !isSepRow(l));
-        if (dataRows.length === 0) { container.appendChild(table); continue; }
-        const thead = document.createElement('thead');
-        const headRow = document.createElement('tr');
-        splitPipeRow(dataRows[0]).forEach(h => {
-          const th = document.createElement('th');
-          th.innerHTML = inlineMarkdown(h);
-          headRow.appendChild(th);
-        });
-        thead.appendChild(headRow);
-        table.appendChild(thead);
-        if (dataRows.length > 1) {
-          const tbody = document.createElement('tbody');
-          dataRows.slice(1).forEach(rowLine => {
-            const tr = document.createElement('tr');
-            splitPipeRow(rowLine).forEach(c => {
-              const td = document.createElement('td');
-              td.innerHTML = inlineMarkdown(c);
-              tr.appendChild(td);
-            });
-            tbody.appendChild(tr);
-          });
-          table.appendChild(tbody);
-        }
+      } else if(isPipeTable){
+        const dataRows=tableLines.filter(l=>!isSepRow(l));
+        if(dataRows.length===0){container.appendChild(table);continue;}
+        const thead=document.createElement('thead');const headRow=document.createElement('tr');
+        splitPipeRow(dataRows[0]).forEach(h=>{const th=document.createElement('th');th.innerHTML=inlineMarkdown(h);headRow.appendChild(th);});
+        thead.appendChild(headRow);table.appendChild(thead);
+        if(dataRows.length>1){const tbody=document.createElement('tbody');dataRows.slice(1).forEach(rowLine=>{const tr=document.createElement('tr');splitPipeRow(rowLine).forEach(c=>{const td=document.createElement('td');td.innerHTML=inlineMarkdown(c);tr.appendChild(td);});tbody.appendChild(tr);});table.appendChild(tbody);}
       } else {
-        const wrap = document.createElement('div');
-        wrap.style.cssText = 'border:1px solid rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;margin:.4rem 0';
-        const validRows = tableLines.filter(l => l.trim() && l.includes('|'));
-        validRows.forEach((rowLine, idx) => {
-          const pipeIdx = rowLine.indexOf('|');
-          if (pipeIdx < 0) return;
-          const key = rowLine.slice(0, pipeIdx).trim();
-          const val = rowLine.slice(pipeIdx + 1).trim();
-          const row = document.createElement('div');
-          row.style.cssText = 'padding:.45rem .7rem' + (idx < validRows.length - 1 ? ';border-bottom:1px solid rgba(255,255,255,0.06)' : '');
-          const keyEl = document.createElement('div');
-          keyEl.innerHTML = inlineMarkdown(key);
-          keyEl.style.cssText = 'font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:.18rem;font-family:"Syne",sans-serif';
-          const valEl = document.createElement('div');
-          valEl.innerHTML = inlineMarkdown(val);
-          valEl.style.cssText = 'font-size:.82rem;color:var(--text);font-weight:500';
-          row.appendChild(keyEl); row.appendChild(valEl); wrap.appendChild(row);
-        });
-        container.appendChild(wrap); continue;
+        const wrap=document.createElement('div');wrap.style.cssText='border:1px solid rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;margin:.4rem 0';
+        const validRows=tableLines.filter(l=>l.trim()&&l.includes('|'));
+        validRows.forEach((rowLine,idx)=>{const pipeIdx=rowLine.indexOf('|');if(pipeIdx<0)return;const key=rowLine.slice(0,pipeIdx).trim();const val=rowLine.slice(pipeIdx+1).trim();const row=document.createElement('div');row.style.cssText='padding:.45rem .7rem'+(idx<validRows.length-1?';border-bottom:1px solid rgba(255,255,255,0.06)':'');const keyEl=document.createElement('div');keyEl.innerHTML=inlineMarkdown(key);keyEl.style.cssText='font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:.18rem;font-family:"Syne",sans-serif';const valEl=document.createElement('div');valEl.innerHTML=inlineMarkdown(val);valEl.style.cssText='font-size:.82rem;color:var(--text);font-weight:500';row.appendChild(keyEl);row.appendChild(valEl);wrap.appendChild(row);});
+        container.appendChild(wrap);continue;
       }
-      container.appendChild(table); continue;
+      container.appendChild(table);continue;
     }
-
-    if (/^[\-\*\+]\s/.test(line)) {
-      const ul = document.createElement('ul');
-      while (i < lines.length && /^[\-\*\+]\s/.test(lines[i])) {
-        const li = document.createElement('li');
-        li.innerHTML = inlineMarkdown(lines[i].replace(/^[\-\*\+]\s/, ''));
-        ul.appendChild(li); i++;
-      }
-      container.appendChild(ul); continue;
-    }
-
-    if (/^\d+\.\s/.test(line)) {
-      const ol = document.createElement('ol');
-      while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
-        const li = document.createElement('li');
-        li.innerHTML = inlineMarkdown(lines[i].replace(/^\d+\.\s/, ''));
-        ol.appendChild(li); i++;
-      }
-      container.appendChild(ol); continue;
-    }
-
-    const pl = [];
-    while (i < lines.length) {
-      const l = lines[i];
-      if (!l.trim()) { i++; break; }
-      if (
-        /^#{1,4}\s/.test(l) || /^[\-\*\+]\s/.test(l) || /^\d+\.\s/.test(l) ||
-        /^[-*_]{3,}$/.test(l.trim()) || /^>\s?/.test(l) ||
-        /^\|.+\|/.test(l) ||
-        (/^[^|]+\|[^|]/.test(l) && !/^[-*+]\s/.test(l) && !/^\d+\.\s/.test(l)) ||
-        /^-{3,}\s*.+\s*-{3,}$/.test(l) || /^={3,}\s*.+\s*={3,}$/.test(l)
-      ) break;
-      pl.push(l); i++;
-    }
-    if (pl.length) {
-      const p = document.createElement('p');
-      p.innerHTML = inlineMarkdown(pl.join('\n'));
-      container.appendChild(p);
-    }
+    if(/^[\-\*\+]\s/.test(line)){const ul=document.createElement('ul');while(i<lines.length&&/^[\-\*\+]\s/.test(lines[i])){const li=document.createElement('li');li.innerHTML=inlineMarkdown(lines[i].replace(/^[\-\*\+]\s/,''));ul.appendChild(li);i++;}container.appendChild(ul);continue;}
+    if(/^\d+\.\s/.test(line)){const ol=document.createElement('ol');while(i<lines.length&&/^\d+\.\s/.test(lines[i])){const li=document.createElement('li');li.innerHTML=inlineMarkdown(lines[i].replace(/^\d+\.\s/,''));ol.appendChild(li);i++;}container.appendChild(ol);continue;}
+    const pl=[];
+    while(i<lines.length){const l=lines[i];if(!l.trim()){i++;break;}if(/^#{1,4}\s/.test(l)||/^[\-\*\+]\s/.test(l)||/^\d+\.\s/.test(l)||/^[-*_]{3,}$/.test(l.trim())||/^>\s?/.test(l)||/^\|.+\|/.test(l)||(/^[^|]+\|[^|]/.test(l)&&!/^[-*+]\s/.test(l)&&!/^\d+\.\s/.test(l))||/^-{3,}\s*.+\s*-{3,}$/.test(l)||/^={3,}\s*.+\s*={3,}$/.test(l))break;pl.push(l);i++;}
+    if(pl.length){const p=document.createElement('p');p.innerHTML=inlineMarkdown(pl.join('\n'));container.appendChild(p);}
   }
 }
 
 // ── Chat streaming ────────────────────────────────────────────────
-async function revealContent(text, container) {
-  // First split on code blocks, then split text segments on [IMAGE:] tags
-  const rawSegs = parseSegments(text);
-  for (const seg of rawSegs) {
-    if (seg.type === 'code') {
-      if (!seg.value.trim() && !seg.lang) continue;
-      const cb = makeCodeBlock(seg.lang, '');
-      const bodyEl = cb.querySelector('.code-body');
-      container.appendChild(cb);
-      await typeCodeBlock(seg.lang, seg.value, bodyEl);
+async function revealContent(text,container){
+  const rawSegs=parseSegments(text);
+  for(const seg of rawSegs){
+    if(seg.type==='code'){
+      if(!seg.value.trim()&&!seg.lang)continue;
+      const cb=makeCodeBlock(seg.lang,'');const bodyEl=cb.querySelector('.code-body');container.appendChild(cb);
+      await typeCodeBlock(seg.lang,seg.value,bodyEl);
     } else {
-      // split on image tags
-      const parts = splitOnImageTags(seg.value);
-      for (const part of parts) {
-        if (part.type === 'image') {
-          const imgBlock = makeImageBlock(part.prompt);
-          container.appendChild(imgBlock);
-          messages.scrollTop = messages.scrollHeight;
+      const parts=splitOnImageTags(seg.value);
+      for(const part of parts){
+        if(part.type==='image'){const imgBlock=makeImageBlock(part.prompt);container.appendChild(imgBlock);messages.scrollTop=messages.scrollHeight;}
+        else{await streamTextSegment(part.value,container);}
+      }
+    }
+    messages.scrollTop=messages.scrollHeight;
+  }
+}
+async function streamTextSegment(text,container){
+  if(!text.trim())return;
+  const paragraphs=text.split(/\n\n+/);
+  for(const para of paragraphs){
+    if(!para.trim())continue;
+    const live=document.createElement('span');live.style.cssText='white-space:pre-wrap;font-size:.85rem;line-height:1.75;color:var(--text);word-break:break-word;display:block;margin:.2rem 0';container.appendChild(live);
+    let typed='';
+    for(const ch of para){
+      typed+=ch;live.textContent=typed;messages.scrollTop=messages.scrollHeight;
+      let d=11;if(ch==='\n')d=4;else if(ch===' ')d=5;else if(ch==='.'||ch==='!'||ch==='?')d=28;else if(ch===',')d=16;if(Math.random()<.015)d+=25;await sleep(d);
+    }
+    const rendered=document.createElement('div');rendered.style.cssText='display:contents';renderTextBlock(para,rendered);live.replaceWith(rendered);messages.scrollTop=messages.scrollHeight;await sleep(20);
+  }
+}
+async function typeCodeBlock(lang,code,bodyEl){
+  const wrap=bodyEl.closest('.code-block');if(wrap?._codeRef)wrap._codeRef.value=code;
+  const isLua=/^lua$/i.test(lang);let typed='';const HIGHLIGHT_INTERVAL=6;
+  for(const ch of code){
+    typed+=ch;const doHighlight=ch==='\n'||typed.length%HIGHLIGHT_INTERVAL===0||typed.length===code.length;
+    if(doHighlight){isLua?bodyEl.innerHTML=luaHighlight(typed):bodyEl.textContent=typed;}
+    messages.scrollTop=messages.scrollHeight;
+    let d=4;if(ch==='\n')d=9;else if(ch===' ')d=2;if(Math.random()<.025)d+=18;await sleep(d);
+  }
+  isLua?bodyEl.innerHTML=luaHighlight(typed):bodyEl.textContent=typed;
+}
+
+// ── Instant render (for shared/readonly chat) ─────────────────────
+function renderContentInstant(text,container){
+  const rawSegs=parseSegments(text);
+  for(const seg of rawSegs){
+    if(seg.type==='code'){
+      if(!seg.value.trim()&&!seg.lang)continue;
+      container.appendChild(makeCodeBlock(seg.lang,seg.value));
+    } else {
+      const parts=splitOnImageTags(seg.value);
+      for(const part of parts){
+        if(part.type==='image'){
+          // in shared view, show a placeholder note instead of regenerating
+          const note=document.createElement('div');
+          note.style.cssText='font-size:.72rem;color:rgba(255,255,255,0.25);font-style:italic;padding:.4rem 0';
+          note.textContent='[generated image — not available in shared view]';
+          container.appendChild(note);
         } else {
-          await streamTextSegment(part.value, container);
+          const segs2=part.value.split(/\n\n+/);
+          for(const para of segs2){if(para.trim()){const d=document.createElement('div');d.style.cssText='display:contents';renderTextBlock(para,d);container.appendChild(d);}}
         }
       }
     }
-    messages.scrollTop = messages.scrollHeight;
   }
-}
-
-async function streamTextSegment(text, container) {
-  if (!text.trim()) return;
-  const paragraphs = text.split(/\n\n+/);
-  for (const para of paragraphs) {
-    if (!para.trim()) continue;
-    const live = document.createElement('span');
-    live.style.cssText = 'white-space:pre-wrap;font-size:.85rem;line-height:1.75;color:var(--text);word-break:break-word;display:block;margin:.2rem 0';
-    container.appendChild(live);
-    let typed = '';
-    for (const ch of para) {
-      typed += ch;
-      live.textContent = typed;
-      messages.scrollTop = messages.scrollHeight;
-      let d = 11;
-      if (ch === '\n') d = 4;
-      else if (ch === ' ') d = 5;
-      else if (ch === '.' || ch === '!' || ch === '?') d = 28;
-      else if (ch === ',') d = 16;
-      if (Math.random() < 0.015) d += 25;
-      await sleep(d);
-    }
-    const rendered = document.createElement('div');
-    rendered.style.cssText = 'display:contents';
-    renderTextBlock(para, rendered);
-    live.replaceWith(rendered);
-    messages.scrollTop = messages.scrollHeight;
-    await sleep(20);
-  }
-}
-
-async function typeCodeBlock(lang, code, bodyEl) {
-  const wrap = bodyEl.closest('.code-block');
-  if (wrap?._codeRef) wrap._codeRef.value = code;
-  const isLua = /^lua$/i.test(lang);
-  let typed = '';
-  const HIGHLIGHT_INTERVAL = 6;
-  for (const ch of code) {
-    typed += ch;
-    const doHighlight = ch === '\n' || typed.length % HIGHLIGHT_INTERVAL === 0 || typed.length === code.length;
-    if (doHighlight) {
-      isLua ? bodyEl.innerHTML = luaHighlight(typed) : bodyEl.textContent = typed;
-    }
-    messages.scrollTop = messages.scrollHeight;
-    let d = 4;
-    if (ch === '\n') d = 9;
-    else if (ch === ' ') d = 2;
-    if (Math.random() < 0.025) d += 18;
-    await sleep(d);
-  }
-  isLua ? bodyEl.innerHTML = luaHighlight(typed) : bodyEl.textContent = typed;
 }
 
 // ── Avatars ───────────────────────────────────────────────────────
@@ -874,67 +723,42 @@ const editCloseBtn = document.getElementById('editCloseBtn');
 let currentEditFile={name:'',content:''};
 
 function renderLinesInstant(content,name){
-  const isLua=/\.lua[u]?$/i.test(name);
-  const wrap=document.createElement('div');wrap.className='ep-lines';
-  for(const line of content.split('\n')){const s=document.createElement('span');s.className='ep-line';s.innerHTML=hlLine(line,isLua);wrap.appendChild(s);}
-  return wrap;
+  const isLua=/\.lua[u]?$/i.test(name);const wrap=document.createElement('div');wrap.className='ep-lines';
+  for(const line of content.split('\n')){const s=document.createElement('span');s.className='ep-line';s.innerHTML=hlLine(line,isLua);wrap.appendChild(s);}return wrap;
 }
 async function animateDiff(prevContent,newContent,hunks,name){
-  const isLua=/\.lua[u]?$/i.test(name);
-  editBodyEl.innerHTML='';
-  const wrap=renderLinesInstant(prevContent,name);
-  editBodyEl.appendChild(wrap);
+  const isLua=/\.lua[u]?$/i.test(name);editBodyEl.innerHTML='';
+  const wrap=renderLinesInstant(prevContent,name);editBodyEl.appendChild(wrap);
   for(const h of [...hunks].sort((a,b)=>b.start-a.start)){
-    const allLines=wrap.querySelectorAll('.ep-line');
-    const removeStart=h.start-1,removeCount=h.mode==='insert'?0:h.end-h.start+1,toRemove=[];
+    const allLines=wrap.querySelectorAll('.ep-line');const removeStart=h.start-1,removeCount=h.mode==='insert'?0:h.end-h.start+1,toRemove=[];
     for(let i=removeStart;i<removeStart+removeCount;i++){if(allLines[i])toRemove.push(allLines[i]);}
-    for(const el of toRemove)el.classList.add('removing');
-    if(toRemove.length)await sleep(260);
-    for(const el of toRemove)el.remove();
-    const repLines=h.replacement?h.replacement.split('\n'):[];
-    const refNode=wrap.querySelectorAll('.ep-line')[removeStart]??null;
-    for(const repLine of repLines){
-      const s=document.createElement('span');s.className='ep-line inserting';wrap.insertBefore(s,refNode);
-      editBodyEl.scrollTop=editBodyEl.scrollHeight;
-      let typed='';
-      for(const ch of repLine){typed+=ch;s.innerHTML=hlLine(typed,isLua);editBodyEl.scrollTop=editBodyEl.scrollHeight;await sleep(5+Math.random()*8);}
-      await sleep(8);
-    }
+    for(const el of toRemove)el.classList.add('removing');if(toRemove.length)await sleep(260);for(const el of toRemove)el.remove();
+    const repLines=h.replacement?h.replacement.split('\n'):[];const refNode=wrap.querySelectorAll('.ep-line')[removeStart]??null;
+    for(const repLine of repLines){const s=document.createElement('span');s.className='ep-line inserting';wrap.insertBefore(s,refNode);editBodyEl.scrollTop=editBodyEl.scrollHeight;let typed='';for(const ch of repLine){typed+=ch;s.innerHTML=hlLine(typed,isLua);editBodyEl.scrollTop=editBodyEl.scrollHeight;await sleep(5+Math.random()*8);}await sleep(8);}
   }
 }
 function openEditPanel(name){
   const entry=getEntry(name);const content=entry?entry.content:'';
-  currentEditFile={name,content};editTitle.textContent=name;
-  editTabs.innerHTML='';
-  const btn=document.createElement('button');btn.className='edit-panel-tab active';btn.dataset.tab='code';btn.textContent='code';
-  btn.onclick=()=>switchEditTab('code');editTabs.appendChild(btn);
-  editBodyEl.innerHTML='';editBodyEl.appendChild(renderLinesInstant(content,name));
-  editPanel.classList.add('open');editBackdrop.classList.add('visible');
+  currentEditFile={name,content};editTitle.textContent=name;editTabs.innerHTML='';
+  const btn=document.createElement('button');btn.className='edit-panel-tab active';btn.dataset.tab='code';btn.textContent='code';btn.onclick=()=>switchEditTab('code');editTabs.appendChild(btn);
+  editBodyEl.innerHTML='';editBodyEl.appendChild(renderLinesInstant(content,name));editPanel.classList.add('open');editBackdrop.classList.add('visible');
 }
 async function openEditPanelAnimated(name,hunks,firstTime){
   const entry=getEntry(name);const content=entry?entry.content:'';const prev=entry?entry.prevContent??content:content;
-  currentEditFile={name,content};editTitle.textContent=name;
-  editTabs.innerHTML='';
-  const btn=document.createElement('button');btn.className='edit-panel-tab active';btn.dataset.tab='code';btn.textContent='code';
-  btn.onclick=()=>switchEditTab('code');editTabs.appendChild(btn);
+  currentEditFile={name,content};editTitle.textContent=name;editTabs.innerHTML='';
+  const btn=document.createElement('button');btn.className='edit-panel-tab active';btn.dataset.tab='code';btn.textContent='code';btn.onclick=()=>switchEditTab('code');editTabs.appendChild(btn);
   editPanel.classList.add('open');editBackdrop.classList.add('visible');
   if(firstTime){
-    const isLua=/\.lua[u]?$/i.test(name);editBodyEl.innerHTML='';
-    const wrap=document.createElement('div');wrap.className='ep-lines';editBodyEl.appendChild(wrap);
-    for(const line of content.split('\n')){
-      const s=document.createElement('span');s.className='ep-line';wrap.appendChild(s);let typed='';
-      for(const ch of line){typed+=ch;s.innerHTML=hlLine(typed,isLua);editBodyEl.scrollTop=editBodyEl.scrollHeight;let d=4;if(Math.random()<.03)d+=18;await sleep(d);}
-      await sleep(9);
-    }
-  } else { await animateDiff(prev,content,hunks,name); }
+    const isLua=/\.lua[u]?$/i.test(name);editBodyEl.innerHTML='';const wrap=document.createElement('div');wrap.className='ep-lines';editBodyEl.appendChild(wrap);
+    for(const line of content.split('\n')){const s=document.createElement('span');s.className='ep-line';wrap.appendChild(s);let typed='';for(const ch of line){typed+=ch;s.innerHTML=hlLine(typed,isLua);editBodyEl.scrollTop=editBodyEl.scrollHeight;let d=4;if(Math.random()<.03)d+=18;await sleep(d);}await sleep(9);}
+  } else {await animateDiff(prev,content,hunks,name);}
 }
 function switchEditTab(tab){
   editTabs.querySelectorAll('.edit-panel-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
   editBodyEl.innerHTML='';editBodyEl.appendChild(renderLinesInstant(currentEditFile.content,currentEditFile.name));
 }
 function closeEditPanel(){editPanel.classList.remove('open');editBackdrop.classList.remove('visible');}
-editCloseBtn.onclick=closeEditPanel;
-editBackdrop.onclick=closeEditPanel;
+editCloseBtn.onclick=closeEditPanel;editBackdrop.onclick=closeEditPanel;
 editDlBtn.onclick=()=>{const blob=new Blob([currentEditFile.content],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=currentEditFile.name;a.click();URL.revokeObjectURL(a.href);};
 editCopyBtn.onclick=()=>{
   navigator.clipboard.writeText(currentEditFile.content).then(()=>{
@@ -946,33 +770,22 @@ editCopyBtn.onclick=()=>{
 // ── [EDIT] diff parser ────────────────────────────────────────────
 function applyHunks(srcContent,hunks){
   const lines=[...srcContent.split('\n')];
-  for(const h of [...hunks].sort((a,b)=>b.start-a.start)){
-    const rep=h.replacement?h.replacement.split('\n'):[];
-    h.mode==='insert'?lines.splice(h.start-1,0,...rep):lines.splice(h.start-1,h.end-h.start+1,...rep);
-  }
+  for(const h of [...hunks].sort((a,b)=>b.start-a.start)){const rep=h.replacement?h.replacement.split('\n'):[];h.mode==='insert'?lines.splice(h.start-1,0,...rep):lines.splice(h.start-1,h.end-h.start+1,...rep);}
   return lines.join('\n');
 }
 function parseEditBlocks(text,knownFiles){
   const edits=[];
   const cleanText=text.replace(/\[EDIT:\s*([^\]]+)\]([\s\S]*?)\[\/EDIT\]/g,(full,fileName,body)=>{
-    fileName=fileName.trim();
-    const e=getEntry(fileName);
-    const src=e?e.content:(knownFiles.find(f=>f.name.toLowerCase()===fileName.toLowerCase())?.content??'');
-    const hunks=[];
-    const re=/@@(\d+)(-(\d+)|(\+))?\n([\s\S]*?)(?=@@\d+|$)/g;let m;
-    while((m=re.exec(body.trim()+'\n'))!==null){
-      const start=parseInt(m[1],10),isIns=m[4]==='+',end=isIns?start:(m[3]?parseInt(m[3],10):start);
-      hunks.push({start,end,mode:isIns?'insert':'replace',replacement:m[5].replace(/\n$/,'')});
-    }
-    setPrev(fileName,src);const result=applyHunks(src,hunks);setContent(fileName,result);
-    const isFirst=!e;edits.push({name:fileName,hunks,isFirst});
-    return '__EDIT_CHIP_'+(edits.length-1)+'__';
+    fileName=fileName.trim();const e=getEntry(fileName);const src=e?e.content:(knownFiles.find(f=>f.name.toLowerCase()===fileName.toLowerCase())?.content??'');
+    const hunks=[];const re=/@@(\d+)(-(\d+)|(\+))?\n([\s\S]*?)(?=@@\d+|$)/g;let m;
+    while((m=re.exec(body.trim()+'\n'))!==null){const start=parseInt(m[1],10),isIns=m[4]==='+',end=isIns?start:(m[3]?parseInt(m[3],10):start);hunks.push({start,end,mode:isIns?'insert':'replace',replacement:m[5].replace(/\n$/,'')});}
+    setPrev(fileName,src);const result=applyHunks(src,hunks);setContent(fileName,result);const isFirst=!e;edits.push({name:fileName,hunks,isFirst});
+    return'__EDIT_CHIP_'+(edits.length-1)+'__';
   });
   return{cleanText,edits};
 }
 function makeEditChip(edit){
-  const chip=document.createElement('div');chip.className='edit-chip';
-  const cl=edit.hunks.length+' change'+(edit.hunks.length!==1?'s':'');
+  const chip=document.createElement('div');chip.className='edit-chip';const cl=edit.hunks.length+' change'+(edit.hunks.length!==1?'s':'');
   chip.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>'
     +`<span>${escHtml(edit.name)}</span><span style="opacity:.45;font-size:.6rem">${cl}</span>`;
   chip.onclick=()=>openEditPanel(edit.name);return chip;
@@ -987,9 +800,7 @@ function stripInternalTags(text){
     .replace(/\[SUBREDDIT:\s*[^\]]+\]/gi,'')
     .replace(/\[REDDITPOST:\s*https?:\/\/[^\]]+\]/gi,'')
     .replace(/\[REMEMBER:\s*[^\]|]+\|[^\]]+\]/gi,'')
-    // NOTE: do NOT strip [IMAGE: ...] — revealContent handles it
-    .replace(/\n{3,}/g,'\n\n')
-    .trim();
+    .replace(/\n{3,}/g,'\n\n').trim();
 }
 
 // ── Core AI request ───────────────────────────────────────────────
@@ -998,17 +809,14 @@ async function doAiRequest(promptText,files){
   try{
     const model=document.getElementById('modelSelect').value;
     const data=await fetch(`${API_BASE}/ai`,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
+      method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({question:buildApiQuestion(promptText,files),model})
     }).then(r=>r.json());
 
     let content='',reasoning='';
     if(data.choices?.[0]){const msg=data.choices[0].message||{};content=msg.content||'';reasoning=msg.reasoning||msg.reasoning_content||'';}
-
     const visitedUrls=Array.isArray(data.visitedUrls)?data.visitedUrls:[];
-    loading.remove();
-    const{body,actions}=createAiMsg();
+    loading.remove();const{body,actions}=createAiMsg();
 
     if(reasoning){
       const block=document.createElement('div');block.className='thinking-block';
@@ -1018,58 +826,236 @@ async function doAiRequest(promptText,files){
       block.appendChild(tog);block.appendChild(tc);body.appendChild(block);
     }
 
-    // Normalize /n newlines
     content=content.replace(/\s*\/n\s*/g,'\n');
-
-    // Parse [EDIT:] blocks first
     const editRe=/(\[EDIT:\s*[^\]]+\][\s\S]*?\[\/EDIT\])/g;
-    const rawParts=content.split(editRe);
-    const{edits}=parseEditBlocks(content,files);
+    const rawParts=content.split(editRe);const{edits}=parseEditBlocks(content,files);
 
     let editIdx=0;
     for(const part of rawParts){
-      if(/^\[EDIT:/i.test(part)){
-        const edit=edits[editIdx++];
-        if(edit)await openEditPanelAnimated(edit.name,edit.hunks,edit.isFirst);
-      } else if(part.trim()){
-        const cleaned=stripInternalTags(part);
-        if(cleaned.trim())await revealContent(cleaned,body);
-      }
+      if(/^\[EDIT:/i.test(part)){const edit=edits[editIdx++];if(edit)await openEditPanelAnimated(edit.name,edit.hunks,edit.isFirst);}
+      else if(part.trim()){const cleaned=stripInternalTags(part);if(cleaned.trim())await revealContent(cleaned,body);}
     }
 
-    if(edits.length){
-      const chipRow=document.createElement('div');chipRow.style.cssText='display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.3rem';
-      for(const e of edits)chipRow.appendChild(makeEditChip(e));
-      body.appendChild(chipRow);
-    }
+    if(edits.length){const chipRow=document.createElement('div');chipRow.style.cssText='display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.3rem';for(const e of edits)chipRow.appendChild(makeEditChip(e));body.appendChild(chipRow);}
     if(visitedUrls.length>0){const strip=makeSourcesStrip(visitedUrls);if(strip)actions.appendChild(strip);}
 
   }catch(err){
-    loading.remove();
-    const{body}=createAiMsg();
-    body.textContent='something went wrong. try again.';
-    console.error(err);
+    loading.remove();const{body}=createAiMsg();body.textContent='something went wrong. try again.';console.error(err);
   }
-  sendBtn.disabled=false;
-  inputEl.focus();
+  sendBtn.disabled=false;inputEl.focus();
 }
 
 async function send(){
   const promptText=inputEl.value.trim();
-  if(!promptText&&!attachedFiles.length)return;
-  if(sendBtn.disabled)return;
+  if(!promptText&&!attachedFiles.length)return;if(sendBtn.disabled)return;
   if(emptyState){emptyState.remove();emptyState=null;}
   const filesToSend=[...attachedFiles];
   lastPromptText=promptText;lastFilesToSend=filesToSend;
   renderUserMessage(promptText,filesToSend);
-  inputEl.value='';inputEl.style.height='auto';
-  attachedFiles=[];renderAttachBar();
-  sendBtn.disabled=true;
+  inputEl.value='';inputEl.style.height='auto';attachedFiles=[];renderAttachBar();sendBtn.disabled=true;
   await doAiRequest(promptText,filesToSend);
 }
 
 sendBtn.addEventListener('click',send);
 inputEl.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
+
+// ============================================================
+//  SHARE MODAL
+// ============================================================
+const shareModalOverlay  = document.getElementById('shareModalOverlay');
+const sharePickerWrap    = document.getElementById('sharePickerWrap');
+const shareResultWrap    = document.getElementById('shareResultWrap');
+const shareConfirmBtn    = document.getElementById('shareConfirmBtn');
+const shareCancelBtn     = document.getElementById('shareCancelBtn');
+const shareDoneBtn       = document.getElementById('shareDoneBtn');
+const shareLinkInput     = document.getElementById('shareLinkInput');
+const shareCopyLinkBtn   = document.getElementById('shareCopyLinkBtn');
+const shareExpiryNote    = document.getElementById('shareExpiryNote');
+const durationGrid       = document.getElementById('durationGrid');
+const shareHeaderBtn     = document.getElementById('shareBtn');
+
+let selectedTtl = 86400; // default 1 day
+
+// Duration picker selection
+durationGrid.addEventListener('click', e => {
+  const opt = e.target.closest('.duration-opt');
+  if(!opt) return;
+  durationGrid.querySelectorAll('.duration-opt').forEach(o=>o.classList.remove('selected'));
+  opt.classList.add('selected');
+  selectedTtl = parseInt(opt.dataset.ttl, 10);
+});
+
+function openShareModal(){
+  // reset to picker state
+  sharePickerWrap.style.display='';
+  shareResultWrap.style.display='none';
+  shareConfirmBtn.disabled=false;
+  shareConfirmBtn.innerHTML=`<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>generate link`;
+  shareCopyLinkBtn.textContent='copy';
+  shareCopyLinkBtn.classList.remove('copied');
+  shareModalOverlay.classList.remove('hidden');
+}
+function closeShareModal(){
+  shareModalOverlay.classList.add('hidden');
+}
+
+shareHeaderBtn.addEventListener('click', openShareModal);
+shareCancelBtn.addEventListener('click', closeShareModal);
+shareDoneBtn.addEventListener('click', closeShareModal);
+shareModalOverlay.addEventListener('click', e => { if(e.target === shareModalOverlay) closeShareModal(); });
+
+function ttlToHumanString(ttl){
+  if(ttl < 3600) return `${Math.round(ttl/60)} minutes`;
+  if(ttl < 86400) { const h=ttl/3600; return `${h} hour${h!==1?'s':''}`; }
+  const d=ttl/86400; return `${d} day${d!==1?'s':''}`;
+}
+
+shareConfirmBtn.addEventListener('click', async () => {
+  shareConfirmBtn.disabled = true;
+  shareConfirmBtn.innerHTML = `<span class="spinner" style="width:11px;height:11px;border-width:1.5px"></span> creating...`;
+
+  const model = document.getElementById('modelSelect').value;
+  try {
+    const res = await fetch(`${API_BASE}/share`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ttl: selectedTtl, model })
+    });
+    const data = await res.json();
+
+    if(data.error) {
+      shareConfirmBtn.disabled = false;
+      shareConfirmBtn.innerHTML = `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>generate link`;
+      // brief error flash
+      const errMsg = document.createElement('div');
+      errMsg.style.cssText = 'font-size:.65rem;color:rgba(255,80,80,0.8);margin-top:.3rem';
+      errMsg.textContent = data.error === 'no chat history to share' ? 'start a conversation first before sharing.' : data.error;
+      sharePickerWrap.appendChild(errMsg);
+      setTimeout(()=>errMsg.remove(), 3000);
+      return;
+    }
+
+    const shareUrl = `${location.origin}${location.pathname}?share=${data.shareId}`;
+    shareLinkInput.value = shareUrl;
+    shareExpiryNote.textContent = `this link expires in ${ttlToHumanString(data.ttlSeconds)}. anyone with the link can view the chat in read-only mode.`;
+
+    sharePickerWrap.style.display = 'none';
+    shareResultWrap.style.display = '';
+
+  } catch(err) {
+    shareConfirmBtn.disabled = false;
+    shareConfirmBtn.innerHTML = `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>generate link`;
+    console.error('share error:', err);
+  }
+});
+
+shareCopyLinkBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(shareLinkInput.value).then(() => {
+    shareCopyLinkBtn.textContent = 'copied!';
+    shareCopyLinkBtn.classList.add('copied');
+    setTimeout(() => { shareCopyLinkBtn.textContent = 'copy'; shareCopyLinkBtn.classList.remove('copied'); }, 2500);
+  });
+});
+
+// ============================================================
+//  SHARED CHAT VIEWER  (?share=ID in URL)
+// ============================================================
+async function loadSharedChat(){
+  const params = new URLSearchParams(location.search);
+  const shareId = params.get('share');
+  if(!shareId) return false;
+
+  // While loading, show spinner in messages
+  if(emptyState){ emptyState.remove(); emptyState=null; }
+  const loadDiv = document.createElement('div');
+  loadDiv.style.cssText = 'display:flex;align-items:center;gap:.65rem;padding:1.2rem .5rem;opacity:.45;font-size:.72rem;color:var(--muted)';
+  loadDiv.innerHTML = `<div class="spinner"></div><span>loading shared chat...</span>`;
+  messages.appendChild(loadDiv);
+
+  try {
+    const res = await fetch(`${API_BASE}/share/${shareId}`);
+    loadDiv.remove();
+
+    if(!res.ok){
+      const errDiv = document.createElement('div');
+      errDiv.style.cssText = 'padding:2rem 0;text-align:center;font-size:.78rem;color:rgba(255,255,255,0.3)';
+      errDiv.textContent = res.status === 404 ? 'this shared chat has expired or doesn\'t exist.' : 'failed to load shared chat.';
+      messages.appendChild(errDiv);
+      hideInputArea();
+      return true;
+    }
+
+    const data = await res.json();
+    const history = data.history || [];
+    const modelId = data.modelId || '1A';
+
+    // Show banner
+    const banner = buildSharedBanner(shareId, data);
+    messages.insertBefore(banner, messages.firstChild);
+
+    // Render all messages from history instantly (no typewriter)
+    for(const msg of history){
+      if(msg.role === 'user'){
+        const cleanQ = msg.content.replace(/^\[USER CONTEXT\][\s\S]*?\[\/USER CONTEXT\]\s*/,'').trim();
+        if(!cleanQ) continue;
+        const div=document.createElement('div');div.className='msg';div.appendChild(makeUserAvatar());
+        const content=document.createElement('div');content.className='msg-content';
+        const roleEl=document.createElement('div');roleEl.className='msg-role';roleEl.textContent='user';
+        const body=document.createElement('div');body.className='msg-body user';
+        if(looksLikeCode(cleanQ)){const lbl=document.createElement('div');lbl.className='pasted-label';lbl.textContent='pasted code';body.appendChild(lbl);body.appendChild(makeCodeBlock('lua',cleanQ));}
+        else{const t=document.createElement('span');t.style.whiteSpace='pre-wrap';t.textContent=cleanQ;body.appendChild(t);}
+        content.appendChild(roleEl);content.appendChild(body);div.appendChild(content);messages.appendChild(div);
+      } else if(msg.role === 'assistant'){
+        const div=document.createElement('div');div.className='msg';div.appendChild(makeAiAvatar());
+        const content=document.createElement('div');content.className='msg-content';
+        const roleEl=document.createElement('div');roleEl.className='msg-role ai';roleEl.textContent='meteor-'+modelId.toLowerCase();
+        const body=document.createElement('div');body.className='msg-body';
+        const cleaned = stripInternalTags(msg.content||'').replace(/\s*\/n\s*/g,'\n');
+        renderContentInstant(cleaned, body);
+        content.appendChild(roleEl);content.appendChild(body);div.appendChild(content);messages.appendChild(div);
+      }
+    }
+
+    hideInputArea();
+    messages.scrollTop = 0;
+    return true;
+
+  } catch(err) {
+    loadDiv.remove();
+    console.error('failed to load shared chat:', err);
+    return false;
+  }
+}
+
+function buildSharedBanner(shareId, data){
+  const banner = document.createElement('div');
+  banner.className = 'shared-banner';
+  banner.innerHTML = `<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>`;
+  const text = document.createElement('div');
+  text.className = 'shared-banner-text';
+  text.innerHTML = `<strong>shared chat</strong> — read-only view. this is a snapshot of someone's conversation with Meteor.`;
+  const dismiss = document.createElement('button');
+  dismiss.className = 'shared-dismiss';
+  dismiss.textContent = '×';
+  dismiss.title = 'dismiss';
+  dismiss.onclick = () => banner.remove();
+  banner.appendChild(text);
+  banner.appendChild(dismiss);
+  return banner;
+}
+
+function hideInputArea(){
+  const ia = document.getElementById('inputArea');
+  if(ia) ia.style.display = 'none';
+  // Also hide share button since it's read-only
+  if(shareHeaderBtn) shareHeaderBtn.style.display = 'none';
+}
+
+// ── Init ──────────────────────────────────────────────────────────
+(async () => {
+  const isShared = await loadSharedChat();
+  // nothing extra needed for normal mode
+})();
 </script>
 </body>
 </html>
