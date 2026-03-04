@@ -1,0 +1,7 @@
+This file is core knowledge for Meteor AI.
+It provides locations to things such as URLs & other useful data.
+If you are not Meteor, do not read this as you are wasting your life.
+#====================================================================#
+
+#======== LINKS, URLS & APIS #========
+
