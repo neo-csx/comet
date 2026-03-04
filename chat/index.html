@@ -31,12 +31,10 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .model-select:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.2)}
 .model-select option{background:#111;color:var(--text)}
 
-/* ── Share button in header ── */
 .share-header-btn{background:none;border:1px solid rgba(255,255,255,0.08);color:var(--muted);width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0}
 .share-header-btn:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.18);color:var(--text)}
 .share-header-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* ── Share modal ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:300;display:flex;align-items:center;justify-content:center;animation:fadeIn .15s ease}
 .modal-overlay.hidden{display:none}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -57,8 +55,6 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .share-modal-confirm{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:.4rem .9rem;border-radius:6px;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;transition:all .2s;display:flex;align-items:center;gap:.4rem}
 .share-modal-confirm:hover{background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.4)}
 .share-modal-confirm:disabled{opacity:.4;cursor:not-allowed}
-
-/* ── Share result (after link generated) ── */
 .share-result{display:flex;flex-direction:column;gap:.8rem}
 .share-result-label{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
 .share-link-row{display:flex;gap:.5rem;align-items:center}
@@ -67,8 +63,6 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .share-copy-btn:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.3)}
 .share-copy-btn.copied{color:#c3e88d;border-color:rgba(195,232,141,0.35)}
 .share-expiry-note{font-size:.62rem;color:rgba(255,255,255,0.3);line-height:1.5}
-
-/* ── Shared chat banner (read-only view) ── */
 .shared-banner{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:.6rem .9rem;display:flex;align-items:center;gap:.65rem;margin-bottom:.25rem;flex-shrink:0}
 .shared-banner svg{flex-shrink:0;opacity:.5;width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .shared-banner-text{font-size:.65rem;color:var(--muted);flex:1;line-height:1.5}
@@ -92,7 +86,7 @@ header{display:flex;align-items:center;gap:.75rem;padding:1.4rem 0 1rem;border-b
 .msg-content{display:flex;flex-direction:column;gap:.35rem;flex:1;min-width:0}
 .msg-role{font-size:.6rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
 .msg-role.ai{color:rgba(255,255,255,0.5)}
-.msg-body{font-size:.85rem;line-height:1.75;color:var(--text);word-break:break-word}
+.msg-body{font-size:.85rem;line-height:1.75;color:var(--text);word-break:break-word;position:relative}
 .msg-body.user{color:rgba(255,255,255,0.6);font-size:.8rem}
 .msg-body p{margin:.25rem 0}.msg-body p:first-child{margin-top:0}.msg-body p:last-child{margin-bottom:0}
 .msg-body strong{color:#fff;font-weight:600}
@@ -243,13 +237,183 @@ textarea:focus{border-color:rgba(255,255,255,0.18)}
 .img-gen-dl:disabled{opacity:.3;cursor:not-allowed}
 @keyframes imgReveal{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
 .img-gen-result.revealed{animation:imgReveal .35s ease forwards}
+
+/* ═══════════════════════════════════════════════
+   FOUND IMAGES  (from AI browsing — [IMGFETCH:])
+   ═══════════════════════════════════════════════ */
+
+/* --- corner float (top-right inside message) --- */
+.fi-float{
+  float:right;
+  margin:0 0 .6rem .9rem;
+  width:130px;
+  flex-shrink:0;
+  clear:right;
+}
+/* --- inline logo/icon (small, sitting inline with text) --- */
+.fi-inline{
+  display:inline-block;
+  vertical-align:middle;
+  width:22px;
+  height:22px;
+  margin:0 .2rem;
+  flex-shrink:0;
+}
+/* --- full-width banner image --- */
+.fi-banner{
+  display:block;
+  width:100%;
+  margin:.5rem 0;
+}
+/* --- gallery strip (multiple) --- */
+.fi-gallery{
+  display:flex;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  gap:.5rem;
+  margin:.6rem 0;
+  padding-bottom:3px;
+  clear:both;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,0.08) transparent;
+}
+.fi-gallery::-webkit-scrollbar{height:3px}
+.fi-gallery::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
+
+/* --- the card itself (used in gallery + standalone) --- */
+.fi-card{
+  position:relative;
+  border-radius:7px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.07);
+  background:#0d0d0d;
+  cursor:pointer;
+  transition:border-color .18s, transform .15s;
+  flex-shrink:0;
+}
+.fi-card:hover{border-color:rgba(255,255,255,0.2);transform:translateY(-1px)}
+/* sizing per layout */
+.fi-float .fi-card{width:100%}
+.fi-banner .fi-card{width:100%}
+.fi-gallery .fi-card{width:140px}
+.fi-inline .fi-card{width:22px;height:22px;border-radius:4px}
+
+.fi-card img{
+  display:block;
+  width:100%;
+  object-fit:cover;
+  background:#111;
+}
+/* height per context */
+.fi-float .fi-card img{height:110px}
+.fi-banner .fi-card img{height:200px}
+.fi-gallery .fi-card img{height:95px}
+.fi-inline .fi-card img{width:22px;height:22px;object-fit:cover}
+
+/* skeleton shimmer */
+.fi-skel{
+  width:100%;
+  background:linear-gradient(90deg,#181818 25%,#222 50%,#181818 75%);
+  background-size:200% 100%;
+  animation:fiShimmer 1.3s infinite;
+}
+.fi-float .fi-skel{height:110px}
+.fi-banner .fi-skel{height:200px}
+.fi-gallery .fi-skel{height:95px}
+.fi-inline .fi-skel{width:22px;height:22px}
+@keyframes fiShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* caption bar */
+.fi-cap{
+  padding:3px 7px 4px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.57rem;
+  color:rgba(255,255,255,0.35);
+  background:rgba(0,0,0,0.4);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  line-height:1.4;
+}
+.fi-inline .fi-cap{display:none}  /* no caption on inline icons */
+
+/* source bar */
+.fi-src{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  padding:3px 6px;
+  background:rgba(0,0,0,0.5);
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+.fi-inline .fi-src{display:none}
+.fi-src-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.18);flex-shrink:0}
+.fi-src-link{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.55rem;
+  color:rgba(255,255,255,0.25);
+  text-decoration:none;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:100%;
+  transition:color .15s;
+}
+.fi-src-link:hover{color:rgba(255,255,255,0.55)}
+
+/* clearfix so float doesn't bleed out of .msg-body */
+.fi-clearfix{clear:both;display:block;height:0;overflow:hidden}
+
+/* ── Lightbox ── */
+.fi-lightbox{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.92);
+  backdrop-filter:blur(12px);
+  z-index:9999;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:10px;
+  opacity:0;visibility:hidden;
+  transition:opacity .22s,visibility .22s;
+}
+.fi-lightbox.open{opacity:1;visibility:visible}
+.fi-lightbox img{
+  max-width:90vw;max-height:78vh;
+  object-fit:contain;border-radius:8px;
+  border:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 24px 80px rgba(0,0,0,.8);
+  animation:imgReveal .25s ease;
+}
+.fi-lightbox-meta{display:flex;flex-direction:column;align-items:center;gap:4px}
+.fi-lightbox-cap{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:rgba(255,255,255,0.4)}
+.fi-lightbox-src{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(255,255,255,0.25);text-decoration:none;transition:color .18s}
+.fi-lightbox-src:hover{color:rgba(255,255,255,0.6)}
+.fi-lightbox-close{
+  position:absolute;top:1rem;right:1.2rem;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  color:rgba(255,255,255,0.5);border-radius:5px;
+  padding:4px 9px;font-size:.72rem;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;
+  transition:background .18s,color .18s;
+}
+.fi-lightbox-close:hover{background:rgba(255,255,255,0.12);color:#fff}
 </style>
 </head>
 <body>
 <div class="noise"></div>
+
+<!-- ── Lightbox (single global instance) ── -->
+<div class="fi-lightbox" id="fiLightbox" onclick="fiCloseLightbox(event)">
+  <button class="fi-lightbox-close" onclick="fiCloseLightboxBtn()">✕ close</button>
+  <img id="fiLightboxImg" src="" alt="" />
+  <div class="fi-lightbox-meta">
+    <span id="fiLightboxCap" class="fi-lightbox-cap"></span>
+    <a id="fiLightboxSrc" class="fi-lightbox-src" href="#" target="_blank" rel="noopener">view source ↗</a>
+  </div>
+</div>
+
 <div class="wrap">
   <header>
-    <!-- Share button on the left -->
     <button class="share-header-btn" id="shareBtn" title="share this chat">
       <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
     </button>
@@ -371,7 +535,7 @@ function setPrev(name,prev){const k=name.toLowerCase();if(fileStore[k])fileStore
 function seedStore(files){for(const f of files)setContent(f.name,f.content);}
 
 // ── Helpers ───────────────────────────────────────────────────────
-function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
 // ── Sources / favicons ────────────────────────────────────────────
@@ -489,6 +653,207 @@ async function fetchGeneratedImage(prompt,placeholder,resultImg,dlBtn){
   }catch(err){placeholder.querySelector('.gen-label').textContent='generation failed';placeholder.querySelector('.gen-spinner').style.display='none';console.error('image gen error:',err);}
 }
 
+// ═══════════════════════════════════════════════════════════════
+//  FOUND IMAGES  — [IMGFETCH: url | layout | caption]
+//
+//  Layouts the AI can use:
+//    float    — small, top-right corner of the message
+//    inline   — tiny icon/logo sitting inline with text
+//    banner   — full-width image above or below text
+//    gallery  — horizontal scroll strip (multiple images)
+//    (default if omitted → float for single, gallery for multiple)
+// ═══════════════════════════════════════════════════════════════
+
+function fiTrimUrl(url){
+  try{const u=new URL(url);const parts=u.pathname.split('/').filter(Boolean);const f=parts[parts.length-1]||'';const s=f.length>24?f.slice(0,24)+'…':f;return u.hostname+(s?'/'+s:'');}catch{return url.slice(0,32);}
+}
+
+function fiProxyUrl(src){
+  if(src.startsWith('https://wsrv.nl/'))return src;
+  return`https://wsrv.nl/?url=${encodeURIComponent(src)}&output=webp&maxage=7d`;
+}
+
+// Open lightbox
+function fiOpenLightbox(src, sourceUrl, caption){
+  document.getElementById('fiLightboxImg').src = src;
+  document.getElementById('fiLightboxCap').textContent = caption||'';
+  const a = document.getElementById('fiLightboxSrc');
+  a.href = sourceUrl; a.textContent = fiTrimUrl(sourceUrl)+' ↗';
+  document.getElementById('fiLightbox').classList.add('open');
+}
+function fiCloseLightboxBtn(){document.getElementById('fiLightbox').classList.remove('open');}
+function fiCloseLightbox(e){if(e.target===document.getElementById('fiLightbox'))fiCloseLightboxBtn();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')fiCloseLightboxBtn();});
+
+// Build one fi-card
+function fiMakeCard(src, sourceUrl, caption, skipLightbox){
+  const proxied = fiProxyUrl(src);
+  const card = document.createElement('div');
+  card.className = 'fi-card';
+
+  const skel = document.createElement('div');
+  skel.className = 'fi-skel';
+  card.appendChild(skel);
+
+  const img = document.createElement('img');
+  img.alt = caption||'image';
+  img.loading = 'lazy';
+  img.onload = ()=>{ skel.remove(); card.insertBefore(img, card.firstChild); };
+  img.onerror = ()=>{
+    if(img.src !== src){ img.src = src; }
+    else{ skel.style.cssText='animation:none;background:#181818;height:28px;'; }
+  };
+  img.src = proxied;
+
+  if(!skipLightbox){
+    card.addEventListener('click', ()=>fiOpenLightbox(proxied, sourceUrl, caption));
+  }
+
+  if(caption){
+    const cap = document.createElement('div');
+    cap.className = 'fi-cap';
+    cap.textContent = caption;
+    card.appendChild(cap);
+  }
+
+  const srcBar = document.createElement('div');
+  srcBar.className = 'fi-src';
+  const dot = document.createElement('div');
+  dot.className = 'fi-src-dot';
+  const link = document.createElement('a');
+  link.className = 'fi-src-link';
+  link.href = sourceUrl;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.title = sourceUrl;
+  link.textContent = fiTrimUrl(sourceUrl);
+  link.addEventListener('click', e=>e.stopPropagation());
+  srcBar.appendChild(dot);
+  srcBar.appendChild(link);
+  card.appendChild(srcBar);
+
+  return card;
+}
+
+/*
+  Parse [IMGFETCH: url | layout | caption] tags out of AI text.
+  Returns { cleanText, images: [{src, layout, caption}] }
+
+  Supported layouts (AI-controlled):
+    float   → top-right corner float inside the message
+    inline  → tiny icon inline with text (placeholder stays in text flow)
+    banner  → full-width, sits above/below the surrounding text
+    gallery → collected into a horizontal strip at end of message
+*/
+function fiParseImgFetch(text){
+  const images = [];
+  // [IMGFETCH: url] or [IMGFETCH: url | layout] or [IMGFETCH: url | layout | caption]
+  const re = /\[IMGFETCH:\s*(https?:\/\/[^|\]]+?)(?:\s*\|\s*([^|\]]*?))?(?:\s*\|\s*([^\]]*?))?\s*\]/gi;
+  let m;
+  const placeholders = [];
+  let clean = text;
+
+  // First pass: collect and replace with placeholder tokens
+  const tagged = text.replace(re, (full, url, layoutRaw, captionRaw)=>{
+    const src = url.trim();
+    const layout = (layoutRaw||'').trim().toLowerCase()||'auto';
+    const caption = (captionRaw||'').trim()||null;
+    const idx = images.length;
+    images.push({ src, layout, caption });
+    // inline images leave a placeholder span in the text stream
+    if(layout === 'inline') return `__FIINLINE_${idx}__`;
+    // everything else gets removed from text
+    return `__FIREMOVE_${idx}__`;
+  });
+
+  // Remove non-inline placeholders from clean text
+  clean = tagged.replace(/__FIREMOVE_\d+__/g, '');
+
+  return { tagged, clean, images };
+}
+
+/*
+  Inject found images into a rendered .msg-body element.
+  Called after revealContent finishes.
+    - float: prepended before all text content (CSS float right)
+    - banner: inserted as block before/after text
+    - gallery: appended as a horizontal strip at bottom
+    - inline: already handled via placeholder tokens during text rendering
+*/
+function fiInjectImages(bodyEl, images){
+  if(!images || !images.length) return;
+
+  const floats   = images.filter(i=>i.layout==='float'||(i.layout==='auto'&&images.length===1));
+  const banners  = images.filter(i=>i.layout==='banner');
+  const galleries= images.filter(i=>i.layout==='gallery'||(i.layout==='auto'&&images.length>1));
+
+  // Floats: prepend before all content so text wraps around
+  floats.forEach(({src, caption})=>{
+    const wrap = document.createElement('div');
+    wrap.className = 'fi-float';
+    wrap.appendChild(fiMakeCard(src, src, caption));
+    bodyEl.insertBefore(wrap, bodyEl.firstChild);
+  });
+
+  // Banners: append after existing content
+  banners.forEach(({src, caption})=>{
+    const wrap = document.createElement('div');
+    wrap.className = 'fi-banner';
+    wrap.appendChild(fiMakeCard(src, src, caption));
+    bodyEl.appendChild(wrap);
+  });
+
+  // Gallery: single scrollable row
+  if(galleries.length){
+    const strip = document.createElement('div');
+    strip.className = 'fi-gallery';
+    galleries.forEach(({src, caption})=>{
+      strip.appendChild(fiMakeCard(src, src, caption));
+    });
+    bodyEl.appendChild(strip);
+  }
+
+  // Clearfix so floats don't bleed past bubble
+  const cf = document.createElement('div');
+  cf.className = 'fi-clearfix';
+  bodyEl.appendChild(cf);
+}
+
+/*
+  Replace __FIINLINE_N__ tokens in the rendered DOM text nodes
+  with actual tiny image elements.
+*/
+function fiResolveInlinePlaceholders(bodyEl, images){
+  // Walk text nodes and replace tokens
+  const walker = document.createTreeWalker(bodyEl, NodeFilter.SHOW_TEXT);
+  const replacements = [];
+  let node;
+  while((node = walker.nextNode())){
+    if(/__FIINLINE_\d+__/.test(node.textContent)){
+      replacements.push(node);
+    }
+  }
+  replacements.forEach(textNode=>{
+    const parts = textNode.textContent.split(/(__FIINLINE_\d+__)/);
+    const frag = document.createDocumentFragment();
+    parts.forEach(part=>{
+      const m = part.match(/__FIINLINE_(\d+)__/);
+      if(m){
+        const img = images[parseInt(m[1],10)];
+        if(img){
+          const wrap = document.createElement('span');
+          wrap.className = 'fi-inline';
+          wrap.appendChild(fiMakeCard(img.src, img.src, img.caption, true));
+          frag.appendChild(wrap);
+        }
+      } else if(part){
+        frag.appendChild(document.createTextNode(part));
+      }
+    });
+    textNode.parentNode.replaceChild(frag, textNode);
+  });
+}
+
 // ── Markdown helpers ──────────────────────────────────────────────
 function parseSegments(text){
   const segs=[],re=/```([\w]*)\n([\s\S]*?)```/g;let last=0,m;re.lastIndex=0;
@@ -565,8 +930,11 @@ function renderTextBlock(text,container){
 }
 
 // ── Chat streaming ────────────────────────────────────────────────
-async function revealContent(text,container){
-  const rawSegs=parseSegments(text);
+async function revealContent(text, container){
+  // Pre-parse IMGFETCH tags before any other processing
+  const { tagged, clean, images: foundImages } = fiParseImgFetch(text);
+
+  const rawSegs = parseSegments(clean);
   for(const seg of rawSegs){
     if(seg.type==='code'){
       if(!seg.value.trim()&&!seg.lang)continue;
@@ -581,12 +949,17 @@ async function revealContent(text,container){
     }
     messages.scrollTop=messages.scrollHeight;
   }
+
+  // After all text is rendered, inject found images
+  if(foundImages.length){
+    fiInjectImages(container, foundImages);
+    fiResolveInlinePlaceholders(container, foundImages);
+    messages.scrollTop = messages.scrollHeight;
+  }
 }
+
 async function streamTextSegment(text,container){
   if(!text.trim())return;
-  // Stream the whole block character-by-character into a live span,
-  // then replace it with the fully-rendered markdown (tables, lists, etc.)
-  // Splitting on \n\n before rendering breaks multi-line constructs like tables.
   const live=document.createElement('span');
   live.style.cssText='white-space:pre-wrap;font-size:.85rem;line-height:1.75;color:var(--text);word-break:break-word;display:block;margin:.2rem 0';
   container.appendChild(live);
@@ -615,7 +988,8 @@ async function typeCodeBlock(lang,code,bodyEl){
 
 // ── Instant render (for shared/readonly chat) ─────────────────────
 function renderContentInstant(text,container,imageData){
-  const rawSegs=parseSegments(text);
+  const { clean, images: foundImages } = fiParseImgFetch(text);
+  const rawSegs=parseSegments(clean);
   for(const seg of rawSegs){
     if(seg.type==='code'){
       if(!seg.value.trim()&&!seg.lang)continue;
@@ -632,6 +1006,10 @@ function renderContentInstant(text,container,imageData){
         }
       }
     }
+  }
+  if(foundImages.length){
+    fiInjectImages(container, foundImages);
+    fiResolveInlinePlaceholders(container, foundImages);
   }
 }
 
@@ -796,7 +1174,7 @@ function makeEditChip(edit){
   chip.onclick=()=>openEditPanel(edit.name);return chip;
 }
 
-// ── Strip internal tags from displayed content ────────────────────
+// ── Strip internal tags ────────────────────────────────────────────
 function stripInternalTags(text){
   return text
     .replace(/\[FETCH(?:JSON)?:\s*https?:\/\/[^\]]+\]/gi,'')
@@ -806,6 +1184,7 @@ function stripInternalTags(text){
     .replace(/\[REDDITPOST:\s*https?:\/\/[^\]]+\]/gi,'')
     .replace(/\[REMEMBER:\s*[^\]|]+\|[^\]]+\]/gi,'')
     .replace(/\n{3,}/g,'\n\n').trim();
+  // NOTE: IMGFETCH tags are intentionally NOT stripped here — fiParseImgFetch handles them
 }
 
 // ── Core AI request ───────────────────────────────────────────────
@@ -864,9 +1243,9 @@ async function send(){
 sendBtn.addEventListener('click',send);
 inputEl.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
 
-// ============================================================
+// ═══════════════════════════════════════════════════
 //  SHARE MODAL
-// ============================================================
+// ═══════════════════════════════════════════════════
 const shareModalOverlay  = document.getElementById('shareModalOverlay');
 const sharePickerWrap    = document.getElementById('sharePickerWrap');
 const shareResultWrap    = document.getElementById('shareResultWrap');
@@ -878,10 +1257,8 @@ const shareCopyLinkBtn   = document.getElementById('shareCopyLinkBtn');
 const shareExpiryNote    = document.getElementById('shareExpiryNote');
 const durationGrid       = document.getElementById('durationGrid');
 const shareHeaderBtn     = document.getElementById('shareBtn');
+let selectedTtl = 86400;
 
-let selectedTtl = 86400; // default 1 day
-
-// Duration picker selection
 durationGrid.addEventListener('click', e => {
   const opt = e.target.closest('.duration-opt');
   if(!opt) return;
@@ -891,7 +1268,6 @@ durationGrid.addEventListener('click', e => {
 });
 
 function openShareModal(){
-  // reset to picker state
   sharePickerWrap.style.display='';
   shareResultWrap.style.display='none';
   shareConfirmBtn.disabled=false;
@@ -900,9 +1276,7 @@ function openShareModal(){
   shareCopyLinkBtn.classList.remove('copied');
   shareModalOverlay.classList.remove('hidden');
 }
-function closeShareModal(){
-  shareModalOverlay.classList.add('hidden');
-}
+function closeShareModal(){shareModalOverlay.classList.add('hidden');}
 
 shareHeaderBtn.addEventListener('click', openShareModal);
 shareCancelBtn.addEventListener('click', closeShareModal);
@@ -911,31 +1285,26 @@ shareModalOverlay.addEventListener('click', e => { if(e.target === shareModalOve
 
 function ttlToHumanString(ttl){
   if(ttl < 3600) return `${Math.round(ttl/60)} minutes`;
-  if(ttl < 86400) { const h=ttl/3600; return `${h} hour${h!==1?'s':''}`; }
+  if(ttl < 86400){ const h=ttl/3600; return `${h} hour${h!==1?'s':''}`; }
   const d=ttl/86400; return `${d} day${d!==1?'s':''}`;
 }
 
 shareConfirmBtn.addEventListener('click', async () => {
   shareConfirmBtn.disabled = true;
   shareConfirmBtn.innerHTML = `<span class="spinner" style="width:11px;height:11px;border-width:1.5px"></span> creating...`;
-
   const model = document.getElementById('modelSelect').value;
   try {
-    // Collect any cached image b64 data keyed by prompt
     const imageData = {};
     imageCache.forEach((b64, prompt) => { imageData[prompt] = b64; });
-
     const res = await fetch(`${API_BASE}/share`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ttl: selectedTtl, model, imageData })
     });
     const data = await res.json();
-
     if(data.error) {
       shareConfirmBtn.disabled = false;
       shareConfirmBtn.innerHTML = `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>generate link`;
-      // brief error flash
       const errMsg = document.createElement('div');
       errMsg.style.cssText = 'font-size:.65rem;color:rgba(255,80,80,0.8);margin-top:.3rem';
       errMsg.textContent = data.error === 'no chat history to share' ? 'start a conversation first before sharing.' : data.error;
@@ -943,14 +1312,11 @@ shareConfirmBtn.addEventListener('click', async () => {
       setTimeout(()=>errMsg.remove(), 3000);
       return;
     }
-
     const shareUrl = `${location.origin}${location.pathname}?share=${data.shareId}`;
     shareLinkInput.value = shareUrl;
     shareExpiryNote.textContent = `this link expires in ${ttlToHumanString(data.ttlSeconds)}. anyone with the link can view the chat in read-only mode.`;
-
     sharePickerWrap.style.display = 'none';
     shareResultWrap.style.display = '';
-
   } catch(err) {
     shareConfirmBtn.disabled = false;
     shareConfirmBtn.innerHTML = `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>generate link`;
@@ -966,25 +1332,21 @@ shareCopyLinkBtn.addEventListener('click', () => {
   });
 });
 
-// ============================================================
-//  SHARED CHAT VIEWER  (?share=ID in URL)
-// ============================================================
+// ═══════════════════════════════════════════════════
+//  SHARED CHAT VIEWER
+// ═══════════════════════════════════════════════════
 async function loadSharedChat(){
   const params = new URLSearchParams(location.search);
   const shareId = params.get('share');
   if(!shareId) return false;
-
-  // While loading, show spinner in messages
   if(emptyState){ emptyState.remove(); emptyState=null; }
   const loadDiv = document.createElement('div');
   loadDiv.style.cssText = 'display:flex;align-items:center;gap:.65rem;padding:1.2rem .5rem;opacity:.45;font-size:.72rem;color:var(--muted)';
   loadDiv.innerHTML = `<div class="spinner"></div><span>loading shared chat...</span>`;
   messages.appendChild(loadDiv);
-
   try {
     const res = await fetch(`${API_BASE}/share/${shareId}`);
     loadDiv.remove();
-
     if(!res.ok){
       const errDiv = document.createElement('div');
       errDiv.style.cssText = 'padding:2rem 0;text-align:center;font-size:.78rem;color:rgba(255,255,255,0.3)';
@@ -993,17 +1355,12 @@ async function loadSharedChat(){
       hideInputArea();
       return true;
     }
-
     const data = await res.json();
     const history = data.history || [];
     const modelId = data.modelId || '1A';
     const imageData = data.imageData || {};
-
-    // Show banner
     const banner = buildSharedBanner(shareId, data);
     messages.insertBefore(banner, messages.firstChild);
-
-    // Render all messages from history instantly (no typewriter)
     for(const msg of history){
       if(msg.role === 'user'){
         const cleanQ = msg.content.replace(/^\[USER CONTEXT\][\s\S]*?\[\/USER CONTEXT\]\s*/,'').trim();
@@ -1025,11 +1382,9 @@ async function loadSharedChat(){
         content.appendChild(roleEl);content.appendChild(body);div.appendChild(content);messages.appendChild(div);
       }
     }
-
     hideInputArea();
     messages.scrollTop = 0;
     return true;
-
   } catch(err) {
     loadDiv.remove();
     console.error('failed to load shared chat:', err);
@@ -1057,17 +1412,13 @@ function buildSharedBanner(shareId, data){
 function hideInputArea(){
   const ia = document.getElementById('inputArea');
   if(ia) ia.style.display = 'none';
-  // Also hide share button since it's read-only
   if(shareHeaderBtn) shareHeaderBtn.style.display = 'none';
 }
 
 // ── Init ──────────────────────────────────────────────────────────
 (async () => {
-  const isShared = await loadSharedChat();
-  // nothing extra needed for normal mode
+  await loadSharedChat();
 })();
 </script>
 </body>
 </html>
-
-
