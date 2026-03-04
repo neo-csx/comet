@@ -1,0 +1,28 @@
+Wikipedia:
+- articles:              https://en.wikipedia.org/wiki/ARTICLE_NAME
+- api summary:           https://en.wikipedia.org/api/rest_v1/page/summary/ARTICLE_NAME
+
+Github:
+- profile page:          https://github.com/USERNAME
+- repo page:             https://github.com/USERNAME/REPO
+- raw file (main):       https://raw.githubusercontent.com/USERNAME/REPO/main/FILENAME
+- raw file (master):     https://raw.githubusercontent.com/USERNAME/REPO/master/FILENAME
+- user repos api:        https://api.github.com/users/USERNAME/repos?per_page=20&sort=updated
+- repo contents api:     https://api.github.com/repos/USERNAME/REPO/contents/
+
+Discord:
+- invite info:           https://discord.com/api/v9/invites/INVITECODE?with_counts=true
+
+Roblox (fetchjson tag):
+- search user:           https://users.roblox.com/v1/users/search?keyword=USERNAME&limit=10
+- user by id:            https://users.roblox.com/v1/users/USERID
+- user games:            https://games.roblox.com/v2/games/list?model.userId=USERID&model.limit=10
+
+Pastebin:
+- raw paste:             https://pastebin.com/raw/PASTEID
+
+Reddit:
+- subreddit hot:         https://www.reddit.com/r/SUBREDDIT/hot.json?limit=15
+- subreddit search:      https://www.reddit.com/r/SUBREDDIT/search.json?q=QUERY&sort=relevance&limit=10
+- post + comments:       https://www.reddit.com/r/SUBREDDIT/comments/POSTID.json?limit=50
+- cross-reddit:          https://www.reddit.com/search.json?q=QUERY&sort=relevance&limit=15&type=link
