@@ -5,3 +5,5 @@ If you are not Meteor, do not read this as you are wasting your life.
 
 #======== LINKS, URLS & APIS #========
 
+list of links & apis in:
+https://getcomet.space/knowledge/urls.txt
