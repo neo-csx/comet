@@ -433,66 +433,137 @@ function renderTextBlock(text, container) {
       continue;
     }
 
-    // TABLE — detect pipe-delimited rows
-    if (/^\|.+\|/.test(line)) {
+    // TABLE — three supported formats:
+    //  A) Standard markdown:  | col | col |  with | --- | --- | separator
+    //  B) No-separator pipes: | col | col |  (no separator row — treat row 0 as header)
+    //  C) Implicit key|value: key | value   (no leading pipe — AI often outputs this)
+
+    // Helper: split a pipe row into trimmed cells, handles leading/trailing pipes
+    function splitPipeRow(line) {
+      let s = line.trim();
+      if (s.startsWith('|')) s = s.slice(1);
+      if (s.endsWith('|')) s = s.slice(0, -1);
+      return s.split('|').map(c => c.trim());
+    }
+
+    // Helper: is a row purely a separator row (| --- | :---: | etc)
+    function isSepRow(line) {
+      return /^\|?\s*[-:]+[-\s:|]*\|/.test(line);
+    }
+
+    // Detect format A/B: line starts with |
+    const isPipeTable = /^\|.+\|/.test(line);
+    // Detect format C: line does NOT start with | but contains | with content on both sides
+    const isImplicitTable = !isPipeTable && /^[^|]+\|[^|]/.test(line) && !(/^[-*+]\s/.test(line)) && !(/^\d+\.\s/.test(line));
+
+    if (isPipeTable || isImplicitTable) {
       const tableLines = [];
-      while (i < lines.length && /^\|/.test(lines[i].trim())) {
-        tableLines.push(lines[i]);
-        i++;
+
+      if (isPipeTable) {
+        // collect consecutive pipe-starting rows
+        while (i < lines.length && /^\|/.test(lines[i].trim())) {
+          tableLines.push(lines[i]);
+          i++;
+        }
+      } else {
+        // collect consecutive implicit key|value rows (no leading pipe, contains |)
+        while (i < lines.length) {
+          const l = lines[i];
+          if (!l.trim()) break;
+          // stop if line switches to a real pipe table or block element
+          if (/^\|/.test(l.trim())) break;
+          if (/^[-*+]\s|^\d+\.\s|^#{1,4}\s|^>\s/.test(l)) break;
+          if (!/\|/.test(l)) break;
+          tableLines.push(l);
+          i++;
+        }
       }
 
-      // find separator row: | --- | :---: | ---: |
-      const sepIdx = tableLines.findIndex(l => /^\|\s*[-:]+[-\s:|]*\|/.test(l));
+      if (!tableLines.length) continue;
+
       const table = document.createElement('table');
+      const sepIdx = tableLines.findIndex(l => isSepRow(l));
 
       if (sepIdx === 1) {
-        // parse column alignments from separator row
-        const aligns = tableLines[1]
-          .split('|').slice(1, -1)
-          .map(c => {
-            const t = c.trim();
-            if (t.startsWith(':') && t.endsWith(':')) return 'center';
-            if (t.endsWith(':')) return 'right';
-            return 'left';
-          });
+        // ── Format A: proper markdown table with separator ──
+        const aligns = splitPipeRow(tableLines[1]).map(c => {
+          if (c.startsWith(':') && c.endsWith(':')) return 'center';
+          if (c.endsWith(':')) return 'right';
+          return 'left';
+        });
 
-        // thead
         const thead = document.createElement('thead');
         const headRow = document.createElement('tr');
-        tableLines[0].split('|').slice(1, -1).forEach((h, idx) => {
+        splitPipeRow(tableLines[0]).forEach((h, idx) => {
           const th = document.createElement('th');
-          th.innerHTML = inlineMarkdown(h.trim());
+          th.innerHTML = inlineMarkdown(h);
           th.style.textAlign = aligns[idx] || 'left';
           headRow.appendChild(th);
         });
         thead.appendChild(headRow);
         table.appendChild(thead);
 
-        // tbody
         const tbody = document.createElement('tbody');
         tableLines.slice(2).forEach(rowLine => {
-          if (!rowLine.trim() || /^\|\s*[-:]+[-\s:|]*\|/.test(rowLine)) return;
+          if (!rowLine.trim() || isSepRow(rowLine)) return;
           const tr = document.createElement('tr');
-          rowLine.split('|').slice(1, -1).forEach((c, idx) => {
+          splitPipeRow(rowLine).forEach((c, idx) => {
             const td = document.createElement('td');
-            td.innerHTML = inlineMarkdown(c.trim());
+            td.innerHTML = inlineMarkdown(c);
             td.style.textAlign = aligns[idx] || 'left';
             tr.appendChild(td);
           });
           tbody.appendChild(tr);
         });
         table.appendChild(tbody);
+
+      } else if (isPipeTable) {
+        // ── Format B: pipe rows, no separator — treat first row as header ──
+        const dataRows = tableLines.filter(l => !isSepRow(l));
+        if (dataRows.length === 0) { container.appendChild(table); continue; }
+
+        const thead = document.createElement('thead');
+        const headRow = document.createElement('tr');
+        splitPipeRow(dataRows[0]).forEach(h => {
+          const th = document.createElement('th');
+          th.innerHTML = inlineMarkdown(h);
+          headRow.appendChild(th);
+        });
+        thead.appendChild(headRow);
+        table.appendChild(thead);
+
+        if (dataRows.length > 1) {
+          const tbody = document.createElement('tbody');
+          dataRows.slice(1).forEach(rowLine => {
+            const tr = document.createElement('tr');
+            splitPipeRow(rowLine).forEach(c => {
+              const td = document.createElement('td');
+              td.innerHTML = inlineMarkdown(c);
+              tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+          });
+          table.appendChild(tbody);
+        }
+
       } else {
-        // no separator — all rows as body cells
+        // ── Format C: implicit key | value rows — no leading pipe ──
+        // Render as a clean two-column table, no header row needed
         const tbody = document.createElement('tbody');
         tableLines.forEach(rowLine => {
           if (!rowLine.trim()) return;
+          const pipeIdx = rowLine.indexOf('|');
+          if (pipeIdx < 0) return;
+          const key = rowLine.slice(0, pipeIdx).trim();
+          const val = rowLine.slice(pipeIdx + 1).trim();
           const tr = document.createElement('tr');
-          rowLine.split('|').slice(1, -1).forEach(c => {
-            const td = document.createElement('td');
-            td.innerHTML = inlineMarkdown(c.trim());
-            tr.appendChild(td);
-          });
+          const tdK = document.createElement('td');
+          tdK.innerHTML = inlineMarkdown(key);
+          tdK.style.cssText = 'color:rgba(255,255,255,0.45);white-space:nowrap;padding-right:1rem;width:1%';
+          const tdV = document.createElement('td');
+          tdV.innerHTML = inlineMarkdown(val);
+          tr.appendChild(tdK);
+          tr.appendChild(tdV);
           tbody.appendChild(tr);
         });
         table.appendChild(tbody);
@@ -540,6 +611,7 @@ function renderTextBlock(text, container) {
         /^[-*_]{3,}$/.test(l.trim()) ||
         /^>\s?/.test(l) ||
         /^\|.+\|/.test(l) ||
+        (/^[^|]+\|[^|]/.test(l) && !/^[-*+]\s/.test(l) && !/^\d+\.\s/.test(l)) ||
         /^-{3,}\s*.+\s*-{3,}$/.test(l) ||
         /^={3,}\s*.+\s*={3,}$/.test(l)
       ) break;
