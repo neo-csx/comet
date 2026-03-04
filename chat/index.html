@@ -547,26 +547,30 @@ function renderTextBlock(text, container) {
         }
 
       } else {
-        // ── Format C: implicit key | value rows — no leading pipe ──
-        // Render as a clean two-column table, no header row needed
-        const tbody = document.createElement('tbody');
-        tableLines.forEach(rowLine => {
-          if (!rowLine.trim()) return;
+        // ── Format C: implicit key | value rows — stacked info-card layout ──
+        // Each row: dim uppercase label on top, value below, divider between rows
+        const wrap = document.createElement('div');
+        wrap.style.cssText = 'border:1px solid rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;margin:.4rem 0';
+        const validRows = tableLines.filter(l => l.trim() && l.includes('|'));
+        validRows.forEach((rowLine, idx) => {
           const pipeIdx = rowLine.indexOf('|');
           if (pipeIdx < 0) return;
           const key = rowLine.slice(0, pipeIdx).trim();
           const val = rowLine.slice(pipeIdx + 1).trim();
-          const tr = document.createElement('tr');
-          const tdK = document.createElement('td');
-          tdK.innerHTML = inlineMarkdown(key);
-          tdK.style.cssText = 'color:rgba(255,255,255,0.45);white-space:nowrap;padding-right:1rem;width:1%';
-          const tdV = document.createElement('td');
-          tdV.innerHTML = inlineMarkdown(val);
-          tr.appendChild(tdK);
-          tr.appendChild(tdV);
-          tbody.appendChild(tr);
+          const row = document.createElement('div');
+          row.style.cssText = 'padding:.45rem .7rem' + (idx < validRows.length - 1 ? ';border-bottom:1px solid rgba(255,255,255,0.06)' : '');
+          const keyEl = document.createElement('div');
+          keyEl.innerHTML = inlineMarkdown(key);
+          keyEl.style.cssText = 'font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:.18rem;font-family:"Syne",sans-serif';
+          const valEl = document.createElement('div');
+          valEl.innerHTML = inlineMarkdown(val);
+          valEl.style.cssText = 'font-size:.82rem;color:var(--text);font-weight:500';
+          row.appendChild(keyEl);
+          row.appendChild(valEl);
+          wrap.appendChild(row);
         });
-        table.appendChild(tbody);
+        container.appendChild(wrap);
+        continue;
       }
 
       container.appendChild(table);
