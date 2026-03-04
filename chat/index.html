@@ -183,6 +183,24 @@ textarea:focus{border-color:rgba(255,255,255,0.18)}
 .attach-btn{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,border-color .2s;flex-shrink:0;color:var(--muted)}
 .attach-btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:var(--text)}
 .attach-btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── IMAGE GENERATION ── */
+.img-gen-wrap{margin:.4rem 0;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);background:#0d0d0d;max-width:480px}
+.img-gen-placeholder{position:relative;width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;background:#0d0d0d;overflow:hidden}
+.img-gen-placeholder .blur-logo{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.img-gen-placeholder .blur-logo img{width:120px;height:120px;opacity:.18;filter:blur(18px) saturate(0);transform:scale(1.4)}
+.img-gen-placeholder .gen-spinner-wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.75rem}
+.img-gen-placeholder .gen-spinner{width:28px;height:28px;border:2px solid rgba(255,255,255,0.08);border-top-color:rgba(255,255,255,0.45);border-radius:50%;animation:spin .8s linear infinite}
+.img-gen-placeholder .gen-label{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.img-gen-result{display:none;width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.img-gen-footer{display:flex;align-items:center;justify-content:space-between;padding:.4rem .7rem;border-top:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02)}
+.img-gen-prompt{font-size:.6rem;color:rgba(255,255,255,0.3);letter-spacing:.04em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;margin-right:.5rem}
+.img-gen-dl{background:none;border:1px solid rgba(255,255,255,0.1);color:var(--muted);padding:.18rem .5rem;border-radius:4px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;transition:all .2s;flex-shrink:0;display:flex;align-items:center;gap:.25rem}
+.img-gen-dl:hover{background:rgba(255,255,255,0.07);color:var(--text);border-color:rgba(255,255,255,0.2)}
+.img-gen-dl svg{width:9px;height:9px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.img-gen-dl:disabled{opacity:.3;cursor:not-allowed}
+@keyframes imgReveal{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.img-gen-result.revealed{animation:imgReveal .35s ease forwards}
 </style>
 </head>
 <body>
@@ -346,28 +364,141 @@ function makeCodeBlock(lang,code,fileName){
   wrap._codeRef=codeRef;return wrap;
 }
 
+// ── Image generation block ────────────────────────────────────────
+function makeImageBlock(prompt) {
+  const wrap = document.createElement('div');
+  wrap.className = 'img-gen-wrap';
+
+  // placeholder with blurred logo + spinner
+  const placeholder = document.createElement('div');
+  placeholder.className = 'img-gen-placeholder';
+
+  const blurLogo = document.createElement('div');
+  blurLogo.className = 'blur-logo';
+  const logoImg = document.createElement('img');
+  logoImg.src = 'assets/comet_2.png';
+  logoImg.alt = '';
+  blurLogo.appendChild(logoImg);
+
+  const spinnerWrap = document.createElement('div');
+  spinnerWrap.className = 'gen-spinner-wrap';
+  const spinner = document.createElement('div');
+  spinner.className = 'gen-spinner';
+  const genLabel = document.createElement('div');
+  genLabel.className = 'gen-label';
+  genLabel.textContent = 'generating...';
+  spinnerWrap.appendChild(spinner);
+  spinnerWrap.appendChild(genLabel);
+
+  placeholder.appendChild(blurLogo);
+  placeholder.appendChild(spinnerWrap);
+
+  // result img (hidden until loaded)
+  const resultImg = document.createElement('img');
+  resultImg.className = 'img-gen-result';
+  resultImg.alt = prompt;
+  resultImg.style.display = 'none';
+
+  // footer
+  const footer = document.createElement('div');
+  footer.className = 'img-gen-footer';
+  const promptLabel = document.createElement('div');
+  promptLabel.className = 'img-gen-prompt';
+  promptLabel.textContent = prompt;
+  promptLabel.title = prompt;
+  const dlBtn = document.createElement('button');
+  dlBtn.className = 'img-gen-dl';
+  dlBtn.disabled = true;
+  dlBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>save`;
+  footer.appendChild(promptLabel);
+  footer.appendChild(dlBtn);
+
+  wrap.appendChild(placeholder);
+  wrap.appendChild(resultImg);
+  wrap.appendChild(footer);
+
+  // kick off generation
+  fetchGeneratedImage(prompt, placeholder, resultImg, dlBtn);
+
+  return wrap;
+}
+
+async function fetchGeneratedImage(prompt, placeholder, resultImg, dlBtn) {
+  try {
+    const res = await fetch(`${API_BASE}/image`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt, width: 1024, height: 1024, steps: 4 })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    const b64 = data.image;
+    const src = `data:image/png;base64,${b64}`;
+
+    resultImg.onload = () => {
+      placeholder.style.display = 'none';
+      resultImg.style.display = 'block';
+      resultImg.classList.add('revealed');
+      dlBtn.disabled = false;
+      dlBtn.onclick = () => {
+        const a = document.createElement('a');
+        a.href = src;
+        a.download = 'meteor-gen.png';
+        a.click();
+      };
+    };
+    resultImg.src = src;
+  } catch (err) {
+    placeholder.querySelector('.gen-label').textContent = 'generation failed';
+    placeholder.querySelector('.gen-spinner').style.display = 'none';
+    console.error('image gen error:', err);
+  }
+}
+
 // ── Markdown helpers ──────────────────────────────────────────────
-function parseSegments(text){
-  const segs=[],re=/```([\w]*)\n([\s\S]*?)```/g;let last=0,m;re.lastIndex=0;
-  while((m=re.exec(text))!==null){if(m.index>last)segs.push({type:'text',value:text.slice(last,m.index)});segs.push({type:'code',lang:m[1].trim()||'',value:m[2].replace(/\n$/,'')});last=m.index+m[0].length;}
-  if(last<text.length){const t=text.slice(last);if(t.trim())segs.push({type:'text',value:t});}
+function parseSegments(text) {
+  const segs = [], re = /```([\w]*)\n([\s\S]*?)```/g;
+  let last = 0, m;
+  re.lastIndex = 0;
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) segs.push({ type: 'text', value: text.slice(last, m.index) });
+    segs.push({ type: 'code', lang: m[1].trim() || '', value: m[2].replace(/\n$/, '') });
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) {
+    const t = text.slice(last);
+    if (t.trim()) segs.push({ type: 'text', value: t });
+  }
   return segs;
 }
 
-// ── FIXED inlineMarkdown — bold + links now allow symbols inside ──
+// ── Image tag splitting ───────────────────────────────────────────
+// Splits text segments further on [IMAGE: ...] tags
+function splitOnImageTags(text) {
+  const parts = [];
+  const re = /\[IMAGE:\s*([\s\S]*?)\]/gi;
+  let last = 0, m;
+  re.lastIndex = 0;
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) parts.push({ type: 'text', value: text.slice(last, m.index) });
+    parts.push({ type: 'image', prompt: m[1].trim() });
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) {
+    const t = text.slice(last);
+    if (t.trim()) parts.push({ type: 'text', value: t });
+  }
+  return parts;
+}
+
 function inlineMarkdown(text) {
   let res = '', i = 0;
   const P = [
-    // inline code — highest priority, prevents other patterns matching inside backticks
     { re: /`([^`\n]+)`/, fn: m => `<code class="inline-code">${escHtml(m[1])}</code>` },
-    // bold — allow any chars (including symbols like @, #, !, etc) except newline between **
-    // uses non-greedy match and allows a single * inside if not followed by another *
     { re: /\*\*([^*\n]+(?:\*(?!\*)[^*\n]*)*)\*\*/, fn: m => `<strong>${inlineMarkdown(m[1])}</strong>` },
-    // italic — single *, content cannot contain another * or newline
     { re: /\*([^*\n]+)\*/, fn: m => `<em>${inlineMarkdown(m[1])}</em>` },
-    // links — [label](url) — label allows ANY chars except ] and newline (fixes @, #, !, etc)
     { re: /\[([^\]\n]+)\]\((https?:\/\/[^)\s]+)\)/, fn: m => `<a href="${escHtml(m[2])}" target="_blank" rel="noopener">${escHtml(m[1])}</a>` },
-    // <highlight> — allow any chars except >, <, / and newline (prevents matching HTML tags)
     { re: /<([^>\/<\n][^>\n]*)>/, fn: m => `<span class="tag-highlight">${escHtml(m[1])}</span>` },
   ];
   while (i < text.length) {
@@ -383,32 +514,24 @@ function inlineMarkdown(text) {
   return res.replace(/\n/g, '<br>');
 }
 
-// ── FIXED + EXTENDED renderTextBlock — tables, blockquotes, dividers ──
 function renderTextBlock(text, container) {
   const lines = text.split('\n');
   let i = 0;
   while (i < lines.length) {
     const line = lines[i];
-
-    // blank line
     if (!line.trim()) { i++; continue; }
 
-    // heading (#, ##, ###, ####)
     const hm = line.match(/^(#{1,4})\s+(.+)/);
     if (hm) {
       const el = document.createElement('h' + hm[1].length);
       el.innerHTML = inlineMarkdown(hm[2]);
-      container.appendChild(el);
-      i++; continue;
+      container.appendChild(el); i++; continue;
     }
 
-    // horizontal rule (---, ***, ___ on their own line with no label)
     if (/^[-*_]{3,}$/.test(line.trim())) {
-      container.appendChild(document.createElement('hr'));
-      i++; continue;
+      container.appendChild(document.createElement('hr')); i++; continue;
     }
 
-    // section divider with label: ---title--- or ===title===
     const sdm = line.match(/^-{3,}\s*(.+?)\s*-{3,}$/) || line.match(/^={3,}\s*(.+?)\s*={3,}$/);
     if (sdm) {
       const div = document.createElement('div');
@@ -416,82 +539,55 @@ function renderTextBlock(text, container) {
       const span = document.createElement('span');
       span.textContent = sdm[1];
       div.appendChild(span);
-      container.appendChild(div);
-      i++; continue;
+      container.appendChild(div); i++; continue;
     }
 
-    // blockquote (> text)
     if (/^>\s?/.test(line)) {
       const bq = document.createElement('blockquote');
       const bqLines = [];
       while (i < lines.length && /^>\s?/.test(lines[i])) {
-        bqLines.push(lines[i].replace(/^>\s?/, ''));
-        i++;
+        bqLines.push(lines[i].replace(/^>\s?/, '')); i++;
       }
       bq.innerHTML = inlineMarkdown(bqLines.join('\n'));
-      container.appendChild(bq);
-      continue;
+      container.appendChild(bq); continue;
     }
 
-    // TABLE — three supported formats:
-    //  A) Standard markdown:  | col | col |  with | --- | --- | separator
-    //  B) No-separator pipes: | col | col |  (no separator row — treat row 0 as header)
-    //  C) Implicit key|value: key | value   (no leading pipe — AI often outputs this)
-
-    // Helper: split a pipe row into trimmed cells, handles leading/trailing pipes
     function splitPipeRow(line) {
       let s = line.trim();
       if (s.startsWith('|')) s = s.slice(1);
       if (s.endsWith('|')) s = s.slice(0, -1);
       return s.split('|').map(c => c.trim());
     }
+    function isSepRow(line) { return /^\|?\s*[-:]+[-\s:|]*\|/.test(line); }
 
-    // Helper: is a row purely a separator row (| --- | :---: | etc)
-    function isSepRow(line) {
-      return /^\|?\s*[-:]+[-\s:|]*\|/.test(line);
-    }
-
-    // Detect format A/B: line starts with |
     const isPipeTable = /^\|.+\|/.test(line);
-    // Detect format C: line does NOT start with | but contains | with content on both sides
     const isImplicitTable = !isPipeTable && /^[^|]+\|[^|]/.test(line) && !(/^[-*+]\s/.test(line)) && !(/^\d+\.\s/.test(line));
 
     if (isPipeTable || isImplicitTable) {
       const tableLines = [];
-
       if (isPipeTable) {
-        // collect consecutive pipe-starting rows
-        while (i < lines.length && /^\|/.test(lines[i].trim())) {
-          tableLines.push(lines[i]);
-          i++;
-        }
+        while (i < lines.length && /^\|/.test(lines[i].trim())) { tableLines.push(lines[i]); i++; }
       } else {
-        // collect consecutive implicit key|value rows (no leading pipe, contains |)
         while (i < lines.length) {
           const l = lines[i];
           if (!l.trim()) break;
-          // stop if line switches to a real pipe table or block element
           if (/^\|/.test(l.trim())) break;
           if (/^[-*+]\s|^\d+\.\s|^#{1,4}\s|^>\s/.test(l)) break;
           if (!/\|/.test(l)) break;
-          tableLines.push(l);
-          i++;
+          tableLines.push(l); i++;
         }
       }
-
       if (!tableLines.length) continue;
 
       const table = document.createElement('table');
       const sepIdx = tableLines.findIndex(l => isSepRow(l));
 
       if (sepIdx === 1) {
-        // ── Format A: proper markdown table with separator ──
         const aligns = splitPipeRow(tableLines[1]).map(c => {
           if (c.startsWith(':') && c.endsWith(':')) return 'center';
           if (c.endsWith(':')) return 'right';
           return 'left';
         });
-
         const thead = document.createElement('thead');
         const headRow = document.createElement('tr');
         splitPipeRow(tableLines[0]).forEach((h, idx) => {
@@ -502,7 +598,6 @@ function renderTextBlock(text, container) {
         });
         thead.appendChild(headRow);
         table.appendChild(thead);
-
         const tbody = document.createElement('tbody');
         tableLines.slice(2).forEach(rowLine => {
           if (!rowLine.trim() || isSepRow(rowLine)) return;
@@ -516,12 +611,9 @@ function renderTextBlock(text, container) {
           tbody.appendChild(tr);
         });
         table.appendChild(tbody);
-
       } else if (isPipeTable) {
-        // ── Format B: pipe rows, no separator — treat first row as header ──
         const dataRows = tableLines.filter(l => !isSepRow(l));
         if (dataRows.length === 0) { container.appendChild(table); continue; }
-
         const thead = document.createElement('thead');
         const headRow = document.createElement('tr');
         splitPipeRow(dataRows[0]).forEach(h => {
@@ -531,7 +623,6 @@ function renderTextBlock(text, container) {
         });
         thead.appendChild(headRow);
         table.appendChild(thead);
-
         if (dataRows.length > 1) {
           const tbody = document.createElement('tbody');
           dataRows.slice(1).forEach(rowLine => {
@@ -545,10 +636,7 @@ function renderTextBlock(text, container) {
           });
           table.appendChild(tbody);
         }
-
       } else {
-        // ── Format C: implicit key | value rows — stacked info-card layout ──
-        // Each row: dim uppercase label on top, value below, divider between rows
         const wrap = document.createElement('div');
         wrap.style.cssText = 'border:1px solid rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;margin:.4rem 0';
         const validRows = tableLines.filter(l => l.trim() && l.includes('|'));
@@ -565,62 +653,45 @@ function renderTextBlock(text, container) {
           const valEl = document.createElement('div');
           valEl.innerHTML = inlineMarkdown(val);
           valEl.style.cssText = 'font-size:.82rem;color:var(--text);font-weight:500';
-          row.appendChild(keyEl);
-          row.appendChild(valEl);
-          wrap.appendChild(row);
+          row.appendChild(keyEl); row.appendChild(valEl); wrap.appendChild(row);
         });
-        container.appendChild(wrap);
-        continue;
+        container.appendChild(wrap); continue;
       }
-
-      container.appendChild(table);
-      continue;
+      container.appendChild(table); continue;
     }
 
-    // unordered list (-, *, +)
     if (/^[\-\*\+]\s/.test(line)) {
       const ul = document.createElement('ul');
       while (i < lines.length && /^[\-\*\+]\s/.test(lines[i])) {
         const li = document.createElement('li');
         li.innerHTML = inlineMarkdown(lines[i].replace(/^[\-\*\+]\s/, ''));
-        ul.appendChild(li);
-        i++;
+        ul.appendChild(li); i++;
       }
-      container.appendChild(ul);
-      continue;
+      container.appendChild(ul); continue;
     }
 
-    // ordered list (1. 2. etc)
     if (/^\d+\.\s/.test(line)) {
       const ol = document.createElement('ol');
       while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
         const li = document.createElement('li');
         li.innerHTML = inlineMarkdown(lines[i].replace(/^\d+\.\s/, ''));
-        ol.appendChild(li);
-        i++;
+        ol.appendChild(li); i++;
       }
-      container.appendChild(ol);
-      continue;
+      container.appendChild(ol); continue;
     }
 
-    // paragraph — accumulate until blank line or block-level element starts
     const pl = [];
     while (i < lines.length) {
       const l = lines[i];
       if (!l.trim()) { i++; break; }
       if (
-        /^#{1,4}\s/.test(l) ||
-        /^[\-\*\+]\s/.test(l) ||
-        /^\d+\.\s/.test(l) ||
-        /^[-*_]{3,}$/.test(l.trim()) ||
-        /^>\s?/.test(l) ||
+        /^#{1,4}\s/.test(l) || /^[\-\*\+]\s/.test(l) || /^\d+\.\s/.test(l) ||
+        /^[-*_]{3,}$/.test(l.trim()) || /^>\s?/.test(l) ||
         /^\|.+\|/.test(l) ||
         (/^[^|]+\|[^|]/.test(l) && !/^[-*+]\s/.test(l) && !/^\d+\.\s/.test(l)) ||
-        /^-{3,}\s*.+\s*-{3,}$/.test(l) ||
-        /^={3,}\s*.+\s*={3,}$/.test(l)
+        /^-{3,}\s*.+\s*-{3,}$/.test(l) || /^={3,}\s*.+\s*={3,}$/.test(l)
       ) break;
-      pl.push(l);
-      i++;
+      pl.push(l); i++;
     }
     if (pl.length) {
       const p = document.createElement('p');
@@ -632,7 +703,9 @@ function renderTextBlock(text, container) {
 
 // ── Chat streaming ────────────────────────────────────────────────
 async function revealContent(text, container) {
-  for (const seg of parseSegments(text)) {
+  // First split on code blocks, then split text segments on [IMAGE:] tags
+  const rawSegs = parseSegments(text);
+  for (const seg of rawSegs) {
     if (seg.type === 'code') {
       if (!seg.value.trim() && !seg.lang) continue;
       const cb = makeCodeBlock(seg.lang, '');
@@ -640,7 +713,17 @@ async function revealContent(text, container) {
       container.appendChild(cb);
       await typeCodeBlock(seg.lang, seg.value, bodyEl);
     } else {
-      await streamTextSegment(seg.value, container);
+      // split on image tags
+      const parts = splitOnImageTags(seg.value);
+      for (const part of parts) {
+        if (part.type === 'image') {
+          const imgBlock = makeImageBlock(part.prompt);
+          container.appendChild(imgBlock);
+          messages.scrollTop = messages.scrollHeight;
+        } else {
+          await streamTextSegment(part.value, container);
+        }
+      }
     }
     messages.scrollTop = messages.scrollHeight;
   }
@@ -904,6 +987,7 @@ function stripInternalTags(text){
     .replace(/\[SUBREDDIT:\s*[^\]]+\]/gi,'')
     .replace(/\[REDDITPOST:\s*https?:\/\/[^\]]+\]/gi,'')
     .replace(/\[REMEMBER:\s*[^\]|]+\|[^\]]+\]/gi,'')
+    // NOTE: do NOT strip [IMAGE: ...] — revealContent handles it
     .replace(/\n{3,}/g,'\n\n')
     .trim();
 }
