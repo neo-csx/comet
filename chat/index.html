@@ -448,8 +448,11 @@ function makeCodeBlock(lang,code,fileName){
   wrap._codeRef=codeRef;return wrap;
 }
 
+// ── Image cache (prompt → b64) ────────────────────────────────────
+const imageCache = new Map();
+
 // ── Image generation block ────────────────────────────────────────
-function makeImageBlock(prompt){
+function makeImageBlock(prompt, cachedB64){
   const wrap=document.createElement('div');wrap.className='img-gen-wrap';
   const placeholder=document.createElement('div');placeholder.className='img-gen-placeholder';
   const blurLogo=document.createElement('div');blurLogo.className='blur-logo';
@@ -466,16 +469,22 @@ function makeImageBlock(prompt){
   dlBtn.innerHTML=`<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>save`;
   footer.appendChild(promptLabel);footer.appendChild(dlBtn);
   wrap.appendChild(placeholder);wrap.appendChild(resultImg);wrap.appendChild(footer);
-  fetchGeneratedImage(prompt,placeholder,resultImg,dlBtn);
+  const b64 = cachedB64 || imageCache.get(prompt);
+  if(b64){ applyImageB64(b64,placeholder,resultImg,dlBtn); }
+  else { fetchGeneratedImage(prompt,placeholder,resultImg,dlBtn); }
   return wrap;
+}
+function applyImageB64(b64,placeholder,resultImg,dlBtn){
+  const src=`data:image/png;base64,${b64}`;
+  resultImg.onload=()=>{placeholder.style.display='none';resultImg.style.display='block';resultImg.classList.add('revealed');dlBtn.disabled=false;dlBtn.onclick=()=>{const a=document.createElement('a');a.href=src;a.download='meteor-gen.png';a.click();};};
+  resultImg.src=src;
 }
 async function fetchGeneratedImage(prompt,placeholder,resultImg,dlBtn){
   try{
     const res=await fetch(`${API_BASE}/image`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt,width:1024,height:1024,steps:4})});
     const data=await res.json();if(data.error)throw new Error(data.error);
-    const src=`data:image/png;base64,${data.image}`;
-    resultImg.onload=()=>{placeholder.style.display='none';resultImg.style.display='block';resultImg.classList.add('revealed');dlBtn.disabled=false;dlBtn.onclick=()=>{const a=document.createElement('a');a.href=src;a.download='meteor-gen.png';a.click();};};
-    resultImg.src=src;
+    imageCache.set(prompt, data.image);
+    applyImageB64(data.image,placeholder,resultImg,dlBtn);
   }catch(err){placeholder.querySelector('.gen-label').textContent='generation failed';placeholder.querySelector('.gen-spinner').style.display='none';console.error('image gen error:',err);}
 }
 
@@ -604,7 +613,7 @@ async function typeCodeBlock(lang,code,bodyEl){
 }
 
 // ── Instant render (for shared/readonly chat) ─────────────────────
-function renderContentInstant(text,container){
+function renderContentInstant(text,container,imageData){
   const rawSegs=parseSegments(text);
   for(const seg of rawSegs){
     if(seg.type==='code'){
@@ -614,9 +623,8 @@ function renderContentInstant(text,container){
       const parts=splitOnImageTags(seg.value);
       for(const part of parts){
         if(part.type==='image'){
-          // Actually generate the image (same as live chat)
-          const imgBlock=makeImageBlock(part.prompt);
-          container.appendChild(imgBlock);
+          const b64=imageData&&imageData[part.prompt];
+          container.appendChild(makeImageBlock(part.prompt,b64));
         } else {
           const d=document.createElement('div');d.style.cssText='display:contents';
           renderTextBlock(part.value,d);container.appendChild(d);
@@ -912,10 +920,14 @@ shareConfirmBtn.addEventListener('click', async () => {
 
   const model = document.getElementById('modelSelect').value;
   try {
+    // Collect any cached image b64 data keyed by prompt
+    const imageData = {};
+    imageCache.forEach((b64, prompt) => { imageData[prompt] = b64; });
+
     const res = await fetch(`${API_BASE}/share`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ttl: selectedTtl, model })
+      body: JSON.stringify({ ttl: selectedTtl, model, imageData })
     });
     const data = await res.json();
 
@@ -984,6 +996,7 @@ async function loadSharedChat(){
     const data = await res.json();
     const history = data.history || [];
     const modelId = data.modelId || '1A';
+    const imageData = data.imageData || {};
 
     // Show banner
     const banner = buildSharedBanner(shareId, data);
@@ -1007,7 +1020,7 @@ async function loadSharedChat(){
         const roleEl=document.createElement('div');roleEl.className='msg-role ai';roleEl.textContent='meteor-'+modelId.toLowerCase();
         const body=document.createElement('div');body.className='msg-body';
         const cleaned = stripInternalTags(msg.content||'').replace(/\s*\/n\s*/g,'\n');
-        renderContentInstant(cleaned, body);
+        renderContentInstant(cleaned, body, imageData);
         content.appendChild(roleEl);content.appendChild(body);div.appendChild(content);messages.appendChild(div);
       }
     }
