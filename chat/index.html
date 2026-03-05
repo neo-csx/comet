@@ -1023,7 +1023,21 @@ function renderUserMessage(promptText,files){
   const content=document.createElement('div');content.className='msg-content';
   const roleEl=document.createElement('div');roleEl.className='msg-role';roleEl.textContent='you';
   const body=document.createElement('div');body.className='msg-body user';
-  if(promptText){if(looksLikeCode(promptText)){const lbl=document.createElement('div');lbl.className='pasted-label';lbl.textContent='pasted code';body.appendChild(lbl);body.appendChild(makeCodeBlock('lua',promptText));}else{const t=document.createElement('span');t.style.whiteSpace='pre-wrap';t.textContent=promptText;body.appendChild(t);}}
+  if(promptText){
+    if(looksLikeCode(promptText)){
+      const lbl=document.createElement('div');lbl.className='pasted-label';lbl.textContent='pasted code';
+      body.appendChild(lbl);body.appendChild(makeCodeBlock('lua',promptText));
+    } else {
+      const { clean, images: foundImages } = fiParseImgFetch(promptText);
+      if(clean.trim()){
+        const t=document.createElement('span');t.style.whiteSpace='pre-wrap';t.textContent=clean;body.appendChild(t);
+      }
+      if(foundImages.length){
+        fiInjectImages(body, foundImages);
+        fiResolveInlinePlaceholders(body, foundImages);
+      }
+    }
+  }
   if(files.length){const fr=document.createElement('div');fr.style.cssText='display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.4rem';for(const f of files)fr.appendChild(makeFileChip(f.name,f.content));body.appendChild(fr);}
   content.appendChild(roleEl);content.appendChild(body);div.appendChild(content);messages.appendChild(div);messages.scrollTop=messages.scrollHeight;
 }
@@ -1422,3 +1436,4 @@ function hideInputArea(){
 </script>
 </body>
 </html>
+
