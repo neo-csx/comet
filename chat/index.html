@@ -679,9 +679,11 @@ function fiWikimediaThumb(url, width){
 }
 function fiProxyUrl(src){
   if(src.startsWith('https://wsrv.nl/'))return src;
-  // Use native Wikimedia thumbnail URLs — smaller, faster, no proxy needed
+  // Wikimedia: use their own thumbnail CDN directly, no proxy needed
   const wikiThumb=fiWikimediaThumb(src,480);
   if(wikiThumb)return wikiThumb;
+  // Already a direct upload.wikimedia.org URL (e.g. from API thumb.source) — use as-is
+  if(src.includes('upload.wikimedia.org'))return src;
   // For all other images: decode first to prevent double-encoding (%28 → %2528)
   let decoded; try{ decoded=decodeURIComponent(src); }catch{ decoded=src; }
   return`https://wsrv.nl/?url=${encodeURIComponent(decoded)}&output=webp&maxage=7d`;
@@ -708,15 +710,22 @@ function fiMakeCard(src, sourceUrl, caption, skipLightbox){
   skel.className = 'fi-skel';
   card.appendChild(skel);
 
-  const img = document.createElement('img');
+const img = document.createElement('img');
   img.alt = caption||'image';
-  img.loading = 'lazy';
   img.onload = ()=>{ skel.remove(); card.insertBefore(img, card.firstChild); };
   img.onerror = ()=>{
     if(img.src !== src){ img.src = src; }
     else{ skel.style.cssText='animation:none;background:#181818;height:28px;'; }
   };
+  // Race the proxy against a timeout — if wsrv.nl stalls, fall back to direct URL
   img.src = proxied;
+  if(proxied !== src){
+    const fallbackTimer = setTimeout(()=>{
+      if(!img.complete || img.naturalWidth === 0){ img.src = src; }
+    }, 3000);
+    img.addEventListener('load', ()=> clearTimeout(fallbackTimer), {once:true});
+    img.addEventListener('error', ()=> clearTimeout(fallbackTimer), {once:true});
+  }
 
   if(!skipLightbox){
     card.addEventListener('click', ()=>fiOpenLightbox(proxied, sourceUrl, caption));
@@ -1449,6 +1458,7 @@ function hideInputArea(){
 </script>
 </body>
 </html>
+
 
 
 
