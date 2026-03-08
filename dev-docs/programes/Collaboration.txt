@@ -1,0 +1,108 @@
+#==================================================================================#
+|               Comet: Collaboration Programme Documentation                       |
+#==================================================================================#
+| This document outlines the information and requirements for the Comet            |
+| Collaboration Programme. Please read everything carefully before applying.       |
+#==================================================================================#
+
+
+#==================================================================================#
+|                              Section Index                                       |
+#==================================================================================#
+| Section                  # Description                                           |
+#==========================|=======================================================#
+| 1. Overview              | What the Collaboration Programme is                   |
+| 2. What We Are Looking For | The kind of communities we want to work with        |
+| 3. Rewards               | What you will receive for participating               |
+| 4. Requirements          | What you need to qualify                              |
+| 5. Rules                 | What is and is not allowed                            |
+| 6. How to Apply          | How to get started                                    |
+#==================================================================================#
+
+
+#==================================================================================#
+| 1. OVERVIEW                                                                      |
+#==================================================================================#
+|                                                                                  |
+| The Collaboration Programme is designed for server owners or community leaders   |
+| who are willing to promote Comet within their own community. In return, Comet    |
+| will provide a lifetime key as a reward for the collaboration.                   |
+|                                                                                  |
+| This programme is about building genuine mutual relationships between Comet      |
+| and other active communities.                                                    |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 2. WHAT WE ARE LOOKING FOR                                                       |
+#==================================================================================#
+|                                                                                  |
+| We are looking for communities that:                                             |
+|                                                                                  |
+|  - Have a large and genuinely active member base                                 |
+|  - Are willing to promote Comet within their server or platform                  |
+|  - Align reasonably with the Comet community in terms of topic and audience      |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 3. REWARDS                                                                       |
+#==================================================================================#
+|                                                                                  |
+| Communities accepted into the Collaboration Programme will receive:              |
+|                                                                                  |
+|  - A lifetime Comet key granting access to any paid product on Comet.            |
+|                                                                                  |
+| This reward is provided in exchange for genuine promotion of Comet within your   |
+| community. Promotion is expected to be active and ongoing.                       |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 4. REQUIREMENTS                                                                  |
+#==================================================================================#
+|                                                                                  |
+|  - Your server or community must have a minimum of 1,000 active members.         |
+|                                                                                  |
+| Active members means real, engaged people. Servers with inflated or bot-heavy    |
+| member counts will not qualify.                                                  |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 5. RULES                                                                         |
+#==================================================================================#
+|                                                                                  |
+|  - You must promote Comet genuinely within your community. Half-hearted or       |
+|    hidden promotion does not count.                                              |
+|                                                                                  |
+|  - You may NOT misrepresent Comet or its products in your promotion.             |
+|                                                                                  |
+|  - Bot-heavy or fake member counts will result in disqualification.              |
+|                                                                                  |
+|  - Comet reserves the right to end a collaboration if expectations are not met.  |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 6. HOW TO APPLY                                                                  |
+#==================================================================================#
+|                                                                                  |
+| To apply for the Collaboration Programme, open a ticket in the server and a      |
+| member of the team will assist you with the process.                             |
+|                                                                                  |
+| Please have the following ready when you apply:                                  |
+|  - A link to your server or community                                            |
+|  - Evidence of your active member count                                          |
+|  - A brief description of how you plan to promote Comet                          |
+|                                                                                  |
+| Do not open empty or troll tickets. Doing so may result in a timeout.            |
+|                                                                                  |
+#==================================================================================#
+|               End of programes/Collaboration.txt  //  Comet                      |
+#==================================================================================#
