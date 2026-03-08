@@ -1,0 +1,223 @@
+#==================================================================================#
+|               Comet: Moderation Team Documentation & Guidelines                  |
+#==================================================================================#
+| This document is intended for members of the Comet Moderation Team. If you are   |
+| reading this and are not part of the moderation team, this document will not be  |
+| of any use to you. Moderation staff are expected to have read and understood     |
+| everything within this document before taking any moderation action.             |
+#==================================================================================#
+
+
+#==================================================================================#
+|                              Section Index                                       |
+#==================================================================================#
+| Section                  # Description                                           |
+#==========================|=======================================================#
+| 1. Role Overview         | What the moderation role is and what it is not        |
+| 2. Conduct               | How you are expected to speak and behave              |
+| 3. Moderation Actions    | What actions you can take and when to use them        |
+| 4. Handling Situations   | Step by step guidance for common scenarios            |
+| 5. Public Channels       | How to manage general and public spaces               |
+| 6. Escalation            | When and how to escalate beyond your scope            |
+| 7. Limitations           | What you are not authorised to do                     |
+| 8. Reminders             | Final notes and expectations                          |
+#==================================================================================#
+
+
+#==================================================================================#
+| 1. ROLE OVERVIEW                                                                 |
+#==================================================================================#
+|                                                                                  |
+| As a member of the Comet Moderation Team, your role is to enforce the rules      |
+| of the server and ensure that the community remains a safe and respectful place  |
+| for all members. You are the primary line of enforcement.                        |
+|                                                                                  |
+| Your primary responsibilities are:                                               |
+|  - Monitoring channels for rule violations                                       |
+|  - Taking appropriate action when violations occur                               |
+|  - Keeping public spaces calm and civil                                          |
+|  - Communicating with members in a fair and professional manner                  |
+|                                                                                  |
+| You are NOT support staff. You are NOT management. You enforce rules.            |
+| You do not assign roles, handle applications, or make server-wide decisions.     |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 2. CONDUCT                                                                       |
+#==================================================================================#
+|                                                                                  |
+| Moderators are held to a high standard of conduct. You represent the server      |
+| and your actions reflect directly on Comet.                                      |
+|                                                                                  |
+|  - Always remain calm and professional, even when dealing with difficult members.|
+|  - Do not engage in arguments. Act, do not argue.                                |
+|  - Do not abuse your moderation permissions. Power is for protection, not        |
+|    punishment.                                                                   |
+|  - Do not moderate members you have a personal conflict with. Step aside and     |
+|    let another moderator handle it.                                              |
+|  - Be transparent. If you take action against a member, briefly explain why.     |
+|  - Do not mock, humiliate, or belittle any member before, during, or after       |
+|    taking action against them.                                                   |
+|                                                                                  |
+| Correct example:                                                                 |
+|   "Hey, just a heads up - this kind of message isn't allowed here. Please        |
+|    keep things civil. Further violations may result in further action."          |
+|                                                                                  |
+| Incorrect example:                                                               |
+|   "lol get banned idiot"                                                         |
+|   "i warned you, you brought this on yourself"                                   |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 3. MODERATION ACTIONS                                                            |
+#==================================================================================#
+|                                                                                  |
+| The following actions are available to you and their appropriate use cases:      |
+|                                                                                  |
+| Warning                                                                          |
+|   Issue a warning for minor rule violations or first offences. A warning         |
+|   makes it clear that behaviour is not acceptable and is on the record.          |
+|   Use this before escalating to heavier action unless the violation is severe.   |
+|                                                                                  |
+| Timeout / Mute                                                                   |
+|   Use a timeout when a member is being persistently disruptive, ignoring         |
+|   warnings, or needs to be temporarily removed from conversation. Duration       |
+|   should be proportional to the severity of the behaviour.                       |
+|   - Minor disruption after warning: short timeout (e.g. 10-60 minutes)           |
+|   - Repeated or moderate violations: longer timeout (e.g. a few hours)           |
+|   - Severe disruption: escalate rather than timeout alone                        |
+|                                                                                  |
+| Kick                                                                             |
+|   Use a kick when a timeout is insufficient and the member's presence is         |
+|   actively harming the community at that moment. A kick removes them from the    |
+|   server but allows them to rejoin. Use sparingly.                               |
+|                                                                                  |
+| Ban                                                                              |
+|   Use a ban for severe violations, repeated serious offences, or members who     |
+|   pose a genuine risk to the community. Bans should not be handed out lightly.   |
+|   If unsure whether a ban is warranted, escalate to management first.            |
+|                                                                                  |
+| Message Deletion                                                                 |
+|   Delete messages that violate rules, contain harmful content, or are spam.      |
+|   You do not need to warn before deleting a message, but should still address    |
+|   the member if the violation warrants it.                                       |
+|                                                                                  |
+| IMPORTANT: Always use the least severe action appropriate for the situation.     |
+| Escalating too quickly damages community trust. Escalate through the levels      |
+| unless the situation demands immediate stronger action.                          |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 4. HANDLING SITUATIONS                                                           |
+#==================================================================================#
+|                                                                                  |
+| The following covers common scenarios you will encounter and how to handle them. |
+|                                                                                  |
+| Scenario A - Minor rule violation (first offence)                                |
+|   Delete the message if necessary. Issue a warning. Briefly explain the rule     |
+|   that was broken. Monitor for repeat behaviour.                                 |
+|                                                                                  |
+| Scenario B - Member arguing or being hostile in a public channel                 |
+|   Step in calmly. Ask them to calm down and move the conversation to a ticket    |
+|   if needed. If they continue, issue a timeout. Do not argue back.               |
+|                                                                                  |
+| Scenario C - Spam or repeated messages                                           |
+|   Delete the messages. Issue a warning or short timeout depending on severity.   |
+|                                                                                  |
+| Scenario D - Harassment or targeted abuse toward another member                  |
+|   Delete the content immediately. Issue a timeout or ban depending on severity.  |
+|   Check if the affected member needs to be directed to support or management.    |
+|                                                                                  |
+| Scenario E - Potential scam, phishing, or malicious link                         |
+|   Delete immediately. Timeout or ban the member. Flag to management promptly.    |
+|                                                                                  |
+| Scenario F - Member being abusive toward staff                                   |
+|   Do not engage beyond what is necessary. Take the appropriate action and        |
+|   escalate to management if it is ongoing or severe.                             |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 5. PUBLIC CHANNELS                                                               |
+#==================================================================================#
+|                                                                                  |
+| When monitoring public channels:                                                 |
+|                                                                                  |
+|  - You do not need to interject in every conversation. Observe and intervene     |
+|    only when necessary.                                                          |
+|  - If a topic is becoming heated, a calm message to redirect things is often     |
+|    enough before action is needed.                                               |
+|  - Do not take sides in debates or discussions. You are there to keep order,     |
+|    not to participate in arguments.                                              |
+|  - If a conversation crosses into territory that violates rules, act. Do not     |
+|    wait and hope it resolves itself.                                             |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 6. ESCALATION                                                                    |
+#==================================================================================#
+|                                                                                  |
+| Escalate to management when:                                                     |
+|                                                                                  |
+|  - You are unsure whether an action is warranted or appropriate                  |
+|  - The situation involves a potential ban and you want a second opinion          |
+|  - A member is making threats of harm to themselves or others                    |
+|  - The issue is ongoing and beyond what moderation alone can resolve             |
+|  - A staff member is involved in the violation                                   |
+|                                                                                  |
+| Escalate to support when:                                                        |
+|  - A member has a question or query unrelated to rule enforcement                |
+|                                                                                  |
+| Always let the member know you are escalating if it is appropriate to do so.     |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 7. LIMITATIONS                                                                   |
+#==================================================================================#
+|                                                                                  |
+|  - You may NOT assign or remove any roles. That is management's responsibility.  |
+|                                                                                  |
+|  - You may NOT make any promises regarding development, features, or updates.    |
+|                                                                                  |
+|  - You may NOT share internal documentation not approved for public access.      |
+|                                                                                  |
+|  - You may NOT take moderation action against someone out of personal bias       |
+|    or as a favour to another member.                                             |
+|                                                                                  |
+|  - You may NOT take action on matters not covered in this documentation          |
+|    without first escalating or consulting a senior team member.                  |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 8. REMINDERS                                                                     |
+#==================================================================================#
+|                                                                                  |
+| - Fair moderation builds trust. Inconsistent or biased moderation destroys it.   |
+|                                                                                  |
+| - It is okay to make mistakes. What matters is that you handle them honestly     |
+|   and learn from them.                                                           |
+|                                                                                  |
+| - You are protecting the community, not punishing it. Keep that in mind.         |
+|                                                                                  |
+| - If you are having a bad day and do not feel you can moderate impartially,      |
+|   let the team know and step back temporarily. That is the right call.           |
+|                                                                                  |
+| - This document may be updated. Always ensure you are reading the latest         |
+|   version. Ignorance of an update is not an excuse.                              |
+|                                                                                  |
+#==================================================================================#
+|                  End of moderation/help.txt  //  Comet                           |
+#==================================================================================#
