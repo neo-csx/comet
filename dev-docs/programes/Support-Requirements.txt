@@ -1,0 +1,136 @@
+#==================================================================================#
+|               Comet: Support Programme Documentation & Requirements              |
+#==================================================================================#
+| This document outlines the information and requirements for the Comet Support    |
+| Programme. Please read everything carefully before applying.                     |
+#==================================================================================#
+
+
+#==================================================================================#
+|                              Section Index                                       |
+#==================================================================================#
+| Section                  # Description                                           |
+#==========================|=======================================================#
+| 1. Overview              | What the Support Programme is                         |
+| 2. What We Are Looking For | The kind of people we want                          |
+| 3. Rewards               | What you will receive for participating               |
+| 4. Requirements          | What you need to qualify                              |
+| 5. Expectations          | What is expected of you once accepted                 |
+| 6. Rules                 | What is and is not allowed                            |
+| 7. How to Apply          | How to get started                                    |
+#==================================================================================#
+
+
+#==================================================================================#
+| 1. OVERVIEW                                                                      |
+#==================================================================================#
+|                                                                                  |
+| The Support Programme is designed for members who want to actively contribute    |
+| to the Comet community by handling support tickets and answering queries from    |
+| other members. If accepted, you will be given the Support role and will be       |
+| expected to assist members with their issues.                                    |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 2. WHAT WE ARE LOOKING FOR                                                       |
+#==================================================================================#
+|                                                                                  |
+| We are looking for members who:                                                  |
+|                                                                                  |
+|  - Are active and present in the server on a regular basis                       |
+|  - Can communicate clearly and professionally with other members                 |
+|  - Have a solid understanding of common bugs and their fixes                     |
+|  - Are familiar with exploits and how they work at a reasonable level            |
+|  - Have good common sense and can handle queries calmly                          |
+|  - Are genuinely interested in helping the community, not just collecting a role |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 3. REWARDS                                                                       |
+#==================================================================================#
+|                                                                                  |
+| Members accepted into the Support Programme will receive:                        |
+|                                                                                  |
+|  - A lifetime Comet key granting access to any paid product on Comet.            |
+|                                                                                  |
+| This reward is given in recognition of your ongoing contribution to the          |
+| community. It is not a payment for inactivity. See Section 5 for expectations.   |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 4. REQUIREMENTS                                                                  |
+#==================================================================================#
+|                                                                                  |
+| To be considered for the Support Programme, you must meet the following:         |
+|                                                                                  |
+|  - You must be actively present in the Comet Discord server                      |
+|  - You must NOT currently be a staff member of another Discord server            |
+|  - You must have a working knowledge of common bugs and fixes relevant to        |
+|    Comet's products                                                              |
+|  - You must have a basic familiarity with exploits                               |
+|  - You must demonstrate common sense and calm communication                      |
+|                                                                                  |
+| You will also be required to pass a qualification process during your            |
+| application. See the Management documentation for what this involves.            |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 5. EXPECTATIONS                                                                  |
+#==================================================================================#
+|                                                                                  |
+| Once accepted into the Support Programme, you are expected to:                   |
+|                                                                                  |
+|  - Actively handle support tickets on a regular basis                            |
+|  - Answer member queries in support and general channels where relevant          |
+|  - Remain professional in all support interactions                               |
+|  - Follow the guidelines outlined in the Support Team documentation at           |
+|    /dev-docs/support/help.txt                                                    |
+|                                                                                  |
+| IMPORTANT: If you receive the Support role and are found to be inactive in       |
+| support duties without a valid reason within the first day, you will be          |
+| removed from the programme. This is taken seriously.                             |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 6. RULES                                                                         |
+#==================================================================================#
+|                                                                                  |
+|  - You may NOT hold a staff position in another server while in this programme.  |
+|                                                                                  |
+|  - You are expected to remain active. Disappearing after receiving the reward    |
+|    will result in removal from the programme.                                    |
+|                                                                                  |
+|  - You must conduct yourself in accordance with the Support Team documentation   |
+|    at all times while representing the team.                                     |
+|                                                                                  |
+|  - Abusing the role or the access it provides will result in immediate removal   |
+|    and potential further action.                                                 |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 7. HOW TO APPLY                                                                  |
+#==================================================================================#
+|                                                                                  |
+| To apply for the Support Programme, open a ticket in the server and a member     |
+| of the management team will handle your application.                             |
+|                                                                                  |
+| Please be prepared to answer questions about your experience and knowledge.      |
+| Refer to Section 4 to understand what areas you may be questioned on.            |
+|                                                                                  |
+| Do not open empty or troll tickets. Doing so may result in a timeout.            |
+|                                                                                  |
+#==================================================================================#
+|             End of programes/Support-Requirements.txt  //  Comet                 |
+#==================================================================================#
