@@ -1,0 +1,210 @@
+#==================================================================================#
+|               Comet: Support Team Documentation & Guidelines                     |
+#==================================================================================#
+| This document is intended for members of the Comet Support Team. If you are      |
+| reading this and are not part of the support team, this document will not be     |
+| of any use to you. Support staff are expected to have read and understood        |
+| everything within this document before assisting any members of the server.      |
+#==================================================================================#
+
+
+#==================================================================================#
+|                              Section Index                                       |
+#==================================================================================#
+| Section             # Description                                                |
+#=====================|============================================================#
+| 1. Role Overview    | What the support role is and what it is not                |
+| 2. Conduct          | How you are expected to speak and behave                   |
+| 3. Tickets          | How to handle support tickets step by step                 |
+| 4. General Help     | Answering questions outside of tickets                     |
+| 5. Escalation       | When and how to escalate an issue                          |
+| 6. Limitations      | What you are not authorised to do                          |
+| 7. Reminders        | Final notes and expectations                               |
+#==================================================================================#
+
+
+#==================================================================================#
+| 1. ROLE OVERVIEW                                                                 |
+#==================================================================================#
+|                                                                                  |
+| As a member of the Comet Support Team, your purpose is to assist members of      |
+| the server with questions, concerns, and issues they may encounter. You are      |
+| the first point of contact for most users and represent Comet directly.          |
+|                                                                                  |
+| You are here to help. Nothing more, nothing less.                                |
+|                                                                                  |
+| You are NOT a moderator. You are NOT a manager. You do not have authority        |
+| over the server, its members, or its structure. Your role is purely to           |
+| provide assistance in a calm, professional, and helpful manner.                  |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 2. CONDUCT                                                                       |
+#==================================================================================#
+|                                                                                  |
+| You are expected to maintain a formal and respectful tone at all times when      |
+| acting in your support capacity. The following rules apply without exception.    |
+|                                                                                  |
+|  - Always greet the user when opening or responding to a ticket.                 |
+|  - Use proper grammar and punctuation in all support interactions.               |
+|  - Do not use slang, aggressive language, or dismissive responses.               |
+|  - Do not argue with a user. If a situation becomes difficult, escalate it.      |
+|  - Do not express frustration, sarcasm, or impatience toward any member.         |
+|  - Remain neutral. You are not there to take sides or pass judgement.            |
+|  - Keep responses clear and concise. Avoid unnecessary filler.                   |
+|                                                                                  |
+| Correct example:                                                                 |
+|   "Hello, thank you for reaching out. I would be happy to assist you with        |
+|    this. Could you please provide a bit more detail so I can look into it?"      |
+|                                                                                  |
+| Incorrect example:                                                               |
+|   "yeah i dont really know, just wait i guess"                                   |
+|   "thats not my problem lol"                                                     |
+|                                                                                  |
+| If you would not want a senior member of the team reading your response,         |
+| do not send it.                                                                  |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 3. TICKETS                                                                       |
+#==================================================================================#
+|                                                                                  |
+| Tickets are the primary method through which members will contact support.       |
+| The following is the expected process for handling a ticket from open to close.  |
+|                                                                                  |
+| Step 1 - Claim the ticket                                                        |
+|   When a ticket is opened, claim it promptly. Do not leave tickets sitting       |
+|   unattended for extended periods. If you cannot handle it, let another          |
+|   support member know.                                                           |
+|                                                                                  |
+| Step 2 - Greet the user                                                          |
+|   Open with a formal greeting and confirm that you are there to help.            |
+|   Example: "Hello! Thank you for opening a ticket. How can I assist you today?"  |
+|                                                                                  |
+| Step 3 - Understand the issue                                                    |
+|   Read the user's message carefully. Ask clarifying questions if needed.         |
+|   Do not assume you know the issue before the user has fully explained it.       |
+|                                                                                  |
+| Step 4 - Provide assistance                                                      |
+|   Offer a clear and helpful response. If you know the answer, provide it.        |
+|   If you are unsure, say so honestly and let them know you will look into it     |
+|   or pass it on to someone who can assist further.                               |
+|                                                                                  |
+| Step 5 - Confirm resolution                                                      |
+|   Before closing the ticket, confirm with the user that their issue has been     |
+|   resolved to their satisfaction.                                                |
+|   Example: "Is there anything else I can help you with, or has this been         |
+|   resolved for you?"                                                             |
+|                                                                                  |
+| Step 6 - Close the ticket                                                        |
+|   Once the issue is resolved and the user is satisfied, close the ticket         |
+|   politely.                                                                      |
+|   Example: "Thank you for reaching out. I will go ahead and close this ticket.   |
+|   Feel free to open another one if you need anything further. Have a good day!"  |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 4. GENERAL HELP                                                                  |
+#==================================================================================#
+|                                                                                  |
+| Members may ask questions outside of the ticket system, for example in           |
+| general channels or support channels. The same conduct rules apply.              |
+|                                                                                  |
+|  - If you are able to help, do so clearly and politely.                          |
+|  - If the question requires more detail or is sensitive, direct them to open     |
+|    a ticket so it can be handled properly.                                       |
+|  - Do not engage in arguments or heated discussions in public channels.          |
+|  - If someone is being disruptive, do not engage. Refer the situation to         |
+|    the moderation team.                                                          |
+|                                                                                  |
+| You are there to assist, not to moderate public channels. Keep that in mind.     |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 5. ESCALATION                                                                    |
+#==================================================================================#
+|                                                                                  |
+| Some situations will be beyond the scope of your role. In these cases you        |
+| must escalate the issue to the appropriate team rather than attempting to        |
+| handle it yourself. You should escalate when:                                    |
+|                                                                                  |
+|  - A user is asking for something you are not authorised to do (see Section 6)   |
+|  - A user is being abusive, threatening, or hostile                              |
+|  - The issue involves a potential rule violation or misconduct                   |
+|  - You are unsure how to handle the situation                                    |
+|  - The issue requires a decision from management or a senior team member         |
+|                                                                                  |
+| When escalating, inform the user professionally that you will be passing their   |
+| case on to the relevant team, and do so promptly.                                |
+|   Example: "This falls outside of what I am able to action directly. I will      |
+|   pass this on to the appropriate team who will be able to assist you further."  |
+|                                                                                  |
+| Do not leave a user without a response while you sort out escalation.            |
+| Always acknowledge them first.                                                   |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 6. LIMITATIONS                                                                   |
+#==================================================================================#
+|                                                                                  |
+| The following is a list of things you are NOT authorised to do as a member of    |
+| the Comet Support Team. This list is not exhaustive.                             |
+|                                                                                  |
+|  - You may NOT grant, assign, or promise any roles to any user. This includes    |
+|    but is not limited to: Beta access, Early Access, or any programme roles.     |
+|                                                                                  |
+|  - You may NOT issue warnings, mutes, kicks, or bans. This is the                |
+|    responsibility of the moderation team.                                        |
+|                                                                                  |
+|  - You may NOT make promises on behalf of the development team or management     |
+|    regarding features, timelines, or updates.                                    |
+|                                                                                  |
+|  - You may NOT share internal documentation, links, or information that has      |
+|    not been approved for public distribution.                                    |
+|                                                                                  |
+|  - You may NOT take unilateral action on any matter that has not been            |
+|    explicitly covered in this documentation. When in doubt, escalate.            |
+|                                                                                  |
+| If a user requests something you are not authorised to do, be transparent        |
+| about it. You do not need to over-explain, simply let them know it is not        |
+| something you are able to action and point them in the right direction.          |
+|   Example: "I am afraid that is not something I am able to assist with           |
+|   directly. I would recommend reaching out to the relevant team for that."       |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 7. REMINDERS                                                                     |
+#==================================================================================#
+|                                                                                  |
+| - You represent Comet every time you interact with a member. Act accordingly.    |
+|                                                                                  |
+| - Being formal does not mean being cold. You can be warm and approachable        |
+|   while still maintaining a professional tone.                                   |
+|                                                                                  |
+| - If you are unsure about something, it is always better to say so than to       |
+|   provide incorrect information. Honesty builds trust.                           |
+|                                                                                  |
+| - Your job is to make the member feel heard and helped. Even if you cannot       |
+|   resolve their issue directly, a good interaction still matters.                |
+|                                                                                  |
+| - Do not burn out. If you need a break or are unable to handle tickets at a      |
+|   given time, communicate that to your team rather than going quiet.             |
+|                                                                                  |
+| - This document may be updated. Make sure you are always reading the latest      |
+|   version. Ignorance of an update is not an excuse.                              |
+|                                                                                  |
+#==================================================================================#
+|                       End of support/help.txt  //  Comet                         |
+#==================================================================================#
