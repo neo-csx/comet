@@ -1,0 +1,91 @@
+#==================================================================================#
+|               Comet: Invites Programme Documentation                             |
+#==================================================================================#
+| This document outlines the information and requirements for the Comet Invites    |
+| Programme. Please read everything carefully before applying.                     |
+#==================================================================================#
+
+
+#==================================================================================#
+|                              Section Index                                       |
+#==================================================================================#
+| Section                  # Description                                           |
+#==========================|=======================================================#
+| 1. Overview              | What the Invites Programme is                         |
+| 2. Rewards               | What you will receive for participating               |
+| 3. Requirements          | What you need to qualify                              |
+| 4. Rules                 | What is and is not allowed                            |
+| 5. How to Apply          | How to get started                                    |
+#==================================================================================#
+
+
+#==================================================================================#
+| 1. OVERVIEW                                                                      |
+#==================================================================================#
+|                                                                                  |
+| The Invites Programme rewards members who help grow the Comet community by       |
+| inviting new members using their personal invite link. The more genuine members  |
+| you bring in, the more you are rewarded.                                         |
+|                                                                                  |
+| This is one of the simplest ways to contribute to Comet and earn rewards.        |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 2. REWARDS                                                                       |
+#==================================================================================#
+|                                                                                  |
+|  - You will receive 1 day of access to any paid item on Comet for every          |
+|    10 members who join the server using your personal invite link.               |
+|                                                                                  |
+| Rewards are tracked via your invite link. Ensure you are using your own link     |
+| at all times. Bot invites or fake accounts will not count and may result in      |
+| removal from the programme.                                                      |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 3. REQUIREMENTS                                                                  |
+#==================================================================================#
+|                                                                                  |
+|  - You must use only your personal assigned invite link                          |
+|  - Invites must be genuine members, not bots or fake accounts                    |
+|                                                                                  |
+| There is no minimum follower or subscriber count required for this programme.    |
+| It is open to all members in good standing.                                      |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 4. RULES                                                                         |
+#==================================================================================#
+|                                                                                  |
+|  - You may NOT invite bots. Doing so will result in immediate blacklisting       |
+|    from the programme and potential removal from the server.                     |
+|                                                                                  |
+|  - You may NOT use another member's invite link to claim rewards.                |
+|                                                                                  |
+|  - You may NOT use deceptive or misleading means to get people to join.          |
+|    All members must join of their own genuine interest.                          |
+|                                                                                  |
+|  - Attempting to manipulate the invite tracking system in any way will result    |
+|    in disqualification.                                                          |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 5. HOW TO APPLY                                                                  |
+#==================================================================================#
+|                                                                                  |
+| To join the Invites Programme and receive your personal invite link, open a      |
+| ticket in the server and a member of the team will get you set up.               |
+|                                                                                  |
+| Do not open empty or troll tickets. Doing so may result in a timeout.            |
+|                                                                                  |
+#==================================================================================#
+|                  End of programes/Invites.txt  //  Comet                         |
+#==================================================================================#
