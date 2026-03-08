@@ -1,0 +1,127 @@
+#==================================================================================#
+|               Comet: Content Creation Programme Documentation                    |
+#==================================================================================#
+| This document outlines the information and requirements for the Comet Content    |
+| Creation Programme. Please read everything carefully before applying.            |
+#==================================================================================#
+
+
+#==================================================================================#
+|                              Section Index                                       |
+#==================================================================================#
+| Section                  # Description                                           |
+#==========================|=======================================================#
+| 1. Overview              | What the Content Creation Programme is                |
+| 2. What We Are Looking For | The kind of creators we want                        |
+| 3. Rewards               | What you will receive for participating               |
+| 4. Requirements          | What you need to qualify                              |
+| 5. Rules                 | What is and is not allowed                            |
+| 6. How to Apply          | How to get started                                    |
+#==================================================================================#
+
+
+#==================================================================================#
+| 1. OVERVIEW                                                                      |
+#==================================================================================#
+|                                                                                  |
+| The Content Creation Programme is designed for creators who can promote Comet    |
+| across social media platforms such as YouTube, TikTok, or similar. In return     |
+| for growing our community and increasing our visibility, participants are        |
+| rewarded based on their performance.                                             |
+|                                                                                  |
+| This programme is open to creators on any relevant platform, provided they       |
+| meet the requirements listed in Section 4.                                       |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 2. WHAT WE ARE LOOKING FOR                                                       |
+#==================================================================================#
+|                                                                                  |
+| We are looking for content creators who can:                                     |
+|                                                                                  |
+|  - Promote Comet on social media platforms (YouTube, TikTok, etc.)               |
+|  - Create content that drives genuine views and brings real members to the       |
+|    server via your assigned invite link.                                         |
+|  - Represent Comet in a positive and professional manner through their content.  |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 3. REWARDS                                                                       |
+#==================================================================================#
+|                                                                                  |
+| Content creators are rewarded based on their performance as follows:             |
+|                                                                                  |
+|  - You will receive 1 day of access to any paid item on Comet for every          |
+|    5,000 views your content receives.                                            |
+|                                                                                  |
+|  - Rewards are also influenced by how many members you bring to the server       |
+|    via your personal invite link.                                                |
+|                                                                                  |
+| Rewards are reviewed and distributed based on verified performance. Botted       |
+| views or members will result in disqualification. See Section 5 for rules.       |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 4. REQUIREMENTS                                                                  |
+#==================================================================================#
+|                                                                                  |
+| Requirements vary depending on your platform:                                    |
+|                                                                                  |
+| YouTube                                                                          |
+|  - Minimum 500 subscribers                                                       |
+|  - Average of at least 500 views per video                                       |
+|                                                                                  |
+| TikTok and other short-form / reels platforms                                    |
+|  - Minimum 1,000 followers                                                       |
+|  - Average of at least 2,000 views per post or reel                              |
+|                                                                                  |
+| All platforms                                                                    |
+|  - You must be able to include your personal Comet invite link in your content   |
+|    or profile.                                                                   |
+|  - Botting views or members is strictly prohibited (see Section 5).              |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 5. RULES                                                                         |
+#==================================================================================#
+|                                                                                  |
+|  - You may NOT bot views, followers, or server members under any circumstances.  |
+|    Doing so will result in immediate removal from the programme and a potential  |
+|    ban from the server.                                                          |
+|                                                                                  |
+|  - You may NOT misrepresent Comet in your content. Keep it honest and accurate.  |
+|                                                                                  |
+|  - You must use your assigned personal invite link only. Do not use links that   |
+|    do not belong to you.                                                         |
+|                                                                                  |
+|  - You are expected to remain active in the programme. Inactivity without notice |
+|    may result in removal.                                                        |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 6. HOW TO APPLY                                                                  |
+#==================================================================================#
+|                                                                                  |
+| To apply for the Content Creation Programme, open a ticket in the server and     |
+| a member of the team will assist you from there.                                 |
+|                                                                                  |
+| Please have the following ready when you apply:                                  |
+|  - A link to your channel or profile                                             |
+|  - Evidence of your current subscriber or follower count                         |
+|  - Evidence of your average view count                                           |
+|                                                                                  |
+| Do not open empty or troll tickets. Doing so may result in a timeout.            |
+|                                                                                  |
+#==================================================================================#
+|               End of programes/Content-Creation.txt  //  Comet                   |
+#==================================================================================#
