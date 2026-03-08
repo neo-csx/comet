@@ -1,1 +1,273 @@
+#==================================================================================#
+|               Comet: Management Team Documentation & Guidelines                  |
+#==================================================================================#
+| This document is intended for members of the Comet Management Team. If you are   |
+| reading this and are not part of the management team, this document will not be  |
+| of any use to you. Management staff are expected to have read and understood     |
+| everything within this document before carrying out any management duties.       |
+#==================================================================================#
 
+
+#==================================================================================#
+|                              Section Index                                       |
+#==================================================================================#
+| Section                  # Description                                           |
+#==========================|=======================================================#
+| 1. Role Overview         | What the management role is and what it is not        |
+| 2. Conduct               | How you are expected to speak and behave              |
+| 3. Role Assignment       | How to evaluate and assign roles to applicants        |
+| 4. Qualification Process | The questioning process and pass threshold            |
+| 5. Community Oversight   | Keeping the community calm and orderly                |
+| 6. Programmes            | How to handle programme-related enquiries             |
+| 7. Escalation            | When and how to escalate beyond your scope            |
+| 8. Limitations           | What you are not authorised to do                     |
+| 9. Reminders             | Final notes and expectations                          |
+#==================================================================================#
+
+
+#==================================================================================#
+| 1. ROLE OVERVIEW                                                                 |
+#==================================================================================#
+|                                                                                  |
+| As a member of the Comet Management Team, you hold a higher level of             |
+| responsibility than support or moderation staff. You are trusted to make         |
+| decisions that directly affect the structure and membership of the team.         |
+|                                                                                  |
+| Your primary responsibilities are:                                               |
+|  - Evaluating applicants for staff and programme roles                           |
+|  - Assigning roles and ranks where appropriate                                   |
+|  - Ensuring the community remains calm, civil, and well-managed                  |
+|  - Directing members to the correct resources and programmes                     |
+|  - Acting as a point of escalation for support and moderation staff              |
+|                                                                                  |
+| You are NOT above the rules. You are NOT exempt from conduct expectations.       |
+| You are trusted with more authority, and that trust must be upheld.              |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 2. CONDUCT                                                                       |
+#==================================================================================#
+|                                                                                  |
+| Management staff are held to the same conduct standards as all other staff,      |
+| and in many cases to a higher standard given the authority you carry.            |
+|                                                                                  |
+|  - Always communicate in a formal, respectful, and professional manner.          |
+|  - Do not abuse your authority. Role assignment is a responsibility, not         |
+|    a privilege to be handed out casually or to personal favourites.              |
+|  - Remain impartial. Do not let personal relationships influence decisions.      |
+|  - Do not discuss internal decisions or staff matters in public channels.        |
+|  - If a situation becomes difficult or heated, de-escalate calmly.               |
+|  - Keep records of role assignments and qualification outcomes where possible.   |
+|                                                                                  |
+| Correct example:                                                                 |
+|   "Thank you for applying. I will be walking you through a short qualification   |
+|    process before we can proceed. Please answer the following questions."        |
+|                                                                                  |
+| Incorrect example:                                                               |
+|   "yeah sure ill just give you the role"                                         |
+|   "i dont like them so no"                                                       |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 3. ROLE ASSIGNMENT                                                               |
+#==================================================================================#
+|                                                                                  |
+| You are authorised to assign the following roles:                                |
+|  - Moderator                                                                     |
+|  - Support                                                                       |
+|  - Programme roles (see Section 6 and programme documentation)                   |
+|                                                                                  |
+| Before assigning any role, you MUST complete the qualification process           |
+| outlined in Section 4. Do not skip this under any circumstances.                 |
+|                                                                                  |
+| When a member applies for a staff role, they should open a ticket. From there:   |
+|                                                                                  |
+| Step 1 - Acknowledge the application                                             |
+|   Greet the applicant and confirm that you are handling their application.       |
+|   Example: "Hello! Thank you for applying. I will be going through your          |
+|   application now and will ask you a few questions to get started."              |
+|                                                                                  |
+| Step 2 - Run the qualification process (see Section 4)                           |
+|                                                                                  |
+| Step 3 - Evaluate the result                                                     |
+|   If the applicant qualifies, assign the role and inform them clearly.           |
+|   If they do not qualify, let them know politely and explain they are welcome    |
+|   to reapply in the future.                                                      |
+|   Example (pass): "You have met the required threshold. Welcome to the team.     |
+|   I will assign your role now and you can get started shortly."                  |
+|   Example (fail): "Unfortunately you have not met the required threshold at      |
+|   this time. You are welcome to reapply in the future. Best of luck."            |
+|                                                                                  |
+| Step 4 - Document and close                                                      |
+|   Note the outcome and close the ticket once the process is complete.            |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 4. QUALIFICATION PROCESS                                                         |
+#==================================================================================#
+|                                                                                  |
+| All applicants for staff roles (Moderator, Support) must pass a qualification    |
+| process before being assigned a role. This is non-negotiable.                    |
+|                                                                                  |
+| The process is as follows:                                                       |
+|                                                                                  |
+|  - Ask the applicant a series of relevant questions for the role they are        |
+|    applying for. The number of questions is at your discretion, but a minimum    |
+|    of five (5) is recommended.                                                   |
+|                                                                                  |
+|  - Questions should be relevant to the role. For example:                        |
+|    Support applicants: knowledge of common bugs, fixes, exploits, and how        |
+|    they would handle various support scenarios.                                  |
+|    Moderator applicants: how they would handle rule violations, disputes,        |
+|    or difficult members.                                                         |
+|                                                                                  |
+|  - Always ask the applicant why they want the role. This is mandatory.           |
+|    Their answer should reflect genuine interest in helping the community,        |
+|    not personal gain or status.                                                  |
+|                                                                                  |
+| PASS THRESHOLD:                                                                  |
+|  - An applicant must answer approximately two thirds (2/3) of the questions      |
+|    correctly or to a satisfactory standard in order to qualify.                  |
+|  - Use your judgement. Answers do not need to be perfect word for word,          |
+|    but they should demonstrate adequate understanding.                           |
+|                                                                                  |
+|  - If an applicant scrapes the threshold but shows clear gaps in knowledge,      |
+|    use your discretion and escalate to a senior member if unsure.                |
+|                                                                                  |
+| Example questions for Support:                                                   |
+|  - What would you do if a user opened a ticket and was being abusive?            |
+|  - How would you handle a question you did not know the answer to?               |
+|  - What are some common fixes you know for [relevant product bugs]?              |
+|  - What does it mean to escalate an issue?                                       |
+|  - Why do you want to join the support team?                                     |
+|                                                                                  |
+| Example questions for Moderator:                                                 |
+|  - How would you handle two members arguing publicly in a channel?               |
+|  - What would you do if you witnessed a rule violation but were not sure         |
+|    of the correct punishment?                                                    |
+|  - How do you remain impartial when moderating someone you know?                 |
+|  - What is the difference between a warning and a timeout in your view?          |
+|  - Why do you want to join the moderation team?                                  |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 5. COMMUNITY OVERSIGHT                                                           |
+#==================================================================================#
+|                                                                                  |
+| As part of management, you are expected to maintain awareness of the general     |
+| atmosphere and health of the community at all times.                             |
+|                                                                                  |
+|  - Monitor general channels and remain attentive to escalating tensions.         |
+|  - If members are arguing or becoming hostile toward one another, step in        |
+|    calmly and professionally to de-escalate the situation.                       |
+|  - You do NOT need to take sides. Your role is to restore calm, not to judge.    |
+|  - If the situation involves a rule violation that requires moderation action,   |
+|    coordinate with the moderation team rather than acting unilaterally.          |
+|  - If a member is repeatedly disruptive or creating an ongoing negative          |
+|    atmosphere, escalate to the appropriate team or senior staff.                 |
+|                                                                                  |
+| De-escalation example:                                                           |
+|   "Hey everyone, let us keep things civil. If there is a genuine concern here,   |
+|    please open a ticket and it will be handled properly. Thank you."             |
+|                                                                                  |
+| Staying composed during a community issue is one of the most important things    |
+| a manager can do. If management panics or reacts poorly, the community will too. |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 6. PROGRAMMES                                                                    |
+#==================================================================================#
+|                                                                                  |
+| Comet currently runs several active programmes that members may enquire about.   |
+| It is not your job to explain every programme in detail within a ticket.         |
+| Instead, direct members to the relevant documentation so they can read it        |
+| themselves and return with any specific questions.                               |
+|                                                                                  |
+| Available programmes and their documentation locations:                          |
+|                                                                                  |
+|  - Content Creation  | /dev-docs/programes/Content-Creation.txt                  |
+|  - Support Programme | /dev-docs/programes/Support-Requirements.txt              |
+|  - Invites Programme | /dev-docs/programes/Invites.txt                           |
+|  - Collaboration     | /dev-docs/programes/Collaboration.txt                     |
+|                                                                                  |
+| If a member is applying for a programme role via ticket, handle it in a          |
+| similar fashion to staff applications. Ensure they meet the requirements         |
+| outlined in the relevant programme documentation before assigning any role.      |
+|                                                                                  |
+| You do not need to re-explain the requirements in full. Point them to the        |
+| document, confirm they have read it, and proceed from there.                     |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 7. ESCALATION                                                                    |
+#==================================================================================#
+|                                                                                  |
+| Even as management, some situations will exceed your scope. Escalate when:       |
+|                                                                                  |
+|  - A situation involves a potential serious rule violation or legal concern      |
+|  - A decision requires input from the server owner or senior leadership          |
+|  - You are unsure whether to assign or deny a role and need a second opinion     |
+|  - A community situation is beyond what de-escalation can resolve                |
+|  - A member is making threats or exhibiting dangerous behaviour                  |
+|                                                                                  |
+| Always acknowledge the member before escalating. Never leave them without a      |
+| response while you sort things internally.                                       |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 8. LIMITATIONS                                                                   |
+#==================================================================================#
+|                                                                                  |
+| The following is a list of things you are NOT authorised to do as management.    |
+|                                                                                  |
+|  - You may NOT assign roles without completing the qualification process.        |
+|                                                                                  |
+|  - You may NOT make promises to members regarding future features, updates,      |
+|    or development timelines on behalf of the development team.                   |
+|                                                                                  |
+|  - You may NOT share internal documentation that has not been approved           |
+|    for public distribution.                                                      |
+|                                                                                  |
+|  - You may NOT take disciplinary action (warnings, bans, etc.) that falls        |
+|    under the jurisdiction of the moderation team without their involvement.      |
+|                                                                                  |
+|  - You may NOT act on matters not covered in this documentation without          |
+|    first consulting a senior team member.                                        |
+|                                                                                  |
+#==================================================================================#
+
+
+#==================================================================================#
+| 9. REMINDERS                                                                     |
+#==================================================================================#
+|                                                                                  |
+| - You hold more authority than most staff. With that comes more responsibility.  |
+|                                                                                  |
+| - Fairness is everything. Every applicant deserves the same process regardless   |
+|   of who they are or who they know.                                              |
+|                                                                                  |
+| - A good manager makes the team stronger. Poor decisions at this level           |
+|   affect everyone below you.                                                     |
+|                                                                                  |
+| - If you are unsure, ask. There is no shame in seeking a second opinion.         |
+|                                                                                  |
+| - This document may be updated. Always ensure you are reading the latest         |
+|   version. Ignorance of an update is not an excuse.                              |
+|                                                                                  |
+#==================================================================================#
+|                     End of management/help.txt  //  Comet                        |
+#==================================================================================#
